@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Development on False Protagonist</title>
+    <link>https://false.org.ru/categories/development/</link>
+    <description>Recent content in Development on False Protagonist</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>© 2020 by Rinat Sabitov</copyright>
+    <lastBuildDate>Wed, 17 May 2017 09:43:11 +0300</lastBuildDate>
+    
+	<atom:link href="https://false.org.ru/categories/development/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Currency formatting snippet</title>
+      <link>https://false.org.ru/blog/currency-formatting/</link>
+      <pubDate>Wed, 17 May 2017 09:43:11 +0300</pubDate>
+      
+      <guid>https://false.org.ru/blog/currency-formatting/</guid>
+      <description>  Have a comment on one of my posts? Start a discussion in my public inbox by sending an email to ~histrio/public-inbox@lists.sr.ht [mailing list etiquette]  </description>
+    </item>
+    
+  </channel>
+</rss>

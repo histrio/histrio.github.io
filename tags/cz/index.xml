@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>cz on False Protagonist</title>
+    <link>https://false.org.ru/tags/cz/</link>
+    <description>Recent content in cz on False Protagonist</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>© 2020 by Rinat Sabitov</copyright>
+    <lastBuildDate>Wed, 27 May 2020 12:39:54 +0300</lastBuildDate>
+    
+	<atom:link href="https://false.org.ru/tags/cz/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Czech Words Frequency List</title>
+      <link>https://false.org.ru/blog/cz-frequency-dict/</link>
+      <pubDate>Wed, 27 May 2020 12:39:54 +0300</pubDate>
+      
+      <guid>https://false.org.ru/blog/cz-frequency-dict/</guid>
+      <description>I make a decision to learn Czech language and to procrastinate I&amp;rsquo;ve made up a problem for myself:
+ I need a deck for the Anki with the most frequently accrued words in that language.
+ So my mind considered that problem as a blocker to my further Czech lessons and force me to spend time on it. First of all, I need a data and very convenient way to get a lot of Czech text was a movie subtitle.</description>
+    </item>
+    
+  </channel>
+</rss>

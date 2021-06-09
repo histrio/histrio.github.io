@@ -1,0 +1,25 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
+
+Contact: mailto:me@false.org.ru
+Contact: https://t.me/histrio
+Encryption: https://github.com/histrio.gpg
+Preferred-Languages: en, ru
+Canonical: https://false.org.ru/.well-known/security.txt
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCAAdFiEEipiT1LZLSA5HHb5XGIOQZ9EiKT0FAl7XJXYACgkQGIOQZ9Ei
+KT3SDQ/9FP3GN+1mbPDj/lwSgNB/Zac7xODOHEmJhaysiJ1Zp1lkg3mRz/e549DP
+Z0AsfbdKkSzdLBX8F1v55SPZnoxfadOnbJsIdnBhoYZi3+m9roAVBsFreG7RjIyd
+Y21aDKpNtk+foJG6z1P0V5Ij2b+d1m37pubsr2rlE8s/L6uMSdOoWVV9Tf0Xg/hT
+OwX802mDV9oqEp/TaZn0DblQAQhIMglQp+Q3ZCRGrvkP+22u81kmBcmSrZvU4lqE
+hRBNEMMy13Tfg66Lk+LgetJWgfEbFi1w9pl0u03SbUPd0mr0h74u8/HW9Nsxbkxc
+lhZIBoiOJc795Ga4773yulpgwEjvdxajh6WsXRmr/8PhfokJzfC5SXYXEq/Ip+4N
+NyQ1GnuiERDBBFvzJPg/PQmr9p+X/9Wvl0/NoGpmRD95EEEmB0A8NA6cU9N2Mkqx
+kmRMQ06CEZzhCrrFq3MSs/5UjxjhP2C5VSr2h5KfVsQ2skW1oeVMfPfgJ10Rx1IC
+HvuWeK3vV+SutiI2Qz1S3/x8Hgl+9KNoCbfKsdYWaTIv3/Ps4+9vAw3xNJi2ZZ0G
+yXOCmPZp5tRbD/BJjzAT+FoQp0DVvJNbONjrdjFDTFlBPNNTXAFqDDX1rhMalcpY
+++CzGyJadhMs42hh8VOP7v1Eok3sIxpZb8lakWhfstPZeXEMiSk=
+=+Ht1
+-----END PGP SIGNATURE-----

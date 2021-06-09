@@ -1,0 +1,47 @@
+<html>
+
+<head>
+    <title>Streams from False</title>
+    <link rel="stylesheet" href="https://false.org.ru/css/main.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+
+<body>
+    <main>
+        <script src="stream_hls.js"></script>
+        <h1>Stream from False</h1>
+        <!-- <p><a href="https://discord.gg/xqz2Eb8ddd">For chat click here</a></p> -->
+    </main>
+
+    <center>
+        <video height="600" id="video" controls></video>
+    </center>
+
+    <script>
+        var video = document.getElementById('video');
+        if (screen.width <= 736) {
+            video.src = "/live/hello.m3u8";
+        }
+        if (Hls.isSupported()) {
+            var hls = new Hls();
+            hls.loadSource('/live/hello.m3u8');
+            hls.attachMedia(video);
+            hls.on(Hls.Events.MANIFEST_PARSED, function () {
+                video.play();
+                console.log("hls");
+            });
+        }
+        // hls.js is not supported on platforms that do not have Media Source Extensions (MSE) enabled.
+        // When the browser has built-in HLS support (check using `canPlayType`), we can provide an HLS manifest (i.e. .m3u8 URL) directly to the video element throught the `src` property.
+        // This is using the built-in support of the plain video element, without using hls.js.
+        else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+            console.log("live");
+            video.src = '/live/hello.m3u8';
+            video.addEventListener('canplay', function () {
+                video.play();
+            });
+        }
+    </script>
+</body>
+
+</html>

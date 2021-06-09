@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>windows on False Protagonist</title>
+    <link>https://false.org.ru/tags/windows/</link>
+    <description>Recent content in windows on False Protagonist</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>© 2020 by Rinat Sabitov</copyright>
+    <lastBuildDate>Fri, 11 Aug 2017 23:29:46 +0300</lastBuildDate>
+    
+	<atom:link href="https://false.org.ru/tags/windows/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>List all tcp connections in windows</title>
+      <link>https://false.org.ru/blog/win-all-tcp-connections/</link>
+      <pubDate>Fri, 11 Aug 2017 23:29:46 +0300</pubDate>
+      
+      <guid>https://false.org.ru/blog/win-all-tcp-connections/</guid>
+      <description>  Have a comment on one of my posts? Start a discussion in my public inbox by sending an email to ~histrio/public-inbox@lists.sr.ht [mailing list etiquette]  </description>
+    </item>
+    
+  </channel>
+</rss>

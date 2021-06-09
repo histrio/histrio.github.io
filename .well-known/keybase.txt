@@ -1,0 +1,73 @@
+==================================================================
+https://keybase.io/histrio
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of https://false.org.ru
+  * I am histrio (https://keybase.io/histrio) on keybase.
+  * I have a public key with fingerprint 8A98 93D4 B64B 480E 471D  BE57 1883 9067 D122 293D
+
+To do so, I am signing this object:
+
+{
+  "body": {
+    "key": {
+      "eldest_kid": "01207c2d8358e106f3298377e7c6bda4d8301d296ce7383d153d9d634b38fd6d41d00a",
+      "fingerprint": "8a9893d4b64b480e471dbe5718839067d122293d",
+      "host": "keybase.io",
+      "key_id": "18839067d122293d",
+      "kid": "010165ccbebcbeb853939e3c609122e437d70f357edde60e5c174f087d9b95858e810a",
+      "uid": "f7c47aac8011fc4b75e19ced30f8f919",
+      "username": "histrio"
+    },
+    "service": {
+      "hostname": "false.org.ru",
+      "protocol": "https:"
+    },
+    "type": "web_service_binding",
+    "version": 1
+  },
+  "ctime": 1591183419,
+  "expire_in": 157680000,
+  "prev": "05bc42875ce3b49947cf5bc8c5531354fcce9bae47206ce2e675850010cced84",
+  "seqno": 32,
+  "tag": "signature"
+}
+
+which yields the signature:
+
+-----BEGIN PGP MESSAGE-----
+
+owFtUn9MVVUcf4DED4mwoVhKyk1B4I3ufef+OBc0adUey5UvJgJl773749z37sT3
+Hu89HhBiG2BCNcUC5EdEwDIrcD5cLAnZnDNC8k2cBsPK8ZgmzLSU0LUFncvkv852
+dna+5/P5nM/3c079k2G6yJC11fW2MSJ1W8jojKgzj9dmVxCiUy4nMiuIvWhpQUUy
+8ngte1WZyCRIykBykkGGgIGIIlkFGHgIOA5xEivKAo0PSEo28KyEOACBTDFA5mUW
+0CKAiszKNCWTpEDoCUV12JDb5VYdXiwLBR7yQKZFlhZpSCKao2QRMRwFIeBJlpMp
+g8GAAZhod3o0BjYnCh6UoTpxDW8sS/b+B7/sm6RYRpJEJGoTMoAHPAISS/IYimjA
+yRypAIZDsoxYEjESxdEKCTmZF3kG4mYhteS7ZElO4SSaEwQJkhSlSLTIMYjiJSQD
+UoEKT/Ea0IPcDmEfwmi76vG6sdFKPYGLPlVCWq5aI48BilCEW3G6bRnuEkx1uZ1e
+p+Qs0qher8uTqTG95S4NWopEy2MRi6g6ZBwjZviQ26M6HUQmhZGSV9VUKYanKAho
+itcTqMylupFF1RAMx0ISD+0e5NOyYUSJNkCugJEQEGmepzlJwTUoMQygAEMrkoR4
+UcCvYiDxwxoQy+FISJwpPpAhTWh9FTucRCYwYKOCDYt6VJtD8Ja4EVEZXRcKVuhC
+InWJa5JWfND8ydX+HTmxxsSh/OW/Fx6qfTxddFTccuX5y3G6g9nG6pBTQSJYfKah
+5pufjV2jg7cqL8CTR9TYsKNTKdM2G3fPE9FW9a2xfEvJyn2h/dGBX4bWbhouf6rr
+9Ye3M9ekH4z5Ynf2eD5XG9LTw+TYt/tn6x7urpp33V64Y0298MKf4s43Mjrv15JJ
+Bd/fHBq/cv8meyCQUyjqr6V1jXqntg2PjcafuxiyKWnkdMHO9s75ZG91AAyfb92T
+lxs227rq2dJp/dO/ftjb2hTofebanrKef2MTCkesLPwh6uIlf2PiqUZTIDnP2lb/
+ti/vSGvc5kfpvesa5myTypZXyavD+dMtDVG2xo6UrmN57avupVsOm6zNLU11hYd3
+zUxI541nZ4cT8sbe7baX/VM2c8gq3n2CPiaWBebNxl2rc4vNG3L1lWZm/8mtVjX7
+wEB6G7zsbGr7aX19d5N4nfo7XtIFj5vi60ayfudfjmvoGG+vWjT3dQ+euFFRvWFi
+JMnt/ysy+uPYxD/G7oS3bIT+Bw/WhU+tNKURkynnco5GxsgpW4WNcWcXg4mLbc9F
+fHTrtX5j2gA83ZeUnTV9punNuVw7kRN7vNPU4dv8lSki5pEf1Lw0t10cdexv+bHz
+s6+L00p9PegdYvXgNPWl+VOwsF545f3UGrrvesJ3I40ehxl+fiJrgnux5j3DW8kL
+8pUbd3cUH/rt0nhFpL8ZDAxZ7cFg+WS46T8=
+=reKU
+-----END PGP MESSAGE-----
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/histrio
+
+==================================================================

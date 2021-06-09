@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>snippets on False Protagonist</title>
+    <link>https://false.org.ru/tags/snippets/</link>
+    <description>Recent content in snippets on False Protagonist</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>© 2020 by Rinat Sabitov</copyright>
+    <lastBuildDate>Sun, 13 Aug 2017 23:12:44 +0300</lastBuildDate>
+    
+	<atom:link href="https://false.org.ru/tags/snippets/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Close all but the last windows in gvim</title>
+      <link>https://false.org.ru/blog/close-all-but-the-last-vim/</link>
+      <pubDate>Sun, 13 Aug 2017 23:12:44 +0300</pubDate>
+      
+      <guid>https://false.org.ru/blog/close-all-but-the-last-vim/</guid>
+      <description>Sometimes I want to close all windows and start from the scratch. Shortcut :qa do this but too much literally: it closes vim too. So to avoid this I wrote this snippet.
+ You need just to add it to your vimrc file.
+ Have a comment on one of my posts? Start a discussion in my public inbox by sending an email to ~histrio/public-inbox@lists.sr.ht [mailing list etiquette]  </description>
+    </item>
+    
+    <item>
+      <title>List all tcp connections in windows</title>
+      <link>https://false.org.ru/blog/win-all-tcp-connections/</link>
+      <pubDate>Fri, 11 Aug 2017 23:29:46 +0300</pubDate>
+      
+      <guid>https://false.org.ru/blog/win-all-tcp-connections/</guid>
+      <description>  Have a comment on one of my posts? Start a discussion in my public inbox by sending an email to ~histrio/public-inbox@lists.sr.ht [mailing list etiquette]  </description>
+    </item>
+    
+    <item>
+      <title>Currency formatting snippet</title>
+      <link>https://false.org.ru/blog/currency-formatting/</link>
+      <pubDate>Wed, 17 May 2017 09:43:11 +0300</pubDate>
+      
+      <guid>https://false.org.ru/blog/currency-formatting/</guid>
+      <description>  Have a comment on one of my posts? Start a discussion in my public inbox by sending an email to ~histrio/public-inbox@lists.sr.ht [mailing list etiquette]  </description>
+    </item>
+    
+    <item>
+      <title>Save as root in vim</title>
+      <link>https://false.org.ru/blog/save-as-root-in-vim/</link>
+      <pubDate>Sat, 08 Apr 2017 20:02:43 +0300</pubDate>
+      
+      <guid>https://false.org.ru/blog/save-as-root-in-vim/</guid>
+      <description>TLDR
+:w !sudo tee % It is a very common situation when for some remote session you are running vim with your default user to make some quick changes for some of your config files. After spending some time on it you are trying to save the result and getting this:
+ E45: &#39;readonly&#39; option is set (add ! to override)
+ or
+ &amp;quot;/etc/zsh/zshenv&amp;quot; E212: Can&#39;t open file for writing</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>couchdb on False Protagonist</title>
+    <link>https://false.org.ru/tags/couchdb/</link>
+    <description>Recent content in couchdb on False Protagonist</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>© 2020 by Rinat Sabitov</copyright>
+    <lastBuildDate>Fri, 19 Jun 2020 11:57:15 +0300</lastBuildDate>
+    
+	<atom:link href="https://false.org.ru/tags/couchdb/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Store Files in a CouchDB</title>
+      <link>https://false.org.ru/blog/store-files-in-a-couchdb/</link>
+      <pubDate>Fri, 19 Jun 2020 11:57:15 +0300</pubDate>
+      
+      <guid>https://false.org.ru/blog/store-files-in-a-couchdb/</guid>
+      <description>There is a very convinent way to store a files indise CouchDB and by able to get them directly from it. In a simple way, an attachment is a new field in a document.
+Lets say we have a document with id e5f46d968b31e400b5db6426d000024b.
+$ curl -X GET http://admin:password@127.0.0.1:5984/sandbox/e5f46d968b31e400b5db6426d000024b {&amp;#34;_id&amp;#34;:&amp;#34;e5f46d968b31e400b5db6426d000024b&amp;#34;,&amp;#34;_rev&amp;#34;:&amp;#34;1-967a00dff5e02add41819138abb3284d&amp;#34;} and we want to attach some index.html to that document.
+We have a two way to attach a file:
+Attach via Fauxton There is a Upload attachment button on a documents page</description>
+    </item>
+    
+  </channel>
+</rss>

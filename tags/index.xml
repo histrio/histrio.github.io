@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags on False Protagonist</title>
+    <link>https://false.org.ru/tags/</link>
+    <description>Recent content in Tags on False Protagonist</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>© 2020 by Rinat Sabitov</copyright>
+    <lastBuildDate>Fri, 19 Jun 2020 11:57:15 +0300</lastBuildDate>
+    
+	<atom:link href="https://false.org.ru/tags/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>couchdb</title>
+      <link>https://false.org.ru/tags/couchdb/</link>
+      <pubDate>Fri, 19 Jun 2020 11:57:15 +0300</pubDate>
+      
+      <guid>https://false.org.ru/tags/couchdb/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>cz</title>
+      <link>https://false.org.ru/tags/cz/</link>
+      <pubDate>Wed, 27 May 2020 12:39:54 +0300</pubDate>
+      
+      <guid>https://false.org.ru/tags/cz/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>rust</title>
+      <link>https://false.org.ru/tags/rust/</link>
+      <pubDate>Wed, 27 May 2020 12:39:54 +0300</pubDate>
+      
+      <guid>https://false.org.ru/tags/rust/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>linux</title>
+      <link>https://false.org.ru/tags/linux/</link>
+      <pubDate>Sat, 16 May 2020 21:47:56 +0300</pubDate>
+      
+      <guid>https://false.org.ru/tags/linux/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>proc</title>
+      <link>https://false.org.ru/tags/proc/</link>
+      <pubDate>Sat, 16 May 2020 21:47:56 +0300</pubDate>
+      
+      <guid>https://false.org.ru/tags/proc/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>python</title>
+      <link>https://false.org.ru/tags/python/</link>
+      <pubDate>Sat, 16 May 2020 21:47:56 +0300</pubDate>
+      
+      <guid>https://false.org.ru/tags/python/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>100DaysToOffload</title>
+      <link>https://false.org.ru/tags/100daystooffload/</link>
+      <pubDate>Thu, 14 May 2020 15:14:13 +0300</pubDate>
+      
+      <guid>https://false.org.ru/tags/100daystooffload/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>meta</title>
+      <link>https://false.org.ru/tags/meta/</link>
+      <pubDate>Thu, 14 May 2020 15:14:13 +0300</pubDate>
+      
+      <guid>https://false.org.ru/tags/meta/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>snippets</title>
+      <link>https://false.org.ru/tags/snippets/</link>
+      <pubDate>Sun, 13 Aug 2017 23:12:44 +0300</pubDate>
+      
+      <guid>https://false.org.ru/tags/snippets/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>vim</title>
+      <link>https://false.org.ru/tags/vim/</link>
+      <pubDate>Sun, 13 Aug 2017 23:12:44 +0300</pubDate>
+      
+      <guid>https://false.org.ru/tags/vim/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>windows</title>
+      <link>https://false.org.ru/tags/windows/</link>
+      <pubDate>Fri, 11 Aug 2017 23:29:46 +0300</pubDate>
+      
+      <guid>https://false.org.ru/tags/windows/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

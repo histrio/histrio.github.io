@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Categories on False Protagonist</title>
+    <link>https://false.org.ru/categories/</link>
+    <description>Recent content in Categories on False Protagonist</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>© 2020 by Rinat Sabitov</copyright>
+    <lastBuildDate>Wed, 17 May 2017 09:43:11 +0300</lastBuildDate>
+    
+	<atom:link href="https://false.org.ru/categories/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Development</title>
+      <link>https://false.org.ru/categories/development/</link>
+      <pubDate>Wed, 17 May 2017 09:43:11 +0300</pubDate>
+      
+      <guid>https://false.org.ru/categories/development/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

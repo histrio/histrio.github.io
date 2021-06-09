@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Blogs on False Protagonist</title>
+    <link>https://false.org.ru/blog/</link>
+    <description>Recent content in Blogs on False Protagonist</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>© 2020 by Rinat Sabitov</copyright>
+    <lastBuildDate>Sun, 06 Dec 2020 09:34:47 +0300</lastBuildDate>
+    
+	<atom:link href="https://false.org.ru/blog/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Deprecated Centos 6</title>
+      <link>https://false.org.ru/blog/deprecated-centos-6/</link>
+      <pubDate>Sun, 06 Dec 2020 09:34:47 +0300</pubDate>
+      
+      <guid>https://false.org.ru/blog/deprecated-centos-6/</guid>
+      <description>Base Centos 6 isn&amp;rsquo;t able to get its full updates since May 10th, 2017 and there are no even Maintainance updates since November 30th, 2020. For most of us that version of Centos, released July 20th, 2011 is objectively outdated but still, a huge amount of servers are using it and there are no plans or opportunities to migrate it further.
+Now, Centos 6 repository looks like a singular file with a message:</description>
+    </item>
+    
+    <item>
+      <title>Store Files in a CouchDB</title>
+      <link>https://false.org.ru/blog/store-files-in-a-couchdb/</link>
+      <pubDate>Fri, 19 Jun 2020 11:57:15 +0300</pubDate>
+      
+      <guid>https://false.org.ru/blog/store-files-in-a-couchdb/</guid>
+      <description>There is a very convinent way to store a files indise CouchDB and by able to get them directly from it. In a simple way, an attachment is a new field in a document.
+Lets say we have a document with id e5f46d968b31e400b5db6426d000024b.
+$ curl -X GET http://admin:password@127.0.0.1:5984/sandbox/e5f46d968b31e400b5db6426d000024b {&amp;#34;_id&amp;#34;:&amp;#34;e5f46d968b31e400b5db6426d000024b&amp;#34;,&amp;#34;_rev&amp;#34;:&amp;#34;1-967a00dff5e02add41819138abb3284d&amp;#34;} and we want to attach some index.html to that document.
+We have a two way to attach a file:
+Attach via Fauxton There is a Upload attachment button on a documents page</description>
+    </item>
+    
+    <item>
+      <title>Czech Words Frequency List</title>
+      <link>https://false.org.ru/blog/cz-frequency-dict/</link>
+      <pubDate>Wed, 27 May 2020 12:39:54 +0300</pubDate>
+      
+      <guid>https://false.org.ru/blog/cz-frequency-dict/</guid>
+      <description>I make a decision to learn Czech language and to procrastinate I&amp;rsquo;ve made up a problem for myself:
+ I need a deck for the Anki with the most frequently accrued words in that language.
+ So my mind considered that problem as a blocker to my further Czech lessons and force me to spend time on it. First of all, I need a data and very convenient way to get a lot of Czech text was a movie subtitle.</description>
+    </item>
+    
+    <item>
+      <title>How to Get Basic Information About a Process in Linux</title>
+      <link>https://false.org.ru/blog/how-to-get-proc-information/</link>
+      <pubDate>Sat, 16 May 2020 21:47:56 +0300</pubDate>
+      
+      <guid>https://false.org.ru/blog/how-to-get-proc-information/</guid>
+      <description>There is a way to get information about any process (with according permissions) using filesystem operations only. You need no additional tools besides you already have on your system. In most cases cat will be ehough.
+Actually for this post we will familrise with such files that can be displayed with cat and we will begin with the real simle ones
+/proc/&amp;lt;pid&amp;gt;/cmdline
+It will produce an output with full command line with the process was runned.</description>
+    </item>
+    
+    <item>
+      <title>Start of the 100 Days to Offload</title>
+      <link>https://false.org.ru/blog/start-the-100-days-to-offload/</link>
+      <pubDate>Thu, 14 May 2020 15:14:13 +0300</pubDate>
+      
+      <guid>https://false.org.ru/blog/start-the-100-days-to-offload/</guid>
+      <description>So, this will be my attempt to start and proceed with #100DaysToOffload. I&amp;rsquo;m not sure that I will have enough ideas or material to make really useful content and it could happen that there will appear posts like that: just random thoughts with no much sense.
+My initial plan is to publish one post in 3 days and I think it is enough to come up with some idea and write not completely garbage text.</description>
+    </item>
+    
+    <item>
+      <title>Close all but the last windows in gvim</title>
+      <link>https://false.org.ru/blog/close-all-but-the-last-vim/</link>
+      <pubDate>Sun, 13 Aug 2017 23:12:44 +0300</pubDate>
+      
+      <guid>https://false.org.ru/blog/close-all-but-the-last-vim/</guid>
+      <description>Sometimes I want to close all windows and start from the scratch. Shortcut :qa do this but too much literally: it closes vim too. So to avoid this I wrote this snippet.
+ You need just to add it to your vimrc file.
+ Have a comment on one of my posts? Start a discussion in my public inbox by sending an email to ~histrio/public-inbox@lists.sr.ht [mailing list etiquette]  </description>
+    </item>
+    
+    <item>
+      <title>List all tcp connections in windows</title>
+      <link>https://false.org.ru/blog/win-all-tcp-connections/</link>
+      <pubDate>Fri, 11 Aug 2017 23:29:46 +0300</pubDate>
+      
+      <guid>https://false.org.ru/blog/win-all-tcp-connections/</guid>
+      <description>  Have a comment on one of my posts? Start a discussion in my public inbox by sending an email to ~histrio/public-inbox@lists.sr.ht [mailing list etiquette]  </description>
+    </item>
+    
+    <item>
+      <title>Currency formatting snippet</title>
+      <link>https://false.org.ru/blog/currency-formatting/</link>
+      <pubDate>Wed, 17 May 2017 09:43:11 +0300</pubDate>
+      
+      <guid>https://false.org.ru/blog/currency-formatting/</guid>
+      <description>  Have a comment on one of my posts? Start a discussion in my public inbox by sending an email to ~histrio/public-inbox@lists.sr.ht [mailing list etiquette]  </description>
+    </item>
+    
+    <item>
+      <title>Save as root in vim</title>
+      <link>https://false.org.ru/blog/save-as-root-in-vim/</link>
+      <pubDate>Sat, 08 Apr 2017 20:02:43 +0300</pubDate>
+      
+      <guid>https://false.org.ru/blog/save-as-root-in-vim/</guid>
+      <description>TLDR
+:w !sudo tee % It is a very common situation when for some remote session you are running vim with your default user to make some quick changes for some of your config files. After spending some time on it you are trying to save the result and getting this:
+ E45: &#39;readonly&#39; option is set (add ! to override)
+ or
+ &amp;quot;/etc/zsh/zshenv&amp;quot; E212: Can&#39;t open file for writing</description>
+    </item>
+    
+  </channel>
+</rss>
