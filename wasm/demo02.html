@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script type="module">
+        async function init() {
+            const { instance } = await WebAssembly.instantiateStreaming(
+                fetch("./demo02.wasm")
+            );
+
+            const width = 600;
+            const height = 600;
+
+            const canvas = document.getElementById("demo-canvas");
+            canvas.width = width;
+            canvas.height = height;
+
+            const buffer_address = instance.exports.addr();
+            const image = new ImageData(
+                new Uint8ClampedArray(
+                    instance.exports.memory.buffer,
+                    buffer_address,
+                    4 * width * height,
+                ),
+                width,
+            );
+
+            const ctx = canvas.getContext("2d");
+
+            // CHANGES BEGIN HERE
+            const render = () => {
+                instance.exports.go();
+                ctx.putImageData(image, 0, 0);
+                requestAnimationFrame(render);
+            };
+
+            render();
+        }
+
+        init();
+    </script>
+</head>
+
+<body>
+    <canvas id="demo-canvas"></canvas>
+</body>
+
+</html>
