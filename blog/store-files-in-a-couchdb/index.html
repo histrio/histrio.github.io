@@ -1,247 +1,112 @@
-<!DOCTYPE html>
-<html lang="en-us"><head>
-  <meta charset="utf-8" />
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1, shrink-to-fit=no"
-  />
-  <title>Store Files in a CouchDB - False Protagonist</title>
-
-  <meta name="HandheldFriendly" content="True" />
-  <meta name="MobileOptimized" content="320" />
-  <meta name="referrer" content="no-referrer" />
-  <meta
-    name="description"
-    content="I’m a software developer. Proud father of two boys. Infrequent blogger."
-  />
-
-  <meta property="og:site_name" content="False Protagonist" />
-  <meta property="og:locale" content="nn_NO" />
-  <meta property="og:type" content="article" />
-  <meta property="og:url" content="https://false.org.ru/blog/store-files-in-a-couchdb/" />
-  <meta
-    property="og:title"
-    content="
+<!doctype html><html lang=en-us><head>
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no">
+<title>Store Files in a CouchDB - False Protagonist</title>
+<meta name=HandheldFriendly content="True">
+<meta name=MobileOptimized content="320">
+<meta name=referrer content="no-referrer">
+<meta name=description content="I’m a software developer. Proud father of two boys. Infrequent blogger.">
+<meta property="og:site_name" content="False Protagonist">
+<meta property="og:locale" content="nn_NO">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://false.org.ru/blog/store-files-in-a-couchdb/">
+<meta property="og:title" content="
       Store Files in a CouchDB
-    "
-  />
-  <meta
-    property="og:image"
-    content="https://false.org.ru/"
-  />
-  <meta
-    property="og:description"
-    content="I’m a software developer. Proud father of two boys. Infrequent blogger."
-  />
-
-  
-
-
-  <meta property="twitter:title" content="Store Files in a CouchDB" />
-  <meta
-    property="twitter:image"
-    content="https://false.org.ru/"
-  />
-  <meta property="twitter:card" content="summary" />
-  <meta
-    property="twitter:description"
-    content="I’m a software developer. Proud father of two boys. Infrequent blogger."
-  />
-
-  
-
-
-  <link rel="canonical" href="https://false.org.ru/blog/store-files-in-a-couchdb/" />
-
-  
-    <link rel="shortcut icon" href="https://false.org.ru/img/favicon.ico" />
-  
-
-
-  <link
-    href=""
-    rel="alternate"
-    type="application/rss+xml"
-    title="False Protagonist"
-  /><link
-  href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
-  rel="stylesheet"
-  integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
-  crossorigin="anonymous"
-/>
-<link
-  rel="stylesheet"
-  href="//fonts.googleapis.com/css?family=Fira+Code|Merriweather+Sans:400,700|Merriweather:400,700&display=swap"
-/>
-<link rel="stylesheet" href="https://false.org.ru/css/main.css" />
-
-<style>
-  :root {
-    --font-code: "Fira Code", monospace;
-    --font-content: "Merriweather", serif;
-    --font-title: "Merriweather Sans", sans-serif;
-  }
-</style>
-<link
-  rel="stylesheet"
-  href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/styles/github.min.css"
-/>
-<link
-  rel="stylesheet"
-  href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/styles/tomorrow-night-bright.min.css"
-/>
-
-<style>
-  screen and (prefers-color-scheme: dark);
-</style>
-
-
-
+    ">
+<meta property="og:image" content="https://false.org.ru/">
+<meta property="og:description" content="I’m a software developer. Proud father of two boys. Infrequent blogger.">
+<meta property="twitter:title" content="Store Files in a CouchDB">
+<meta property="twitter:image" content="https://false.org.ru/">
+<meta property="twitter:card" content="summary">
+<meta property="twitter:description" content="I’m a software developer. Proud father of two boys. Infrequent blogger.">
+<link rel=canonical href=https://gem.org.ru/store-files-in-a-couchdb>
+<link rel="shortcut icon" href=https://false.org.ru/img/favicon.ico>
+<link href rel=alternate type=application/rss+xml title="False Protagonist"><link href=https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css rel=stylesheet integrity=sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3 crossorigin=anonymous>
+<link rel=stylesheet href="//fonts.googleapis.com/css?family=Fira+Code|Merriweather+Sans:400,700|Merriweather:400,700&display=swap">
+<link rel=stylesheet href=https://false.org.ru/css/main.css>
+<style>:root{--font-code:"Fira Code", monospace;--font-content:"Merriweather", serif;--font-title:"Merriweather Sans", sans-serif}</style>
+<link rel=stylesheet href=https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/styles/github.min.css>
+<link rel=stylesheet href=https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/styles/tomorrow-night-bright.min.css>
+<style>screen and (prefers-color-scheme: dark)</style>
 </head>
 <body>
-
-
 <div class="my-4 my-md-5 header">
-  <div class="container">
-    <div class="row">
-      <div
-        class="col-auto
-          offset-lg-1
-         d-none d-md-block"
-      >
-        
-      </div>
-      <div class="col-auto align-self-center mr-auto">
-        <a class="text-decoration-none" href="https://false.org.ru/">
-          <h1 class="font-weight-bold name">False Protagonist</h1>
-        </a>
-
-        <ul class="nav nav-primary">
-          
-            <li class="nav-item">
-              <a
-                class="text-uppercase nav-link
-                  text-code
-                "
-                href="//github.com/histrio"
-              >
-                
-                Code
-              </a>
-            </li>
-          
-            <li class="nav-item">
-              <a
-                class="text-uppercase nav-link
-                  text-posts
-                "
-                href="https://false.org.ru/blog"
-              >
-                
-                Posts
-              </a>
-            </li>
-          
-            <li class="nav-item">
-              <a
-                class="text-uppercase nav-link
-                  text-cv
-                "
-                href="https://false.org.ru/cv"
-              >
-                
-                CV
-              </a>
-            </li>
-          
-            <li class="nav-item">
-              <a
-                class="text-uppercase nav-link
-                  text-bmc
-                "
-                href="https://www.buymeacoffee.com/histrio"
-              >
-                
-                Buy me a coffee
-              </a>
-            </li>
-          
-          
-        </ul>
-
-        <ul class="nav nav-secondary">
-          
-        </ul>
-      </div>
-    </div>
-  </div>
+<div class=container>
+<div class=row>
+<div class="col-auto offset-lg-1 d-none d-md-block">
 </div>
-<div id="content">
-  
-
-  
-
-
-  <div class="content">
-    <div class="container">
-      <div class="row justify-content-center">
-        <div
-          
-            class="col-md-12 col-lg-10"
-          
-        >
-          <h1 class="mx-0 mx-md-4">
-            Store Files in a CouchDB
-          </h1>
-
-          <div class="mb-4 mb-md-5 meta">
-            <span
-              class="date"
-              title="Fri Jun 19 2020 08:34:34 UTC"
-            >
-              June 19, 2020
-            </span>
-
-            
-              
-            
-
-
-            <span class="reading-time middot">
-              1 minute
-            </span>
-
-            <div class="d-none d-md-inline tags">
-              <ul class="list-unstyled d-inline">
-                
-              </ul>
-            </div>
-
-            <div class="d-none d-md-inline tags">
-              <ul class="list-unstyled d-inline">
-                
-                
-              </ul>
-            </div>
-          </div>
-
-          <div class="markdown">
-            
-  <p>There is a very convenient way to store files inside CouchDB and be able to get them directly from it.</p>
+<div class="col-auto align-self-center mr-auto">
+<a class=text-decoration-none href=https://false.org.ru/>
+<h1 class="font-weight-bold name">False Protagonist</h1>
+</a>
+<ul class="nav nav-primary">
+<li class=nav-item>
+<a class="text-uppercase nav-link text-code" href=//github.com/histrio>
+Code
+</a>
+</li>
+<li class=nav-item>
+<a class="text-uppercase nav-link text-posts" href=https://false.org.ru/blog>
+Posts
+</a>
+</li>
+<li class=nav-item>
+<a class="text-uppercase nav-link text-cv" href=https://false.org.ru/cv>
+CV
+</a>
+</li>
+<li class=nav-item>
+<a class="text-uppercase nav-link text-bmc" href=https://www.buymeacoffee.com/histrio>
+Buy me a coffee
+</a>
+</li>
+</ul>
+<ul class="nav nav-secondary">
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div id=content>
+<div class=content>
+<div class=container>
+<div class="row justify-content-center">
+<div class="col-md-12 col-lg-10">
+<h1 class="mx-0 mx-md-4">
+Store Files in a CouchDB
+</h1>
+<div class="mb-4 mb-md-5 meta">
+<span class=date title="Fri Jun 19 2020 08:34:34 UTC">
+June 19, 2020
+</span>
+<span class="reading-time middot">
+1 minute
+</span>
+<div class="d-none d-md-inline tags">
+<ul class="list-unstyled d-inline">
+</ul>
+</div>
+<div class="d-none d-md-inline tags">
+<ul class="list-unstyled d-inline">
+</ul>
+</div>
+</div>
+<div class=markdown>
+<p>There is a very convenient way to store files inside CouchDB and be able to get them directly from it.</p>
 <p>In a simple way, an attachment is a new field in a document. Lets say we have a document with id <code>e5f46d968b31e400b5db6426d000024b</code>.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ curl -X GET http://admin:password@127.0.0.1:5984/sandbox/e5f46d968b31e400b5db6426d000024b
-<span style="color:#f92672">{</span><span style="color:#e6db74">&#34;_id&#34;</span>:<span style="color:#e6db74">&#34;e5f46d968b31e400b5db6426d000024b&#34;</span>,<span style="color:#e6db74">&#34;_rev&#34;</span>:<span style="color:#e6db74">&#34;1-967a00dff5e02add41819138abb3284d&#34;</span><span style="color:#f92672">}</span>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>$ curl -X GET http://admin:password@127.0.0.1:5984/sandbox/e5f46d968b31e400b5db6426d000024b
+<span style=color:#f92672>{</span><span style=color:#e6db74>&#34;_id&#34;</span>:<span style=color:#e6db74>&#34;e5f46d968b31e400b5db6426d000024b&#34;</span>,<span style=color:#e6db74>&#34;_rev&#34;</span>:<span style=color:#e6db74>&#34;1-967a00dff5e02add41819138abb3284d&#34;</span><span style=color:#f92672>}</span>
 </code></pre></div><p>and we want to attach some <code>index.html</code> to that document.</p>
 <p>We have two ways to attach a file:</p>
-<h3 id="attach-via-fauxton">Attach via Fauxton</h3>
+<h3 id=attach-via-fauxton>Attach via Fauxton</h3>
 <p>There is an <em>Upload attachment</em> button on a documents page</p>
 <p>http://127.0.0.1:5984/_utils/#database/sandbox/e5f46d968b31e400b5db6426d000024b</p>
-<p><img src="//false.org.ru/img/fauxton-attachement-1.png" alt="fauxton-attachement-1 image"></p>
-<h3 id="attach-via-curl">Attach via curl</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">curl -vX PUT http://127.0.0.1:5984/sandbox/e5f46d968b31e400b5db6426d000024b/index.html?rev<span style="color:#f92672">=</span>1-967a00dff5e02add41819138abb3284d --data-binary @index.html -H <span style="color:#e6db74">&#34;ContentType: text/html&#34;</span>
-</code></pre></div><h3 id="attachment-structure">Attachment structure</h3>
+<p><img src=//false.org.ru/img/fauxton-attachement-1.png alt="fauxton-attachement-1 image"></p>
+<h3 id=attach-via-curl>Attach via curl</h3>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>curl -vX PUT http://127.0.0.1:5984/sandbox/e5f46d968b31e400b5db6426d000024b/index.html?rev<span style=color:#f92672>=</span>1-967a00dff5e02add41819138abb3284d --data-binary @index.html -H <span style=color:#e6db74>&#34;ContentType: text/html&#34;</span>
+</code></pre></div><h3 id=attachment-structure>Attachment structure</h3>
 <p>As a result, we will have an additional field <code>_attachments</code> which will contain all files that we attached. In our case, it&rsquo;s <code>index.html</code> only.</p>
-<pre><code>{
+<pre tabindex=0><code>{
   &quot;_id&quot;: &quot;e5f46d968b31e400b5db6426d000024b&quot;,
   &quot;_rev&quot;: &quot;2-83c73b6b3427d2bb5a8fc5492c6320f8&quot;,
   &quot;_attachments&quot;: {
@@ -255,99 +120,41 @@
   }
 }
 </code></pre><p>It&rsquo;s super easy to get and it&rsquo;s accessible as a simple page</p>
-<pre><code>curl -X GET http://admin:password@127.0.0.1:5984/sandbox/e5f46d968b31e400b5db6426d000024b/index.html
+<pre tabindex=0><code>curl -X GET http://admin:password@127.0.0.1:5984/sandbox/e5f46d968b31e400b5db6426d000024b/index.html
 &lt;html&gt;&lt;/html&gt;
-</code></pre><hr/>
-    <div class="container">
-        Have a comment on one of my posts? Start a discussion in my <a href=https://lists.sr.ht/~histrio/public-inbox>public inbox</a> by sending an email to <a href='mailto:~histrio/public-inbox@lists.sr.ht?Subject="Store%20Files%20in%20a%20CouchDB"'>~histrio/public-inbox@lists.sr.ht</a> [<a href=https://man.sr.ht/lists.sr.ht/etiquette.md>mailing list etiquette<a>] 
-    </div>
-
-
-          </div>
-        </div>
-
-        
-      </div>
-
-      <div
-        class="row justify-content-center"
-      >
-        <div
-          
-            class="col-md-12 col-lg-10"
-          
-        >
-          
-
-          
-        </div>
-      </div>
-    </div>
-  </div>
-
-    </div><div class="my-4 footer">
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-sm-12 col-md-6 col-lg-5">
-        <div class="mx-0 mx-md-4 mb-2 text-center text-md-start">
-          
-
-          
-            
-              <a href="https://false.org.ru">
-                © 2022 by Rinat Sabitov
-              </a>
-            
-          
-        </div>
-      </div>
-      <div class="col-sm-12 col-md-6 col-lg-5">
-        <div class="mx-0 mx-md-4 text-center text-md-end">
-          
-
-          
-
-          
-
-          
-
-          
-
-          
-
-          
-
-          
-
-          
-
-          <a
-  href=""
-  class="mx-1 ml-md-2 mr-md-0 icon"
-  aria-label="RSS"
->
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 16 16"
-    fill-rule="evenodd"
-    clip-rule="evenodd"
-    stroke-linejoin="round"
-    stroke-miterlimit="1.414"
-  >
-    <path
-      d="M12.8 16C12.8 8.978 7.022 3.2 0 3.2V0c8.777 0 16 7.223 16 16h-3.2zM2.194 11.61c1.21 0 2.195.985 2.195 2.196 0 1.21-.99 2.194-2.2 2.194C.98 16 0 15.017 0 13.806c0-1.21.983-2.195 2.194-2.195zM10.606 16h-3.11c0-4.113-3.383-7.497-7.496-7.497v-3.11c5.818 0 10.606 4.79 10.606 10.607z"
-    />
-  </svg>
-</a>
-
-
-          
-        </div>
-      </div>
-    </div>
-  </div>
+</code></pre><p><a href=https://gem.org.ru/store-files-in-a-couchdb>orig</a></p>
+<hr>
+<div class=container>
+Have a comment on one of my posts? Start a discussion in my <a href=https://lists.sr.ht/~histrio/public-inbox>public inbox</a> by sending an email to <a href='mailto:~histrio/public-inbox@lists.sr.ht?Subject="Store%20Files%20in%20a%20CouchDB"'>~histrio/public-inbox@lists.sr.ht</a> [<a href=https://man.sr.ht/lists.sr.ht/etiquette.md>mailing list etiquette<a>]
 </div>
-<script data-goatcounter="https://false.goatcounter.com/count"
-        async src="//gc.zgo.at/count.js"></script>
+</div>
+</div>
+</div>
+<div class="row justify-content-center">
+<div class="col-md-12 col-lg-10">
+</div>
+</div>
+</div>
+</div>
+</div><div class="my-4 footer">
+<div class=container>
+<div class="row justify-content-center">
+<div class="col-sm-12 col-md-6 col-lg-5">
+<div class="mx-0 mx-md-4 mb-2 text-center text-md-start">
+<a href=https://false.org.ru>
+© 2022 by Rinat Sabitov
+</a>
+</div>
+</div>
+<div class="col-sm-12 col-md-6 col-lg-5">
+<div class="mx-0 mx-md-4 text-center text-md-end">
+<a href class="mx-1 ml-md-2 mr-md-0 icon" aria-label=RSS><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill-rule="evenodd" clip-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="1.414"><path d="M12.8 16C12.8 8.978 7.022 3.2.0 3.2V0c8.777.0 16 7.223 16 16h-3.2zM2.194 11.61c1.21.0 2.195.985 2.195 2.196.0 1.21-.99 2.194-2.2 2.194C.98 16 0 15.017.0 13.806c0-1.21.983-2.195 2.194-2.195zM10.606 16h-3.11c0-4.113-3.383-7.497-7.496-7.497v-3.11c5.818.0 10.606 4.79 10.606 10.607z"/></svg>
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script data-goatcounter=https://false.goatcounter.com/count async src=//gc.zgo.at/count.js></script>
 </body>
 </html>

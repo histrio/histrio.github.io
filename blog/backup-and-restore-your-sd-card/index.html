@@ -1,7 +1,7 @@
 <!doctype html><html lang=en-us><head>
 <meta charset=utf-8>
 <meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no">
-<title>Тестовый пост на другом языке - False Protagonist</title>
+<title>Backup and restore your SD card - False Protagonist</title>
 <meta name=HandheldFriendly content="True">
 <meta name=MobileOptimized content="320">
 <meta name=referrer content="no-referrer">
@@ -9,17 +9,17 @@
 <meta property="og:site_name" content="False Protagonist">
 <meta property="og:locale" content="nn_NO">
 <meta property="og:type" content="article">
-<meta property="og:url" content="https://false.org.ru/blog/testovyi-post-na-drugom-iazyke/">
+<meta property="og:url" content="https://false.org.ru/blog/backup-and-restore-your-sd-card/">
 <meta property="og:title" content="
-      Тестовый пост на другом языке
+      Backup and restore your SD card
     ">
 <meta property="og:image" content="https://false.org.ru/">
 <meta property="og:description" content="I’m a software developer. Proud father of two boys. Infrequent blogger.">
-<meta property="twitter:title" content="Тестовый пост на другом языке">
+<meta property="twitter:title" content="Backup and restore your SD card">
 <meta property="twitter:image" content="https://false.org.ru/">
 <meta property="twitter:card" content="summary">
 <meta property="twitter:description" content="I’m a software developer. Proud father of two boys. Infrequent blogger.">
-<link rel=canonical href=https://gem.org.ru/testovyi-post-na-drugom-iazyke>
+<link rel=canonical href=https://gem.org.ru/backup-and-restore-your-sd-card>
 <link rel="shortcut icon" href=https://false.org.ru/img/favicon.ico>
 <link href rel=alternate type=application/rss+xml title="False Protagonist"><link href=https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css rel=stylesheet integrity=sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3 crossorigin=anonymous>
 <link rel=stylesheet href="//fonts.googleapis.com/css?family=Fira+Code|Merriweather+Sans:400,700|Merriweather:400,700&display=swap">
@@ -73,14 +73,14 @@ Buy me a coffee
 <div class="row justify-content-center">
 <div class="col-md-12 col-lg-10">
 <h1 class="mx-0 mx-md-4">
-Тестовый пост на другом языке
+Backup and restore your SD card
 </h1>
 <div class="mb-4 mb-md-5 meta">
-<span class=date title="Tue Nov 30 2021 09:03:56 UTC">
-November 30, 2021
+<span class=date title="Fri Sep 9 2022 13:29:36 UTC">
+September 09, 2022
 </span>
 <span class="reading-time middot">
-1 minute
+2 minutes
 </span>
 <div class="d-none d-md-inline tags">
 <ul class="list-unstyled d-inline">
@@ -92,11 +92,30 @@ November 30, 2021
 </div>
 </div>
 <div class=markdown>
-<p>Пробую возможность писать на двух языках</p>
-<p><a href=https://gem.org.ru/testovyi-post-na-drugom-iazyke>orig</a></p>
+<h2 id=backup>Backup</h2>
+<p>To get rid of empty space, we will process it via <code>gzip</code></p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>$ sudo dd <span style=color:#66d9ef>if</span><span style=color:#f92672>=</span>/dev/mmcblk0 conv<span style=color:#f92672>=</span>sync,noerror bs<span style=color:#f92672>=</span>64K | gzip -c &gt; backup.img.gz
+</code></pre></div><h2 id=restore>Restore</h2>
+<pre tabindex=0><code>$ gunzip backup.img.gz
+$ sudo dd if=backup.img of=/dev/mmcblk0 bs=4M &amp;&amp; sync
+</code></pre><h2 id=mount-image>Mount image</h2>
+<p>If you need just to explore the content of your backup or get only one file from it, you can mount it to a folder. First of all, you need to get an offset where your filesystem actually begins</p>
+<pre tabindex=0><code>$ fdisk -l backup.img                                                                        ~
+Disk backup.img: 14.42 GiB, 15485370368 bytes, 30244864 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disklabel type: dos
+Disk identifier: 0x93c181e7
+
+Device                          Boot Start      End  Sectors  Size Id Type
+backup.img1       8192 30244863 30236672 14.4G 83 Linux
+</code></pre><p>As you can see in the example above we have one partition that starts on <code>8192</code> sector and each sector is <code>512</code> bytes. Now, all we have to do is multiply <code>8192 * 512 = 4194304</code> and use it as an offset when mounting as a loop device</p>
+<pre tabindex=0><code>$ sudo mount -o offset=4194304 backup.img /mnt/backup
+</code></pre><p><a href=https://gem.org.ru/backup-and-restore-your-sd-card>orig</a></p>
 <hr>
 <div class=container>
-Have a comment on one of my posts? Start a discussion in my <a href=https://lists.sr.ht/~histrio/public-inbox>public inbox</a> by sending an email to <a href='mailto:~histrio/public-inbox@lists.sr.ht?Subject="%d0%a2%d0%b5%d1%81%d1%82%d0%be%d0%b2%d1%8b%d0%b9%20%d0%bf%d0%be%d1%81%d1%82%20%d0%bd%d0%b0%20%d0%b4%d1%80%d1%83%d0%b3%d0%be%d0%bc%20%d1%8f%d0%b7%d1%8b%d0%ba%d0%b5"'>~histrio/public-inbox@lists.sr.ht</a> [<a href=https://man.sr.ht/lists.sr.ht/etiquette.md>mailing list etiquette<a>]
+Have a comment on one of my posts? Start a discussion in my <a href=https://lists.sr.ht/~histrio/public-inbox>public inbox</a> by sending an email to <a href='mailto:~histrio/public-inbox@lists.sr.ht?Subject="Backup%20and%20restore%20your%20SD%20card"'>~histrio/public-inbox@lists.sr.ht</a> [<a href=https://man.sr.ht/lists.sr.ht/etiquette.md>mailing list etiquette<a>]
 </div>
 </div>
 </div>

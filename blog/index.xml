@@ -1,158 +1,28 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>Blogs on False Protagonist</title>
-    <link>https://false.org.ru/blog/</link>
-    <description>Recent content in Blogs on False Protagonist</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <copyright>© 2022 by Rinat Sabitov</copyright>
-    <lastBuildDate>Fri, 01 Jul 2022 07:57:56 +0000</lastBuildDate>
-    
-	<atom:link href="https://false.org.ru/blog/index.xml" rel="self" type="application/rss+xml" />
-    
-    
-    <item>
-      <title>How to fix yum after CentOS 8 went EOL </title>
-      <link>https://false.org.ru/blog/how-to-fix-yum-after-centos-8-went-eol/</link>
-      <pubDate>Fri, 01 Jul 2022 07:57:56 +0000</pubDate>
-      
-      <guid>https://false.org.ru/blog/how-to-fix-yum-after-centos-8-went-eol/</guid>
-      <description>&lt;blockquote&gt;
-&lt;p&gt;Error: Failed to download metadata for repo &amp;lsquo;appstream&amp;rsquo;: Cannot prepare internal mirrorlist: No URLs in mirrorlist&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;So now we have the same issues that we had for Centos 6. And therefore we can fix it like it was described in &lt;a href=&#34;https://false.org.ru/deprecated-centos-6&#34;&gt;previous post&lt;/a&gt;.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;$ sed -i &#39;s,baseurl=http://vault.centos.org,baseurl=http://vault.epel.cloud|g&#39; /etc/yum.repos.d/CentOS-Linux-*
-&lt;/code&gt;&lt;/pre&gt;</description>
-    </item>
-    
-    <item>
-      <title>Hardware troubleshooting</title>
-      <link>https://false.org.ru/blog/hardware-troubleshooting/</link>
-      <pubDate>Thu, 02 Dec 2021 08:53:16 +0000</pubDate>
-      
-      <guid>https://false.org.ru/blog/hardware-troubleshooting/</guid>
-      <description>Another post to the &amp;ldquo;suffering journal&amp;rdquo;. Experienced a lot of hardware fails:
- SSD disks become read-only or other IO errors Video card do not start while power on. Had to restart each time. Other system freezes of unknown origin.  It happened for a month, and I tried to replace SATA cables, disable &amp;ldquo;spoiled&amp;rdquo; disks, do memory checks, use the rest of the voodoo too. Started scaring myself with a shopping list if the motherboard broke.</description>
-    </item>
-    
-    <item>
-      <title>Тестовый пост на другом языке</title>
-      <link>https://false.org.ru/blog/testovyi-post-na-drugom-iazyke/</link>
-      <pubDate>Tue, 30 Nov 2021 09:03:56 +0000</pubDate>
-      
-      <guid>https://false.org.ru/blog/testovyi-post-na-drugom-iazyke/</guid>
-      <description>Пробую возможность писать на двух языках
- Have a comment on one of my posts? Start a discussion in my public inbox by sending an email to ~histrio/public-inbox@lists.sr.ht [mailing list etiquette]  </description>
-    </item>
-    
-    <item>
-      <title>Syncthing and NFS</title>
-      <link>https://false.org.ru/blog/syncthing-and-nfs/</link>
-      <pubDate>Fri, 26 Nov 2021 10:30:07 +0000</pubDate>
-      
-      <guid>https://false.org.ru/blog/syncthing-and-nfs/</guid>
-      <description>&lt;p&gt;&lt;em&gt;TLDR: Dockerised Syncthing using NFS mounted folder is a bad idea.&lt;/em&gt;&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>After a vacancy</title>
-      <link>https://false.org.ru/blog/after-a-vacancy/</link>
-      <pubDate>Fri, 14 May 2021 12:14:48 +0000</pubDate>
-      
-      <guid>https://false.org.ru/blog/after-a-vacancy/</guid>
-      <description>I&amp;rsquo;ve spent almost two weeks without a laptop and very restricted mobile internet. When I sat at the keyboard again, there was no that excitement level as it used to be, even close. Maybe I&amp;rsquo;m just so tired after more or less hardcore trailing experience.
-That place is a nice tool for writing by the way. It could be a neat tool to draft post ideas and tidy up formatting. But such short posts should not exist as a blog post and it fits tweet format which is not my intention.</description>
-    </item>
-    
-    <item>
-      <title>About systemd vs init.d</title>
-      <link>https://false.org.ru/blog/about-systemd-vs-init-d/</link>
-      <pubDate>Wed, 12 May 2021 11:40:18 +0000</pubDate>
-      
-      <guid>https://false.org.ru/blog/about-systemd-vs-init-d/</guid>
-      <description>I have no issues with a systemd and have no right or arguments or authority to criticize such a huge tool and all involved human efforts. It&amp;rsquo;s a tool and it does its work.
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Blogs on False Protagonist</title><link>https://false.org.ru/blog/</link><description>Recent content in Blogs on False Protagonist</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><copyright>© 2022 by Rinat Sabitov</copyright><lastBuildDate>Fri, 09 Sep 2022 13:29:36 +0000</lastBuildDate><atom:link href="https://false.org.ru/blog/index.xml" rel="self" type="application/rss+xml"/><item><title>Backup and restore your SD card</title><link>https://false.org.ru/blog/backup-and-restore-your-sd-card/</link><pubDate>Fri, 09 Sep 2022 13:29:36 +0000</pubDate><guid>https://false.org.ru/blog/backup-and-restore-your-sd-card/</guid><description>&lt;h2 id="backup">Backup&lt;/h2>
+&lt;p>To get rid of empty space, we will process it via &lt;code>gzip&lt;/code>&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-bash" data-lang="bash">$ sudo dd &lt;span style="color:#66d9ef">if&lt;/span>&lt;span style="color:#f92672">=&lt;/span>/dev/mmcblk0 conv&lt;span style="color:#f92672">=&lt;/span>sync,noerror bs&lt;span style="color:#f92672">=&lt;/span>64K | gzip -c &amp;gt; backup.img.gz
+&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="restore">Restore&lt;/h2>
+&lt;pre tabindex="0">&lt;code>$ gunzip backup.img.gz
+$ sudo dd if=backup.img of=/dev/mmcblk0 bs=4M &amp;amp;&amp;amp; sync
+&lt;/code>&lt;/pre></description></item><item><title>How to fix Rust tools that bind libgit2.so</title><link>https://false.org.ru/blog/how-to-fix-rust-tools-that-bind-libgit2-so/</link><pubDate>Thu, 08 Sep 2022 11:26:51 +0000</pubDate><guid>https://false.org.ru/blog/how-to-fix-rust-tools-that-bind-libgit2-so/</guid><description>Recently, after a system update, I became not able to run some of the system tools written on Rust, like exa and bat
+$ bat --version ~ bat: error while loading shared libraries: libgit2.so.1.4: cannot open shared object file: No such file or directory The fix was easy: rebuild a binary
+$ cargo install exa bat --force orig
+Have a comment on one of my posts? Start a discussion in my public inbox by sending an email to ~histrio/public-inbox@lists.</description></item><item><title>How to fix yum after CentOS 8 went EOL</title><link>https://false.org.ru/blog/how-to-fix-yum-after-centos-8-went-eol/</link><pubDate>Fri, 01 Jul 2022 07:57:56 +0000</pubDate><guid>https://false.org.ru/blog/how-to-fix-yum-after-centos-8-went-eol/</guid><description>&lt;blockquote>
+&lt;p>Error: Failed to download metadata for repo &amp;lsquo;appstream&amp;rsquo;: Cannot prepare internal mirrorlist: No URLs in mirrorlist&lt;/p>
+&lt;/blockquote>
+&lt;p>So now we have the same issues that we had for Centos 6. And therefore we can fix it like it was described in &lt;a href="https://false.org.ru/deprecated-centos-6">previous post&lt;/a>.&lt;/p>
+&lt;pre tabindex="0">&lt;code>$ sed -i 's,baseurl=http://vault.centos.org,baseurl=http://vault.epel.cloud|g' /etc/yum.repos.d/CentOS-Linux-*
+&lt;/code>&lt;/pre></description></item><item><title>Hardware troubleshooting</title><link>https://false.org.ru/blog/hardware-troubleshooting/</link><pubDate>Thu, 02 Dec 2021 08:53:16 +0000</pubDate><guid>https://false.org.ru/blog/hardware-troubleshooting/</guid><description>Another post to the &amp;ldquo;suffering journal&amp;rdquo;. Experienced a lot of hardware fails:
+SSD disks become read-only or other IO errors Video card do not start while power on. Had to restart each time. Other system freezes of unknown origin. It happened for a month, and I tried to replace SATA cables, disable &amp;ldquo;spoiled&amp;rdquo; disks, do memory checks, use the rest of the voodoo too. Started scaring myself with a shopping list if the motherboard broke.</description></item><item><title>Тестовый пост на другом языке</title><link>https://false.org.ru/blog/testovyi-post-na-drugom-iazyke/</link><pubDate>Tue, 30 Nov 2021 09:03:56 +0000</pubDate><guid>https://false.org.ru/blog/testovyi-post-na-drugom-iazyke/</guid><description>Пробую возможность писать на двух языках
+orig
+Have a comment on one of my posts? Start a discussion in my public inbox by sending an email to ~histrio/public-inbox@lists.sr.ht [mailing list etiquette]</description></item><item><title>Syncthing and NFS</title><link>https://false.org.ru/blog/syncthing-and-nfs/</link><pubDate>Fri, 26 Nov 2021 10:30:07 +0000</pubDate><guid>https://false.org.ru/blog/syncthing-and-nfs/</guid><description>&lt;p>&lt;em>TLDR: Dockerised Syncthing using NFS mounted folder is a bad idea.&lt;/em>&lt;/p></description></item><item><title>After a vacancy</title><link>https://false.org.ru/blog/after-a-vacancy/</link><pubDate>Fri, 14 May 2021 12:14:48 +0000</pubDate><guid>https://false.org.ru/blog/after-a-vacancy/</guid><description>I&amp;rsquo;ve spent almost two weeks without a laptop and very restricted mobile internet. When I sat at the keyboard again, there was no that excitement level as it used to be, even close. Maybe I&amp;rsquo;m just so tired after more or less hardcore trailing experience.
+That place is a nice tool for writing by the way. It could be a neat tool to draft post ideas and tidy up formatting. But such short posts should not exist as a blog post and it fits tweet format which is not my intention.</description></item><item><title>About systemd vs init.d</title><link>https://false.org.ru/blog/about-systemd-vs-init-d/</link><pubDate>Wed, 12 May 2021 11:40:18 +0000</pubDate><guid>https://false.org.ru/blog/about-systemd-vs-init-d/</guid><description>I have no issues with a systemd and have no right or arguments or authority to criticize such a huge tool and all involved human efforts. It&amp;rsquo;s a tool and it does its work.
 For my cases, it&amp;rsquo;s an over-complicated tool though. I&amp;rsquo;d prefer to use a simple as is init.d when I need a simple thing working on a simple server.
-To go even further I&amp;rsquo;m considering moving my VPS to a FreeBSD.</description>
-    </item>
-    
-    <item>
-      <title>What is this?</title>
-      <link>https://false.org.ru/blog/what-is-this/</link>
-      <pubDate>Tue, 27 Apr 2021 17:50:47 +0000</pubDate>
-      
-      <guid>https://false.org.ru/blog/what-is-this/</guid>
-      <description>Another platform and another attempt to begin to write something. I will try to migrate here some older posts (not all though) in time. Or, maybe it will became not so technical place and will contain some thoughts, but I&amp;rsquo;m afraid which I have not much. Will it be a topics with a vote idea or just a public journal? Will I convert posts from to the gemini mirror?
-Did not write a line of code for a week.</description>
-    </item>
-    
-    <item>
-      <title>How to fix yum after CentOS 6 went EOL</title>
-      <link>https://false.org.ru/blog/deprecated-centos-6/</link>
-      <pubDate>Sun, 06 Dec 2020 10:47:30 +0000</pubDate>
-      
-      <guid>https://false.org.ru/blog/deprecated-centos-6/</guid>
-      <description>&lt;p&gt;Centos 6 isn&amp;rsquo;t able to get its full updates since May 10th, 2017 and there are no even Maintainance updates since November 30th, 2020. For most of us that version of Centos, released July 20th, 2011 is objectively outdated but still, a huge amount of servers are using it and there are no plans or opportunities to migrate it further.&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>Save as root in vim</title>
-      <link>https://false.org.ru/blog/save-as-root-in-vim/</link>
-      <pubDate>Fri, 19 Jun 2020 08:46:57 +0000</pubDate>
-      
-      <guid>https://false.org.ru/blog/save-as-root-in-vim/</guid>
-      <description>&lt;p&gt;&lt;em&gt;TLDR &lt;code&gt;:w !sudo tee %&lt;/code&gt;&lt;/em&gt;&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>Store Files in a CouchDB</title>
-      <link>https://false.org.ru/blog/store-files-in-a-couchdb/</link>
-      <pubDate>Fri, 19 Jun 2020 08:34:34 +0000</pubDate>
-      
-      <guid>https://false.org.ru/blog/store-files-in-a-couchdb/</guid>
-      <description>&lt;p&gt;There is a very convenient way to store files inside CouchDB and be able to get them directly from it.&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>Czech Words Frequency List</title>
-      <link>https://false.org.ru/blog/czech-words-frequency-list/</link>
-      <pubDate>Wed, 27 May 2020 11:53:44 +0000</pubDate>
-      
-      <guid>https://false.org.ru/blog/czech-words-frequency-list/</guid>
-      <description>&lt;p&gt;I make a decision to learn the Czech language and to procrastinate I&amp;rsquo;ve made up a problem for myself:&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;I need a deck for the Anki with the most frequently accrued words in that language.&lt;/p&gt;
-&lt;/blockquote&gt;</description>
-    </item>
-    
-    <item>
-      <title>How to Get Basic Information About a Process in Linux</title>
-      <link>https://false.org.ru/blog/how-to-get-basic-information-about-a-process-in-linux/</link>
-      <pubDate>Sat, 16 May 2020 14:11:22 +0000</pubDate>
-      
-      <guid>https://false.org.ru/blog/how-to-get-basic-information-about-a-process-in-linux/</guid>
-      <description>&lt;p&gt;There is a way to get information about any process (with according permissions) using filesystem operations only. You need no additional tools besides what you already have on your system. In most cases &lt;code&gt;cat&lt;/code&gt; will be enough.&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>Start of the 100 Days to Offload</title>
-      <link>https://false.org.ru/blog/start-of-the-100-days-to-offload/</link>
-      <pubDate>Thu, 14 May 2020 10:52:58 +0000</pubDate>
-      
-      <guid>https://false.org.ru/blog/start-of-the-100-days-to-offload/</guid>
-      <description>So, this will be my attempt to start and proceed with #100DaysToOffload. I&amp;rsquo;m not sure that I will have enough ideas or material to make really useful content and it could happen that there will appear posts like that: just random thoughts with not much sense.
-My initial plan is to publish one post in 3 days and I think it is enough to come up with some idea and write not completely garbage text.</description>
-    </item>
-    
-    <item>
-      <title>Currency formatting</title>
-      <link>https://false.org.ru/blog/currency-formatting/</link>
-      <pubDate>Wed, 17 May 2017 11:44:02 +0000</pubDate>
-      
-      <guid>https://false.org.ru/blog/currency-formatting/</guid>
-      <description>def currency(value, group_sep=&amp;#39; &amp;#39;, decimal_sep=&amp;#39;.&amp;#39;): &amp;#34;&amp;#34;&amp;#34;Format currency by digits. &amp;gt;&amp;gt;&amp;gt; currency(100) &amp;#39;100.00&amp;#39; &amp;gt;&amp;gt;&amp;gt; currency(3.1415) &amp;#39;3.14&amp;#39; &amp;gt;&amp;gt;&amp;gt; currency(31415) &amp;#39;31 415.00&amp;#39; &amp;gt;&amp;gt;&amp;gt; currency(3141500.1) &amp;#39;3 141 500.10&amp;#39; &amp;gt;&amp;gt;&amp;gt; currency(31415000.1) &amp;#39;31 415 000.10&amp;#39; &amp;#34;&amp;#34;&amp;#34; head,tail = (&amp;#39;%.2f&amp;#39;%value).split(&amp;#39;.&amp;#39;) l = len(head) return group_sep.join([head[r-3:l+r] for r in xrange(0,-l,-3)][::-1]) + decimal_sep + tail Gist
- Have a comment on one of my posts? Start a discussion in my public inbox by sending an email to ~histrio/public-inbox@lists.sr.ht [mailing list etiquette]  </description>
-    </item>
-    
-  </channel>
-</rss>
+To go even further I&amp;rsquo;m considering moving my VPS to a FreeBSD.</description></item><item><title>What is this?</title><link>https://false.org.ru/blog/what-is-this/</link><pubDate>Tue, 27 Apr 2021 17:50:47 +0000</pubDate><guid>https://false.org.ru/blog/what-is-this/</guid><description>Another platform and another attempt to begin to write something. I will try to migrate here some older posts (not all though) in time. Or, maybe it will became not so technical place and will contain some thoughts, but I&amp;rsquo;m afraid which I have not much. Will it be a topics with a vote idea or just a public journal? Will I convert posts from to the gemini mirror?
+Did not write a line of code for a week.</description></item><item><title>How to fix yum after CentOS 6 went EOL</title><link>https://false.org.ru/blog/deprecated-centos-6/</link><pubDate>Sun, 06 Dec 2020 10:47:30 +0000</pubDate><guid>https://false.org.ru/blog/deprecated-centos-6/</guid><description>&lt;p>Centos 6 isn&amp;rsquo;t able to get its full updates since May 10th, 2017 and there are no even Maintainance updates since November 30th, 2020. For most of us that version of Centos, released July 20th, 2011 is objectively outdated but still, a huge amount of servers are using it and there are no plans or opportunities to migrate it further.&lt;/p></description></item><item><title>Save as root in vim</title><link>https://false.org.ru/blog/save-as-root-in-vim/</link><pubDate>Fri, 19 Jun 2020 08:46:57 +0000</pubDate><guid>https://false.org.ru/blog/save-as-root-in-vim/</guid><description>&lt;p>&lt;em>TLDR &lt;code>:w !sudo tee %&lt;/code>&lt;/em>&lt;/p></description></item><item><title>Store Files in a CouchDB</title><link>https://false.org.ru/blog/store-files-in-a-couchdb/</link><pubDate>Fri, 19 Jun 2020 08:34:34 +0000</pubDate><guid>https://false.org.ru/blog/store-files-in-a-couchdb/</guid><description>&lt;p>There is a very convenient way to store files inside CouchDB and be able to get them directly from it.&lt;/p></description></item><item><title>Czech Words Frequency List</title><link>https://false.org.ru/blog/czech-words-frequency-list/</link><pubDate>Wed, 27 May 2020 11:53:44 +0000</pubDate><guid>https://false.org.ru/blog/czech-words-frequency-list/</guid><description>&lt;p>I make a decision to learn the Czech language and to procrastinate I&amp;rsquo;ve made up a problem for myself:&lt;/p>
+&lt;blockquote>
+&lt;p>I need a deck for the Anki with the most frequently accrued words in that language.&lt;/p>
+&lt;/blockquote></description></item><item><title>How to Get Basic Information About a Process in Linux</title><link>https://false.org.ru/blog/how-to-get-basic-information-about-a-process-in-linux/</link><pubDate>Sat, 16 May 2020 14:11:22 +0000</pubDate><guid>https://false.org.ru/blog/how-to-get-basic-information-about-a-process-in-linux/</guid><description>&lt;p>There is a way to get information about any process (with according permissions) using filesystem operations only. You need no additional tools besides what you already have on your system. In most cases &lt;code>cat&lt;/code> will be enough.&lt;/p></description></item><item><title>Start of the 100 Days to Offload</title><link>https://false.org.ru/blog/start-of-the-100-days-to-offload/</link><pubDate>Thu, 14 May 2020 10:52:58 +0000</pubDate><guid>https://false.org.ru/blog/start-of-the-100-days-to-offload/</guid><description>So, this will be my attempt to start and proceed with #100DaysToOffload. I&amp;rsquo;m not sure that I will have enough ideas or material to make really useful content and it could happen that there will appear posts like that: just random thoughts with not much sense.
+My initial plan is to publish one post in 3 days and I think it is enough to come up with some idea and write not completely garbage text.</description></item><item><title>Currency formatting</title><link>https://false.org.ru/blog/currency-formatting/</link><pubDate>Wed, 17 May 2017 11:44:02 +0000</pubDate><guid>https://false.org.ru/blog/currency-formatting/</guid><description>def currency(value, group_sep=&amp;#39; &amp;#39;, decimal_sep=&amp;#39;.&amp;#39;): &amp;#34;&amp;#34;&amp;#34;Format currency by digits. &amp;gt;&amp;gt;&amp;gt; currency(100) &amp;#39;100.00&amp;#39; &amp;gt;&amp;gt;&amp;gt; currency(3.1415) &amp;#39;3.14&amp;#39; &amp;gt;&amp;gt;&amp;gt; currency(31415) &amp;#39;31 415.00&amp;#39; &amp;gt;&amp;gt;&amp;gt; currency(3141500.1) &amp;#39;3 141 500.10&amp;#39; &amp;gt;&amp;gt;&amp;gt; currency(31415000.1) &amp;#39;31 415 000.10&amp;#39; &amp;#34;&amp;#34;&amp;#34; head,tail = (&amp;#39;%.2f&amp;#39;%value).split(&amp;#39;.&amp;#39;) l = len(head) return group_sep.join([head[r-3:l+r] for r in xrange(0,-l,-3)][::-1]) + decimal_sep + tail Gist
+orig
+Have a comment on one of my posts? Start a discussion in my public inbox by sending an email to ~histrio/public-inbox@lists.sr.ht [mailing list etiquette]</description></item></channel></rss>
