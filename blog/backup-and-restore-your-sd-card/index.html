@@ -112,8 +112,7 @@ Device                          Boot Start      End  Sectors  Size Id Type
 backup.img1       8192 30244863 30236672 14.4G 83 Linux
 </code></pre><p>As you can see in the example above we have one partition that starts on <code>8192</code> sector and each sector is <code>512</code> bytes. Now, all we have to do is multiply <code>8192 * 512 = 4194304</code> and use it as an offset when mounting as a loop device</p>
 <pre tabindex=0><code>$ sudo mount -o offset=4194304 backup.img /mnt/backup
-</code></pre><p><a href=https://gem.org.ru/backup-and-restore-your-sd-card>orig</a></p>
-<hr>
+</code></pre><hr>
 <div class=container>
 Have a comment on one of my posts? Start a discussion in my <a href=https://lists.sr.ht/~histrio/public-inbox>public inbox</a> by sending an email to <a href='mailto:~histrio/public-inbox@lists.sr.ht?Subject="Backup%20and%20restore%20your%20SD%20card"'>~histrio/public-inbox@lists.sr.ht</a> [<a href=https://man.sr.ht/lists.sr.ht/etiquette.md>mailing list etiquette<a>]
 </div>

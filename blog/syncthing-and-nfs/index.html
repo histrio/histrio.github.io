@@ -97,7 +97,6 @@ November 26, 2021
 <p>First of all, I blamed the android app and excluded it from the flow. I&rsquo;d had no luck and mess with my dotfiles continued. Nodes were often unsynchronised, logs showed a lot of deleted-created status for the files that nobody touched. A file could be deleted and reappeared again in a matter of hours.
 After days of troubleshooting, I was able to locate the source of the issue. It was my main node setup. The Syncthing process in the node was dockerized and the mounted sync folder was also an NFS mount. Changing it to SMB did no effect.</p>
 <p>So my current solution is a structural change. Now each node is synced with all others and with no master. Each node uses it&rsquo;s own local filesystem. Works like a charm.</p>
-<p><a href=https://gem.org.ru/syncthing-and-nfs>orig</a></p>
 <hr>
 <div class=container>
 Have a comment on one of my posts? Start a discussion in my <a href=https://lists.sr.ht/~histrio/public-inbox>public inbox</a> by sending an email to <a href='mailto:~histrio/public-inbox@lists.sr.ht?Subject="Syncthing%20and%20NFS"'>~histrio/public-inbox@lists.sr.ht</a> [<a href=https://man.sr.ht/lists.sr.ht/etiquette.md>mailing list etiquette<a>]
