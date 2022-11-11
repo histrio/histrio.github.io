@@ -95,9 +95,12 @@ September 08, 2022
 <p>Recently, after a system update, I became not able to run some of the system tools written on Rust, like <code>exa</code> and <code>bat</code></p>
 <div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>$ bat --version                                                                ~
 bat: error <span style=color:#66d9ef>while</span> loading shared libraries: libgit2.so.1.4: cannot open shared object file: No such file or directory
-</code></pre></div><p>The fix was easy: rebuild a binary</p>
+</code></pre></div><p>Later I&rsquo;ve got</p>
+<pre tabindex=0><code>.local/share/cargo/bin/cargo-install-update: error while loading shared libraries: libssl.so.1.1: cannot open shared object file: No such file or directory
+</code></pre><p>The fix was easy: rebuild a binary</p>
 <pre tabindex=0><code>$ cargo install exa bat --force
-</code></pre><hr>
+</code></pre><p>That will rebuild a binary with new linking with current libraies</p>
+<hr>
 <div class=container>
 Have a comment on one of my posts? Start a discussion in my <a href=https://lists.sr.ht/~histrio/public-inbox>public inbox</a> by sending an email to <a href='mailto:~histrio/public-inbox@lists.sr.ht?Subject="How%20to%20fix%20Rust%20tools%20that%20bind%20libgit2.so"'>~histrio/public-inbox@lists.sr.ht</a> [<a href=https://man.sr.ht/lists.sr.ht/etiquette.md>mailing list etiquette<a>]
 </div>

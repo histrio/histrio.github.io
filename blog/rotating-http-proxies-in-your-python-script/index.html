@@ -1,0 +1,192 @@
+<!doctype html><html lang=en-us><head>
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no">
+<title>Rotating HTTP proxies in your python script - False Protagonist</title>
+<meta name=HandheldFriendly content="True">
+<meta name=MobileOptimized content="320">
+<meta name=referrer content="no-referrer">
+<meta name=description content="I’m a software developer. Proud father of two boys. Infrequent blogger.">
+<meta property="og:site_name" content="False Protagonist">
+<meta property="og:locale" content="nn_NO">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://false.org.ru/blog/rotating-http-proxies-in-your-python-script/">
+<meta property="og:title" content="
+      Rotating HTTP proxies in your python script
+    ">
+<meta property="og:image" content="https://false.org.ru/">
+<meta property="og:description" content="I’m a software developer. Proud father of two boys. Infrequent blogger.">
+<meta property="twitter:title" content="Rotating HTTP proxies in your python script">
+<meta property="twitter:image" content="https://false.org.ru/">
+<meta property="twitter:card" content="summary">
+<meta property="twitter:description" content="I’m a software developer. Proud father of two boys. Infrequent blogger.">
+<link rel=canonical href=https://gem.org.ru/rotating-http-proxies-in-your-python-script>
+<link rel="shortcut icon" href=https://false.org.ru/img/favicon.ico>
+<link href rel=alternate type=application/rss+xml title="False Protagonist"><link href=https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css rel=stylesheet integrity=sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3 crossorigin=anonymous>
+<link rel=stylesheet href="//fonts.googleapis.com/css?family=Fira+Code|Merriweather+Sans:400,700|Merriweather:400,700&display=swap">
+<link rel=stylesheet href=https://false.org.ru/css/main.css>
+<style>:root{--font-code:"Fira Code", monospace;--font-content:"Merriweather", serif;--font-title:"Merriweather Sans", sans-serif}</style>
+<link rel=stylesheet href=https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/styles/github.min.css>
+<link rel=stylesheet href=https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/styles/tomorrow-night-bright.min.css>
+<style>screen and (prefers-color-scheme: dark)</style>
+</head>
+<body>
+<div class="my-4 my-md-5 header">
+<div class=container>
+<div class=row>
+<div class="col-auto offset-lg-1 d-none d-md-block">
+</div>
+<div class="col-auto align-self-center mr-auto">
+<a class=text-decoration-none href=https://false.org.ru/>
+<h1 class="font-weight-bold name">False Protagonist</h1>
+</a>
+<ul class="nav nav-primary">
+<li class=nav-item>
+<a class="text-uppercase nav-link text-code" href=//github.com/histrio>
+Code
+</a>
+</li>
+<li class=nav-item>
+<a class="text-uppercase nav-link text-posts" href=https://false.org.ru/blog>
+Posts
+</a>
+</li>
+<li class=nav-item>
+<a class="text-uppercase nav-link text-cv" href=https://false.org.ru/cv>
+CV
+</a>
+</li>
+<li class=nav-item>
+<a class="text-uppercase nav-link text-bmc" href=https://www.buymeacoffee.com/histrio>
+Buy me a coffee
+</a>
+</li>
+</ul>
+<ul class="nav nav-secondary">
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div id=content>
+<div class=content>
+<div class=container>
+<div class="row justify-content-center">
+<div class="col-md-12 col-lg-10">
+<h1 class="mx-0 mx-md-4">
+Rotating HTTP proxies in your python script
+</h1>
+<div class="mb-4 mb-md-5 meta">
+<span class=date title="Fri Nov 11 2022 17:15:36 UTC">
+November 11, 2022
+</span>
+<span class="reading-time middot">
+2 minutes
+</span>
+<div class="d-none d-md-inline tags">
+<ul class="list-unstyled d-inline">
+</ul>
+</div>
+<div class="d-none d-md-inline tags">
+<ul class="list-unstyled d-inline">
+</ul>
+</div>
+</div>
+<div class=markdown>
+<p>Ok, there can be a whole bunch of reasons why you would need to use multiple proxy servers at once. But most of them, to be honest, are related to playing around with bot detection, scrapping, and other not-so-honorable stuff.</p>
+<p>Anyway. We have a task to get <a href=https://httpbin.org/ip>https://httpbin.org/ip</a> content and to be sure that each time I will get a result that differs from the previous one.</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=color:#f92672>import</span> urllib.request
+<span style=color:#f92672>import</span> json
+
+previous <span style=color:#f92672>=</span> <span style=color:#66d9ef>None</span>
+<span style=color:#66d9ef>while</span> <span style=color:#66d9ef>True</span>:
+    <span style=color:#66d9ef>with</span> urllib<span style=color:#f92672>.</span>request<span style=color:#f92672>.</span>urlopen(<span style=color:#e6db74>&#39;https://httpbin.org/ip&#39;</span>) <span style=color:#66d9ef>as</span> response:
+        current <span style=color:#f92672>=</span> json<span style=color:#f92672>.</span>loads(response<span style=color:#f92672>.</span>read())[<span style=color:#e6db74>&#39;origin&#39;</span>]
+        <span style=color:#66d9ef>assert</span> previous <span style=color:#f92672>!=</span> current, <span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;Got the same </span><span style=color:#e6db74>{</span>current<span style=color:#e6db74>}</span><span style=color:#e6db74> twice in a row&#34;</span>
+        print(<span style=color:#e6db74>&#34;OK: &#34;</span>, current)
+        previous <span style=color:#f92672>=</span> current
+</code></pre></div><p>That will obviously fail. The second request will get the same IP which is not OK for us.</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>$ python script.py 
+OK:  79.143.111.139
+Traceback <span style=color:#f92672>(</span>most recent call last<span style=color:#f92672>)</span>:
+  File <span style=color:#e6db74>&#34;/home/rinat/test.py&#34;</span>, line 8, in &lt;module&gt;
+    assert previous !<span style=color:#f92672>=</span> current, f<span style=color:#e6db74>&#34;Got the same {current} twice in a row&#34;</span>
+AssertionError: Got the same 79.143.111.139 twice in a row
+</code></pre></div><p>Let&rsquo;s extend ProxyHandler a little bit. We need a way to define multiple proxies for one proto and circulate it for each request. A little trick with cycle iterator will do the thing</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=color:#f92672>import</span> urllib.request
+<span style=color:#f92672>import</span> json
+<span style=color:#f92672>import</span> itertools
+
+<span style=color:#66d9ef>class</span> <span style=color:#a6e22e>RotatingProxyHandler</span>(urllib<span style=color:#f92672>.</span>request<span style=color:#f92672>.</span>ProxyHandler):
+
+    <span style=color:#66d9ef>def</span> __init__(self, proxies):
+        self<span style=color:#f92672>.</span>proxies <span style=color:#f92672>=</span> proxies <span style=color:#f92672>or</span> {}
+        <span style=color:#66d9ef>for</span> type, urls <span style=color:#f92672>in</span> self<span style=color:#f92672>.</span>proxies<span style=color:#f92672>.</span>items():
+            type <span style=color:#f92672>=</span> type<span style=color:#f92672>.</span>lower()
+            setattr(self, <span style=color:#e6db74>f</span><span style=color:#e6db74>&#39;_</span><span style=color:#e6db74>{</span>type<span style=color:#e6db74>}</span><span style=color:#e6db74>_proxies&#39;</span>, itertools<span style=color:#f92672>.</span>cycle(urls))
+            setattr(self, <span style=color:#e6db74>f</span><span style=color:#e6db74>&#39;</span><span style=color:#e6db74>{</span>type<span style=color:#e6db74>}</span><span style=color:#e6db74>_open&#39;</span>,
+                    <span style=color:#66d9ef>lambda</span> r, proxy<span style=color:#f92672>=</span>getattr(self, <span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;_</span><span style=color:#e6db74>{</span>type<span style=color:#e6db74>}</span><span style=color:#e6db74>_proxies&#34;</span>), type<span style=color:#f92672>=</span>type, meth<span style=color:#f92672>=</span>self<span style=color:#f92672>.</span>proxy_open:
+                        meth(r, proxy, type))
+
+    <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>proxy_open</span>(self, req, proxy, type):
+        super()<span style=color:#f92672>.</span>proxy_open(req, next(proxy), type)
+
+
+proxy_support <span style=color:#f92672>=</span> RotatingProxyHandler(proxies<span style=color:#f92672>=</span>{<span style=color:#e6db74>&#39;https&#39;</span>: [
+    <span style=color:#e6db74>&#34;92.205.22.114:38080&#34;</span>,
+    <span style=color:#e6db74>&#34;169.57.1.85:8123&#34;</span>,
+]})
+opener <span style=color:#f92672>=</span> urllib<span style=color:#f92672>.</span>request<span style=color:#f92672>.</span>build_opener(proxy_support)
+urllib<span style=color:#f92672>.</span>request<span style=color:#f92672>.</span>install_opener(opener)
+
+previous <span style=color:#f92672>=</span> <span style=color:#66d9ef>None</span>
+<span style=color:#66d9ef>while</span> <span style=color:#66d9ef>True</span>:
+    <span style=color:#66d9ef>with</span> urllib<span style=color:#f92672>.</span>request<span style=color:#f92672>.</span>urlopen(<span style=color:#e6db74>&#39;https://httpbin.org/ip&#39;</span>) <span style=color:#66d9ef>as</span> response:
+        current <span style=color:#f92672>=</span> json<span style=color:#f92672>.</span>loads(response<span style=color:#f92672>.</span>read())[<span style=color:#e6db74>&#39;origin&#39;</span>]
+        <span style=color:#66d9ef>assert</span> previous <span style=color:#f92672>!=</span> current, <span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;Got the same </span><span style=color:#e6db74>{</span>current<span style=color:#e6db74>}</span><span style=color:#e6db74> twice in a row&#34;</span>
+        print(<span style=color:#e6db74>&#34;OK: &#34;</span>, current)
+        previous <span style=color:#f92672>=</span> current
+
+</code></pre></div><p>And now we have it!</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>$ python script.py
+OK:  92.205.22.114
+OK:  169.57.1.85
+OK:  92.205.22.114
+OK:  169.57.1.85
+OK:  92.205.22.114
+OK:  169.57.1.85
+OK:  92.205.22.114
+</code></pre></div><hr>
+<div class=container>
+Have a comment on one of my posts? Start a discussion in my <a href=https://lists.sr.ht/~histrio/public-inbox>public inbox</a> by sending an email to <a href='mailto:~histrio/public-inbox@lists.sr.ht?Subject="Rotating%20HTTP%20proxies%20in%20your%20python%20script"'>~histrio/public-inbox@lists.sr.ht</a> [<a href=https://man.sr.ht/lists.sr.ht/etiquette.md>mailing list etiquette<a>]
+</div>
+</div>
+</div>
+</div>
+<div class="row justify-content-center">
+<div class="col-md-12 col-lg-10">
+</div>
+</div>
+</div>
+</div>
+</div><div class="my-4 footer">
+<div class=container>
+<div class="row justify-content-center">
+<div class="col-sm-12 col-md-6 col-lg-5">
+<div class="mx-0 mx-md-4 mb-2 text-center text-md-start">
+<a href=https://false.org.ru>
+© 2022 by Rinat Sabitov
+</a>
+</div>
+</div>
+<div class="col-sm-12 col-md-6 col-lg-5">
+<div class="mx-0 mx-md-4 text-center text-md-end">
+<a href class="mx-1 ml-md-2 mr-md-0 icon" aria-label=RSS><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill-rule="evenodd" clip-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="1.414"><path d="M12.8 16C12.8 8.978 7.022 3.2.0 3.2V0c8.777.0 16 7.223 16 16h-3.2zM2.194 11.61c1.21.0 2.195.985 2.195 2.196.0 1.21-.99 2.194-2.2 2.194C.98 16 0 15.017.0 13.806c0-1.21.983-2.195 2.194-2.195zM10.606 16h-3.11c0-4.113-3.383-7.497-7.496-7.497v-3.11c5.818.0 10.606 4.79 10.606 10.607z"/></svg>
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script data-goatcounter=https://false.goatcounter.com/count async src=//gc.zgo.at/count.js></script>
+</body>
+</html>
