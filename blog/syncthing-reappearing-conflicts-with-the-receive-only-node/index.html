@@ -2,24 +2,24 @@
 <head>
 <meta charset=utf-8>
 <meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no">
-<title>Тестовый пост на другом языке - False Protagonist</title>
+<title>Syncthing reappearing conflicts with the 'receive only' node - False Protagonist</title>
 <meta name=HandheldFriendly content="True">
 <meta name=MobileOptimized content="320">
 <meta name=referrer content="no-referrer">
 <meta name=description content="I’m a software developer. Proud father of two boys. Infrequent blogger.">
-<meta property="og:title" content="Тестовый пост на другом языке">
-<meta property="og:description" content="Пробую возможность писать на двух языках
- Have a comment on one of my posts? Start a discussion in my public inbox by sending an email to ~histrio/public-inbox@lists.sr.ht [mailing list etiquette]  ">
+<meta property="og:title" content="Syncthing reappearing conflicts with the 'receive only' node">
+<meta property="og:description" content="Ok, for a long time, I&rsquo;m recreating my home setup in my new place. An increasing amount of new devices led me to use syncing tools again. A syncthing was the obvious but not easy way.
+I have a Raspberry Pi with a storage HDD and a desktop with my Calibre library. The setup is simple, and it&rsquo;s supposed to be easy: desktop as an introducer (Send&Recieve) and storage mounted to RPi as &ldquo;Recieve Only&rdquo;.">
 <meta property="og:type" content="article">
-<meta property="og:url" content="https://false.org.ru/blog/testovyi-post-na-drugom-iazyke/"><meta property="article:section" content="blog">
-<meta property="article:published_time" content="2021-11-30T09:03:56+00:00">
-<meta property="article:modified_time" content="2021-11-30T09:03:56+00:00">
+<meta property="og:url" content="https://false.org.ru/blog/syncthing-reappearing-conflicts-with-the-receive-only-node/"><meta property="article:section" content="blog">
+<meta property="article:published_time" content="2023-04-05T07:14:07+00:00">
+<meta property="article:modified_time" content="2023-04-05T07:14:07+00:00">
 <meta name=twitter:card content="summary">
-<meta name=twitter:title content="Тестовый пост на другом языке">
-<meta name=twitter:description content="Пробую возможность писать на двух языках
- Have a comment on one of my posts? Start a discussion in my public inbox by sending an email to ~histrio/public-inbox@lists.sr.ht [mailing list etiquette]  ">
+<meta name=twitter:title content="Syncthing reappearing conflicts with the 'receive only' node">
+<meta name=twitter:description content="Ok, for a long time, I&rsquo;m recreating my home setup in my new place. An increasing amount of new devices led me to use syncing tools again. A syncthing was the obvious but not easy way.
+I have a Raspberry Pi with a storage HDD and a desktop with my Calibre library. The setup is simple, and it&rsquo;s supposed to be easy: desktop as an introducer (Send&Recieve) and storage mounted to RPi as &ldquo;Recieve Only&rdquo;.">
 <meta name=generator content="Hugo 0.91.2">
-<link rel=canonical href=https://gem.org.ru/testovyi-post-na-drugom-iazyke>
+<link rel=canonical href=https://gem.org.ru/syncthing-reappearing-conflicts-with-the-receive-only-node>
 <link rel="shortcut icon" href=https://false.org.ru/img/favicon.ico>
 <link href rel=alternate type=application/rss+xml title="False Protagonist">
 <link href=https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css rel=stylesheet integrity=sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT crossorigin=anonymous>
@@ -74,11 +74,11 @@ Buy me a coffee
 <div class="row justify-content-center">
 <div class="col-md-12 col-lg-10">
 <h1 class="mx-0 mx-md-4">
-Тестовый пост на другом языке
+Syncthing reappearing conflicts with the 'receive only' node
 </h1>
 <div class="mb-4 mb-md-5 meta">
-<span class=date title="Tue Nov 30 2021 09:03:56 UTC">
-November 30, 2021
+<span class=date title="Wed Apr 5 2023 07:14:07 UTC">
+April 05, 2023
 </span>
 <span class="reading-time middot">
 1 minute
@@ -93,10 +93,13 @@ November 30, 2021
 </div>
 </div>
 <div class=markdown>
-<p>Пробую возможность писать на двух языках</p>
+<p>Ok, for a long time, I&rsquo;m recreating my home setup in my new place. An increasing amount of new devices led me to use syncing tools again. A <a href=https://syncthing.net/>syncthing</a> was the obvious but not easy way.</p>
+<p>I have a Raspberry Pi with a storage HDD and a desktop with my <a href=https://calibre-ebook.com/>Calibre</a> library. The setup is simple, and it&rsquo;s supposed to be easy: desktop as an introducer (Send&Recieve) and storage mounted to RPi as &ldquo;Recieve Only&rdquo;. It should prevent any local changes to be synced.</p>
+<p>The initial sync was ok, but further attempts to modify files there led to massive conflicted files appearing. Constantly pressing the &ldquo;Revert Local Changes&rdquo; button had little effect: new conflicts after file modification.</p>
+<p>I&rsquo;ve applied my favorite tactic &ndash; press all buttons and set all flags till it begin to work. The magic parameter was &ldquo;Ignore Permissions&rdquo; for the receiving side. No conflicts after</p>
 <hr>
 <div class=container>
-Have a comment on one of my posts? Start a discussion in my <a href=https://lists.sr.ht/~histrio/public-inbox>public inbox</a> by sending an email to <a href='mailto:~histrio/public-inbox@lists.sr.ht?Subject="%d0%a2%d0%b5%d1%81%d1%82%d0%be%d0%b2%d1%8b%d0%b9%20%d0%bf%d0%be%d1%81%d1%82%20%d0%bd%d0%b0%20%d0%b4%d1%80%d1%83%d0%b3%d0%be%d0%bc%20%d1%8f%d0%b7%d1%8b%d0%ba%d0%b5"'>~histrio/public-inbox@lists.sr.ht</a> [<a href=https://man.sr.ht/lists.sr.ht/etiquette.md>mailing list etiquette<a>]
+Have a comment on one of my posts? Start a discussion in my <a href=https://lists.sr.ht/~histrio/public-inbox>public inbox</a> by sending an email to <a href='mailto:~histrio/public-inbox@lists.sr.ht?Subject="Syncthing%20reappearing%20conflicts%20with%20the%20%27receive%20only%27%20node"'>~histrio/public-inbox@lists.sr.ht</a> [<a href=https://man.sr.ht/lists.sr.ht/etiquette.md>mailing list etiquette<a>]
 </div>
 </div>
 </div>
