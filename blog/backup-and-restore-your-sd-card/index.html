@@ -1,123 +1,16 @@
-<!doctype html><html lang=en-us>
-<head>
-<meta charset=utf-8>
-<meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no">
-<title>Backup and restore your SD card - False Protagonist</title>
-<meta name=HandheldFriendly content="True">
-<meta name=MobileOptimized content="320">
-<meta name=referrer content="no-referrer">
-<meta name=description content="I’m a software developer. Proud father of two boys. Infrequent blogger.">
-<meta property="og:title" content="Backup and restore your SD card">
-<meta property="og:description" content="Backup
-To get rid of empty space, we will process it via gzip
-$ sudo dd if=/dev/mmcblk0 conv=sync,noerror bs=64K | gzip -c > backup.img.gz
-Restore
-$ gunzip backup.img.gz
-$ sudo dd if=backup.img of=/dev/mmcblk0 bs=4M && sync
-">
-<meta property="og:type" content="article">
-<meta property="og:url" content="https://false.org.ru/blog/backup-and-restore-your-sd-card/"><meta property="article:section" content="blog">
-<meta property="article:published_time" content="2022-09-09T13:29:36+00:00">
-<meta property="article:modified_time" content="2022-09-09T13:29:36+00:00">
-<meta name=twitter:card content="summary">
-<meta name=twitter:title content="Backup and restore your SD card">
-<meta name=twitter:description content="Backup
-To get rid of empty space, we will process it via gzip
-$ sudo dd if=/dev/mmcblk0 conv=sync,noerror bs=64K | gzip -c > backup.img.gz
-Restore
-$ gunzip backup.img.gz
-$ sudo dd if=backup.img of=/dev/mmcblk0 bs=4M && sync
-">
-<meta name=generator content="Hugo 0.91.2">
-<link rel=canonical href=https://gem.org.ru/backup-and-restore-your-sd-card>
-<link rel="shortcut icon" href=https://false.org.ru/img/favicon.ico>
-<link href rel=alternate type=application/rss+xml title="False Protagonist">
-<link href=https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css rel=stylesheet integrity=sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT crossorigin=anonymous>
-<link rel=stylesheet href="//fonts.googleapis.com/css?family=Fira+Code|Merriweather+Sans:400,700|Merriweather:400,700&display=swap">
-<link rel=stylesheet href=https://false.org.ru/css/main.css>
-<style>:root{--font-code:"Fira Code", monospace;--font-content:"Merriweather", serif;--font-title:"Merriweather Sans", sans-serif}</style>
-<link rel=stylesheet href=https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.6.0/build/styles/github.min.css>
-<link rel=stylesheet href=https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.6.0/build/styles/tomorrow-night-bright.min.css>
-<style>screen and (prefers-color-scheme: dark)</style>
-</head>
-<body>
-<div class="my-4 my-md-5 header">
-<div class=container>
-<div class=row>
-<div class="col-auto
+<!doctype html><html lang=en-us><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><title>Backup and restore your SD card - False Protagonist</title><meta name=HandheldFriendly content="True"><meta name=MobileOptimized content="320"><meta name=referrer content="no-referrer"><meta name=description content="I’m a software developer. Proud father of two boys. Infrequent blogger."><meta property="og:url" content="https://false.org.ru/blog/backup-and-restore-your-sd-card/"><meta property="og:site_name" content="False Protagonist"><meta property="og:title" content="Backup and restore your SD card"><meta property="og:description" content="Backup To get rid of empty space, we will process it via gzip
+$ sudo dd if=/dev/mmcblk0 conv=sync,noerror bs=64K | gzip -c > backup.img.gz Restore $ gunzip backup.img.gz $ sudo dd if=backup.img of=/dev/mmcblk0 bs=4M && sync"><meta property="og:locale" content="en_us"><meta property="og:type" content="article"><meta property="article:section" content="blog"><meta property="article:published_time" content="2022-09-09T13:29:36+00:00"><meta property="article:modified_time" content="2022-09-09T13:29:36+00:00"><meta name=twitter:card content="summary"><meta name=twitter:title content="Backup and restore your SD card"><meta name=twitter:description content="Backup To get rid of empty space, we will process it via gzip
+$ sudo dd if=/dev/mmcblk0 conv=sync,noerror bs=64K | gzip -c > backup.img.gz Restore $ gunzip backup.img.gz $ sudo dd if=backup.img of=/dev/mmcblk0 bs=4M && sync"><meta name=generator content="Hugo 0.156.0"><link rel=canonical href=https://gem.org.ru/backup-and-restore-your-sd-card><link rel="shortcut icon" href=https://false.org.ru/img/favicon.ico><link href rel=alternate type=application/rss+xml title="False Protagonist"><link href=https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css rel=stylesheet integrity=sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT crossorigin=anonymous><link rel=stylesheet href="//fonts.googleapis.com/css?family=Fira+Code|Merriweather+Sans:400,700|Merriweather:400,700&display=swap"><link rel=stylesheet href=https://false.org.ru/css/main.css><style>:root{--font-code:"Fira Code", monospace;--font-content:"Merriweather", serif;--font-title:"Merriweather Sans", sans-serif}</style><link rel=stylesheet href=https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.6.0/build/styles/github.min.css><link rel=stylesheet href=https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.6.0/build/styles/tomorrow-night-bright.min.css><style>screen and (prefers-color-scheme: dark)</style></head><body><div class="my-4 my-md-5 header"><div class=container><div class=row><div class="col-auto
 offset-lg-1
-d-none d-md-block">
-</div>
-<div class="col-auto align-self-center mr-auto">
-<a class=text-decoration-none href=https://false.org.ru/>
-<h1 class="font-weight-bold name">False Protagonist</h1>
-</a>
-<ul class="nav nav-primary">
-<li class=nav-item>
-<a class="text-uppercase nav-link
-text-code" href=//github.com/histrio>
-Code
-</a>
-</li>
-<li class=nav-item>
-<a class="text-uppercase nav-link
-text-posts" href=https://false.org.ru/blog>
-Posts
-</a>
-</li>
-<li class=nav-item>
-<a class="text-uppercase nav-link
-text-cv" href=https://false.org.ru/cv>
-CV
-</a>
-</li>
-<li class=nav-item>
-<a class="text-uppercase nav-link
-text-bmc" href=https://www.buymeacoffee.com/histrio>
-Buy me a coffee
-</a>
-</li>
-</ul>
-<ul class="nav nav-secondary">
-</ul>
-</div>
-</div>
-</div>
-</div>
-<div id=content>
-<div class=content>
-<div class=container>
-<div class="row justify-content-center">
-<div class="col-md-12 col-lg-10">
-<h1 class="mx-0 mx-md-4">
-Backup and restore your SD card
-</h1>
-<div class="mb-4 mb-md-5 meta">
-<span class=date title="Fri Sep 9 2022 13:29:36 UTC">
-September 09, 2022
-</span>
-<span class="reading-time middot">
-2 minutes
-</span>
-<div class="d-none d-md-inline tags">
-<ul class="list-unstyled d-inline">
-</ul>
-</div>
-<div class="d-none d-md-inline tags">
-<ul class="list-unstyled d-inline">
-</ul>
-</div>
-</div>
-<div class=markdown>
-<h2 id=backup>Backup</h2>
-<p>To get rid of empty space, we will process it via <code>gzip</code></p>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>$ sudo dd <span style=color:#66d9ef>if</span><span style=color:#f92672>=</span>/dev/mmcblk0 conv<span style=color:#f92672>=</span>sync,noerror bs<span style=color:#f92672>=</span>64K | gzip -c &gt; backup.img.gz
-</code></pre></div><h2 id=restore>Restore</h2>
-<pre tabindex=0><code>$ gunzip backup.img.gz
+d-none d-md-block"></div><div class="col-auto align-self-center mr-auto"><a class=text-decoration-none href=https://false.org.ru/><h1 class="font-weight-bold name">False Protagonist</h1></a><ul class="nav nav-primary"><li class=nav-item><a class="text-uppercase nav-link
+text-code" href=//github.com/histrio>Code</a></li><li class=nav-item><a class="text-uppercase nav-link
+text-posts" href=https://false.org.ru/blog>Posts</a></li><li class=nav-item><a class="text-uppercase nav-link
+text-cv" href=https://false.org.ru/cv>CV</a></li><li class=nav-item><a class="text-uppercase nav-link
+text-bmc" href=https://www.buymeacoffee.com/histrio>Buy me a coffee</a></li></ul><ul class="nav nav-secondary"></ul></div></div></div></div><div id=content><div class=content><div class=container><div class="row justify-content-center"><div class="col-md-12 col-lg-10"><h1 class="mx-0 mx-md-4">Backup and restore your SD card</h1><div class="mb-4 mb-md-5 meta"><span class=date title="Fri Sep 9 2022 13:29:36 UTC">September 09, 2022
+</span><span class="reading-time middot">2 minutes</span><div class="d-none d-md-inline tags"><ul class="list-unstyled d-inline"></ul></div><div class="d-none d-md-inline tags"><ul class="list-unstyled d-inline"></ul></div></div><div class=markdown><h2 id=backup>Backup</h2><p>To get rid of empty space, we will process it via <code>gzip</code></p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bash data-lang=bash><span style=display:flex><span>$ sudo dd <span style=color:#66d9ef>if</span><span style=color:#f92672>=</span>/dev/mmcblk0 conv<span style=color:#f92672>=</span>sync,noerror bs<span style=color:#f92672>=</span>64K | gzip -c &gt; backup.img.gz
+</span></span></code></pre></div><h2 id=restore>Restore</h2><pre tabindex=0><code>$ gunzip backup.img.gz
 $ sudo dd if=backup.img of=/dev/mmcblk0 bs=4M &amp;&amp; sync
-</code></pre><h2 id=mount-image>Mount image</h2>
-<p>If you need just to explore the content of your backup or get only one file from it, you can mount it to a folder. First of all, you need to get an offset where your filesystem actually begins</p>
-<pre tabindex=0><code>$ fdisk -l backup.img                                                                        ~
+</code></pre><h2 id=mount-image>Mount image</h2><p>If you need just to explore the content of your backup or get only one file from it, you can mount it to a folder. First of all, you need to get an offset where your filesystem actually begins</p><pre tabindex=0><code>$ fdisk -l backup.img                                                                        ~
 Disk backup.img: 14.42 GiB, 15485370368 bytes, 30244864 sectors
 Units: sectors of 1 * 512 = 512 bytes
 Sector size (logical/physical): 512 bytes / 512 bytes
@@ -127,41 +20,5 @@ Disk identifier: 0x93c181e7
 
 Device                          Boot Start      End  Sectors  Size Id Type
 backup.img1       8192 30244863 30236672 14.4G 83 Linux
-</code></pre><p>As you can see in the example above we have one partition that starts on <code>8192</code> sector and each sector is <code>512</code> bytes. Now, all we have to do is multiply <code>8192 * 512 = 4194304</code> and use it as an offset when mounting as a loop device</p>
-<pre tabindex=0><code>$ sudo mount -o offset=4194304 backup.img /mnt/backup
-</code></pre><hr>
-<div class=container>
-Have a comment on one of my posts? Start a discussion in my <a href=https://lists.sr.ht/~histrio/public-inbox>public inbox</a> by sending an email to <a href='mailto:~histrio/public-inbox@lists.sr.ht?Subject="Backup%20and%20restore%20your%20SD%20card"'>~histrio/public-inbox@lists.sr.ht</a> [<a href=https://man.sr.ht/lists.sr.ht/etiquette.md>mailing list etiquette<a>]
-</div>
-</div>
-</div>
-</div>
-<div class="row justify-content-center">
-<div class="col-md-12 col-lg-10">
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="my-4 footer">
-<div class=container>
-<div class="row justify-content-center">
-<div class="col-sm-12 col-md-6 col-lg-5">
-<div class="mx-0 mx-md-4 mb-2 text-center text-md-start">
-<a href=https://false.org.ru>
-© 2025 by Rinat Sabitov
-</a>
-</div>
-</div>
-<div class="col-sm-12 col-md-6 col-lg-5">
-<div class="mx-0 mx-md-4 text-center text-md-end">
-<a href class="mx-1 ml-md-2 mr-md-0 icon" aria-label=RSS><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill-rule="evenodd" clip-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="1.414"><path d="M12.8 16C12.8 8.978 7.022 3.2.0 3.2V0c8.777.0 16 7.223 16 16h-3.2zM2.194 11.61c1.21.0 2.195.985 2.195 2.196.0 1.21-.99 2.194-2.2 2.194C.98 16 0 15.017.0 13.806c0-1.21.983-2.195 2.194-2.195zM10.606 16h-3.11c0-4.113-3.383-7.497-7.496-7.497v-3.11c5.818.0 10.606 4.79 10.606 10.607z"/></svg>
-</a>
-</div>
-</div>
-</div>
-</div>
-</div>
-<script defer src=https://u.gem.org.ru/script.js data-website-id=a3afee7a-dea9-4514-af37-ef6e82fbc7aa></script>
-</body>
-</html>
+</code></pre><p>As you can see in the example above we have one partition that starts on <code>8192</code> sector and each sector is <code>512</code> bytes. Now, all we have to do is multiply <code>8192 * 512 = 4194304</code> and use it as an offset when mounting as a loop device</p><pre tabindex=0><code>$ sudo mount -o offset=4194304 backup.img /mnt/backup
+</code></pre><hr><div class=container>Have a comment on one of my posts? Start a discussion in my <a href=https://lists.sr.ht/~histrio/public-inbox>public inbox</a> by sending an email to <a href='mailto:~histrio/public-inbox@lists.sr.ht?Subject="Backup%20and%20restore%20your%20SD%20card"'>~histrio/public-inbox@lists.sr.ht</a> [<a href=https://man.sr.ht/lists.sr.ht/etiquette.md>mailing list etiquette<a>]</div></div></div></div><div class="row justify-content-center"><div class="col-md-12 col-lg-10"></div></div></div></div></div><div class="my-4 footer"><div class=container><div class="row justify-content-center"><div class="col-sm-12 col-md-6 col-lg-5"><div class="mx-0 mx-md-4 mb-2 text-center text-md-start"><a href=https://false.org.ru>© 2025 by Rinat Sabitov</a></div></div><div class="col-sm-12 col-md-6 col-lg-5"><div class="mx-0 mx-md-4 text-center text-md-end"><a href class="mx-1 ml-md-2 mr-md-0 icon" aria-label=RSS><svg viewBox="0 0 16 16" fill-rule="evenodd" clip-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="1.414"><path d="M12.8 16C12.8 8.978 7.022 3.2.0 3.2V0c8.777.0 16 7.223 16 16h-3.2zM2.194 11.61c1.21.0 2.195.985 2.195 2.196.0 1.21-.99 2.194-2.2 2.194C.98 16 0 15.017.0 13.806c0-1.21.983-2.195 2.194-2.195zM10.606 16h-3.11c0-4.113-3.383-7.497-7.496-7.497v-3.11c5.818.0 10.606 4.79 10.606 10.607z"/></svg></a></div></div></div></div></div><script defer src=https://u.gem.org.ru/script.js data-website-id=a3afee7a-dea9-4514-af37-ef6e82fbc7aa></script></body></html>
