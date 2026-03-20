@@ -1,1753 +1,1390 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Morse Teacher powered by jscwlib</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Morse Trainer</title>
+  <!-- PWA / mobile meta -->
+  <meta name="theme-color" content="#111111" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <meta name="apple-mobile-web-app-title" content="Morse Trainer" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="apple-touch-icon" href="icon.svg" />
   <style>
-    :root {
-      --bg: #f9fafb; /* Light gray background */
-      --card-bg: #ffffff; /* White for cards */
-      --accent: #3b82f6; /* A modern, friendly blue */
-      --accent-muted: rgba(59, 130, 246, 0.15); /* Light blue for focus/active */
-      --text: #1f2937; /* Dark slate for text */
-      --text-muted: #6b7280; /* Medium gray for muted text */
-      --danger: #ef4444; /* A clear red for danger/errors */
-      --border: #e5e7eb; /* Light gray for borders */
-      --sidebar-bg: #f3f4f6; /* Slightly darker bg for sidebar */
-    }
-    * {
-      box-sizing: border-box;
-    }
+    /* ── Base ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      margin: 0;
-      min-height: 100vh;
-      background: var(--bg);
-      color: var(--text);
-      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    }
-    
-    /* NEW: Page Container */
-    .page-container {
-      width: 100%;
-      max-width: 1440px;
-      margin: 0 auto;
+      font-family: monospace;
+      font-size: 14px;
+      background: #f0f0f0;
+      color: #111;
+      padding: 12px;
+      /* Prevent double-tap zoom on the whole page */
+      touch-action: manipulation;
     }
 
-    /* NEW: Header is now page-wide */
-    header {
-      padding: 40px 32px 32px;
-      text-align: left;
-      border-bottom: 1px solid var(--border);
-      background: var(--card-bg);
-    }
+    /* ── Layout ── */
+    .wrap { max-width: 720px; margin: 0 auto; }
+
     h1 {
-      margin: 0;
-      font-size: 2.1rem;
-      font-weight: 600;
-      letter-spacing: -0.02em;
-    }
-    p.lead {
-      color: var(--text-muted);
-      margin: 8px 0 0;
-      max-width: 700px;
-      line-height: 1.5;
-      font-size: 1rem;
-    }
-    
-    /* NEW: Main Layout Wrapper */
-    .layout-wrapper {
-      display: grid;
-      /* Define the two-column layout */
-      grid-template-columns: 320px 1fr;
-      /* Align sidebar to the top */
-      align-items: start;
-      gap: 32px;
-      padding: 32px;
-    }
-
-    /* NEW: Sidebar Panel */
-    .sidebar-panel {
-      display: flex;
-      flex-direction: column;
-      gap: 24px;
-      /* Make sidebar sticky on tall screens */
-      position: sticky;
-      top: 32px;
-    }
-
-    /* NEW: Main Content Panel */
-    .main-panel {
-      display: flex;
-      flex-direction: column;
-      gap: 24px;
-      min-width: 0; /* Fix flexbox overflow */
-    }
-
-    /* NEW: Universal Card Style */
-    .card {
-      border: 1px solid var(--border);
-      background: var(--card-bg);
-      border-radius: 16px;
-      padding: 24px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
-    }
-    .sidebar-panel .card {
-      background: var(--card-bg); /* Sidebar cards are white */
-      padding: 20px;
-    }
-
-    .card h2 {
-      margin: 0 0 16px;
-      font-size: 1.2rem;
-      font-weight: 600;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    
-    /* Controls Styling (in sidebar) */
-    .controls {
-      display: grid;
-      gap: 20px;
-    }
-    .controls-row {
-      display: flex;
-      flex-direction: column; /* Stack controls in sidebar */
-      gap: 16px;
-      align-items: stretch;
-    }
-    label {
-      font-size: 0.9rem;
-      color: var(--text-muted);
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-    select, button, input[type="number"] {
-      background: #f9fafb; /* Lightest gray bg */
-      color: var(--text);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 10px 14px;
-      font-size: 0.95rem;
-      font-family: inherit;
-      transition: border-color 0.2s, box-shadow 0.2s, transform 0.1s;
-    }
-    select:focus, input[type="number"]:focus, input[type="text"]:focus, button:focus-visible {
-      outline: none;
-      border-color: var(--accent);
-      box-shadow: 0 0 0 3px var(--accent-muted);
-      background: var(--card-bg);
-    }
-    input[type="range"] {
-      width: 100%;
-      accent-color: var(--accent);
-      margin-top: 4px;
-    }
-    .range-value {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      letter-spacing: 0.03em;
-    }
-    button.action {
-      background: var(--accent);
-      border-color: transparent;
-      color: #ffffff;
-      font-weight: 600;
-      cursor: pointer;
-    }
-    button.action:disabled {
-      cursor: not-allowed;
-      opacity: 0.6;
-    }
-    button.secondary {
-      background: var(--card-bg);
-      color: var(--text);
-      border: 1px solid var(--border);
-      cursor: pointer;
-    }
-    button.secondary:hover:not(:disabled) {
-      background: #f9fafb;
-      transform: translateY(-1px);
-    }
-    button.action:hover:not(:disabled) {
-      background: #2563eb;
-      transform: translateY(-1px);
-    }
-    
-    /* NEW: Status Card Styling (in sidebar) */
-    .status-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px 12px;
-    }
-    .status-grid span {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-      font-size: 0.85rem;
-      color: var(--text-muted);
-    }
-    .status-grid strong {
-      color: var(--text);
-      font-weight: 600;
-      font-size: 1.1rem;
-      /* Ellipsis for long preset names */
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    .status-grid .status-full-width {
-      grid-column: 1 / -1;
-    }
-
-    /* Stats Panel */
-    .stats-card {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-    .stats-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-    .stats-subtitle {
-      margin: 2px 0 0;
-      color: var(--text-muted);
-      font-size: 0.9rem;
-    }
-    .stats-grid {
-      display: grid;
-      gap: 12px;
-      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
-    }
-    .stat {
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 12px 14px;
-      background: #f9fafb;
-      display: grid;
-      gap: 6px;
-      min-height: 110px;
-    }
-    .stat-label {
-      font-size: 0.9rem;
-      color: var(--text-muted);
-      letter-spacing: 0.02em;
-    }
-    .stat-value {
-      font-weight: 700;
-      font-size: 1.6rem;
-      letter-spacing: -0.01em;
-      color: var(--text);
-    }
-    .stat-meta {
-      color: #2563eb;
-      font-weight: 600;
-      font-size: 0.9rem;
-      letter-spacing: 0.03em;
-    }
-    .stat-note {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      letter-spacing: 0.01em;
-    }
-
-    /* NEW: Entry Panel Styling (in main area) */
-    .entry-panel {
-      position: relative;
-      border: 1px solid var(--border);
-      transition: border-color 0.25s ease, box-shadow 0.25s ease;
-    }
-    .entry-panel.focused {
-      border-color: var(--accent);
-      box-shadow: 0 8px 20px var(--accent-muted);
-    }
-    .entry-panel h3 {
-      margin: 0 0 12px;
-      font-size: 1.05rem;
-      font-weight: 600;
-      color: var(--text);
-    }
-    .entry-hint {
-      margin: 0 0 14px;
-      font-size: 0.9rem;
-      color: var(--text-muted);
-      line-height: 1.4;
-    }
-    .letter-hint {
-      display: none;
-      padding: 10px 14px;
-      border-radius: 10px;
-      border: 1px dashed rgba(37, 99, 235, 0.4);
-      background: rgba(37, 99, 235, 0.08);
-      color: #1d4ed8;
-      font-weight: 600;
-      letter-spacing: 0.04em;
+      font-size: 16px;
+      font-weight: bold;
+      letter-spacing: 0.1em;
+      border-bottom: 2px solid #111;
+      padding-bottom: 4px;
+      margin-bottom: 10px;
       text-transform: uppercase;
     }
-    .letter-hint.visible {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
+
+    /* ── Section panels ── */
+    .panel {
+      border: 1px solid #999;
+      background: #fff;
+      margin-bottom: 8px;
     }
-    .letter-hint.visible::before {
-      content: "Hint";
-      font-size: 0.75rem;
-      font-weight: 700;
-      padding: 2px 8px;
-      border-radius: 999px;
-      background: rgba(37, 99, 235, 0.15);
-      color: #1e3a8a;
-      letter-spacing: 0.08em;
-    }
-    .letter-hint.paused {
-      border-color: rgba(249, 115, 22, 0.45);
-      background: rgba(249, 115, 22, 0.12);
-      color: #b45309;
-    }
-    .letter-hint.paused::before {
-      content: "Paused";
-      background: rgba(249, 115, 22, 0.22);
-      color: #92400e;
-    }
-    #answerField {
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 16px 18px;
-      color: var(--text);
-      font-size: 1.3rem;
-      line-height: 1.4;
-      font-weight: 500;
-      letter-spacing: 0.08em;
-      text-align: center;
+    .panel-title {
+      background: #ddd;
+      border-bottom: 1px solid #999;
+      padding: 3px 8px;
+      font-weight: bold;
       text-transform: uppercase;
-      width: 100%;
-      max-width: 200px;
-      margin: 0 auto;
+      letter-spacing: 0.08em;
+      font-size: 12px;
+    }
+    .panel-body { padding: 8px; }
+
+    /* ── Settings grid ── */
+    .settings-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 6px 16px;
+    }
+    .field label {
       display: block;
+      font-size: 11px;
+      color: #555;
+      margin-bottom: 2px;
+      text-transform: uppercase;
     }
-    #answerField::placeholder {
-      color: #9ca3af;
-      text-transform: none;
-      letter-spacing: normal;
-      font-weight: 400;
-      font-size: 0.95rem;
+    .field input[type="number"],
+    .field input[type="range"],
+    .field textarea {
+      font-family: monospace;
+      font-size: 13px;
+      width: 100%;
+      border: 1px solid #aaa;
+      background: #fafafa;
+      padding: 3px 5px;
     }
-    #answerField:disabled {
-      opacity: 0.7;
-      cursor: not-allowed;
-      background: #f9fafb;
-    }
-    #answerField:focus {
-      outline: none;
-      border-color: var(--accent);
-      box-shadow: 0 0 0 3px var(--accent-muted);
+    .field input[type="range"] { padding: 0; cursor: pointer; }
+    .field .val { display: inline-block; min-width: 28px; text-align: right; }
+
+    /* ── Text input ── */
+    .text-field textarea {
+      width: 100%;
+      height: 60px;
+      resize: vertical;
     }
 
-    /* Graph Styling (in main area) */
-    .graph-wrapper {
-      display: grid;
-      gap: 12px;
+    /* ── Status banner ── */
+    #status-banner {
+      font-size: clamp(16px, 5vw, 28px);
+      font-weight: bold;
+      letter-spacing: 0.15em;
+      text-align: center;
+      padding: 10px;
+      border: 2px solid #111;
+      background: #222;
+      color: #0f0;
+      text-transform: uppercase;
+      margin-bottom: 8px;
     }
-    .graph-header {
+    #status-banner.waiting { color: #0af; background: #222; }
+    #status-banner.paused  { color: #fa0; }
+    #status-banner.stopped { color: #f44; background: #333; }
+    #status-banner.ready   { color: #888; background: #222; }
+    /* Flash output: bright white burst on the banner */
+    #status-banner.flash-on { background: #fff; color: #111; border-color: #fff; }
+
+    /* ── Timer ── */
+    #timer {
+      text-align: center;
+      font-size: 22px;
+      letter-spacing: 0.1em;
+      padding: 4px;
+      background: #111;
+      color: #ccc;
+      border: 1px solid #555;
+      margin-bottom: 8px;
+    }
+
+    /* ── Character display ── */
+    #char-display {
+      min-height: 48px;
+      font-size: 24px;
+      letter-spacing: 0.12em;
+      line-height: 1.6;
+      word-break: break-all;
+      padding: 6px 8px;
+      background: #f9f9e8;
+      border: 1px solid #bbb;
+    }
+    #char-display .correct { color: #060; font-weight: bold; }
+    #char-display .wrong   { color: #c00; font-weight: bold; }
+    #char-display .pending { color: #aaa; }
+
+    /* ── Controls ── */
+    .controls {
       display: flex;
-      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+    .controls button {
+      flex: 1;
+      font-family: monospace;
+      font-size: 15px;
+      font-weight: bold;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 12px 8px;
+      min-height: 44px;
+      border: 2px solid #111;
+      cursor: pointer;
+      background: #e8e8e8;
+      color: #111;
+      transition: background 0.1s, color 0.1s;
+      touch-action: manipulation;
+    }
+    #btn-start  { background: #1a7f1a; color: #fff; border-color: #0d4d0d; }
+    #btn-start:hover  { background: #1d9c1d; }
+    #btn-pause  { background: #b87800; color: #fff; border-color: #6b4700; }
+    #btn-pause:hover  { background: #d48c00; }
+    #btn-stop   { background: #b82020; color: #fff; border-color: #6b1010; }
+    #btn-stop:hover   { background: #d42424; }
+    #btn-report { flex: 0 0 auto; padding: 12px 14px; font-size: 18px; letter-spacing: 0; text-transform: none; }
+    #btn-report:hover { background: #d0d0d0; }
+    button:disabled { opacity: 0.35; cursor: not-allowed; }
+
+    /* ── Progress bar ── */
+    .progress-wrap {
+      height: 8px;
+      background: #ccc;
+      border: 1px solid #aaa;
+      margin-bottom: 8px;
+    }
+    #progress-bar {
+      height: 100%;
+      width: 0%;
+      background: #1a7f1a;
+      transition: width 0.3s linear;
+    }
+
+    /* ── Mode selector ── */
+    .mode-selector { display: flex; gap: 16px; }
+    .mode-selector label {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 13px;
+      cursor: pointer;
+      text-transform: none;
+    }
+    .mode-selector input[type="radio"] { cursor: pointer; }
+
+    /* ── Koch char set display ── */
+    #koch-chars-display {
+      font-size: 13px;
+      letter-spacing: 0.15em;
+      color: #1a7f1a;
+      font-weight: bold;
+    }
+    .koch-new-char {
+      color: #b82020;
+    }
+    .koch-info {
+      margin-top: 6px;
+      font-size: 11px;
+      color: #555;
+    }
+
+    /* ── Level-up banner state ── */
+    #status-banner.levelup { color: #0f0; background: #003300; border-color: #0f0; }
+
+    /* ── Answer groups ── */
+    #char-display {
+      white-space: pre-wrap;
+      line-height: 2;
+    }
+
+    /* ── Stats panel ── */
+    .stats-summary {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+      margin-bottom: 8px;
+      font-size: 13px;
+    }
+    .stats-summary .stat-item {
+      display: flex;
+      flex-direction: column;
       align-items: center;
     }
-    .graph-bars {
-      display: flex;
-      gap: 10px;
-      align-items: flex-end;
-      min-height: 220px;
-      padding: 18px 20px 16px;
-      border-radius: 14px;
-      border: 1px solid var(--border);
-      background: #f9fafb;
-      overflow-x: auto;
-      overscroll-behavior-x: contain;
-      scroll-snap-type: x proximity;
+    .stats-summary .stat-value {
+      font-size: 22px;
+      font-weight: bold;
+      letter-spacing: 0.05em;
+      color: #1a7f1a;
     }
-    .graph-bars.empty {
+    .stats-summary .stat-label {
+      font-size: 11px;
+      color: #555;
+      text-transform: uppercase;
+    }
+    .char-stats-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      font-size: 12px;
+    }
+    .char-stat {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-width: 32px;
+      border: 1px solid #ccc;
+      background: #fafafa;
+      padding: 3px 4px;
+    }
+    .char-stat .cs-char {
+      font-size: 14px;
+      font-weight: bold;
+    }
+    .char-stat .cs-pct {
+      font-size: 10px;
+      color: #555;
+    }
+    .char-stat.cs-good     { border-color: #1a7f1a; background: #efffef; }
+    .char-stat.cs-mid      { border-color: #b87800; background: #fff8e0; }
+    .char-stat.cs-bad      { border-color: #b82020; background: #fff0f0; }
+    .char-stat.cs-none     { border-color: #ccc;    background: #f5f5f5; color: #999; }
+    .char-stat.cs-inactive { border-color: #e0e0e0; background: #f8f8f8; color: #ccc; }
+    .panel-title-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    /* ── On-screen tap keyboard (mobile) ── */
+    #touch-keyboard-panel { display: none; }
+    #touch-keyboard {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .touch-key {
+      font-family: monospace;
+      font-size: 18px;
+      font-weight: bold;
+      min-width: 44px;
+      min-height: 44px;
+      border: 2px solid #555;
+      background: #e8e8e8;
+      color: #111;
+      cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: var(--text-muted);
-      font-size: 0.95rem;
-      min-height: 140px;
+      flex: 1 0 44px;
+      max-width: 64px;
+      touch-action: manipulation;
+      transition: background 0.1s;
     }
-    .graph-bar {
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 8px;
-      color: var(--text-muted);
-      scroll-snap-align: end;
-      flex: 0 0 clamp(42px, 4vw, 60px);
-    }
-    .graph-bar span { z-index: 1; }
-    .graph-bar .bar {
-      width: 100%;
-      border-radius: 10px 10px 4px 4px;
-      background: linear-gradient(180deg, rgba(37, 99, 235, 0.95) 0%, rgba(37, 99, 235, 0.7) 65%, rgba(37, 99, 235, 0.4) 100%);
-      border: 1px solid rgba(37, 99, 235, 0.45);
-      box-shadow: 0 10px 18px -10px rgba(30, 64, 175, 0.55);
-      transition: height 0.35s ease, background 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
-      min-height: 6px;
-    }
-    .graph-bar .bar::after {
-      content: "";
-      display: block;
-      position: absolute;
-      inset: auto 0 0 0;
-      height: 6px;
-      background: rgba(37, 99, 235, 0.35);
-      border-radius: 10px;
-      filter: blur(8px);
-      opacity: 0;
-      transition: opacity 0.35s;
-    }
-    .graph-bar.current .bar {
-      background: linear-gradient(180deg, rgba(16, 185, 129, 0.95) 0%, rgba(16, 185, 129, 0.7) 65%, rgba(16, 185, 129, 0.45) 100%);
-      border-color: rgba(16, 185, 129, 0.6);
-      box-shadow: 0 12px 22px -8px rgba(16, 185, 129, 0.55);
-    }
-    .graph-bar.current .bar::after { opacity: 1; }
-    .graph-bar .letter { font-weight: 600; color: var(--text); }
-    .graph-bar .value { font-size: 0.75rem; letter-spacing: 0.06em; text-transform: uppercase; color: #1d4ed8; }
-    .graph-bar.current .value { color: #0f9d7a; }
-    
-    /* Table Styling */
-    .graph-table {
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      overflow: hidden;
-      background: var(--card-bg);
-      max-height: 0;
-      transition: max-height 0.3s ease;
-    }
-    .graph-table.open { max-height: 420px; }
-    table { width: 100%; border-collapse: collapse; }
-    th, td {
-      padding: 10px 14px;
-      border-bottom: 1px solid var(--border);
-      font-size: 0.9rem;
-      text-align: left;
-    }
-    th {
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      font-size: 0.75rem;
-      color: var(--text-muted);
-      background: #f9fafb;
-    }
-    tr.current-row { background: var(--accent-muted); }
-    .hint { font-size: 0.85rem; color: var(--text-muted); }
+    .touch-key:active, .touch-key:focus { background: #c0c0c0; outline: none; }
 
-    /* Dialog Styling */
-    dialog {
-      border: none;
-      border-radius: 18px;
-      padding: 28px;
-      background: var(--card-bg);
-      color: var(--text);
-      max-width: 640px;
-      width: 100%;
-      box-shadow: 0 24px 80px rgba(0, 0, 0, 0.15);
+    /* ── Signal output options ── */
+    .signal-options {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-top: 8px;
+      padding-top: 8px;
+      border-top: 1px solid #ddd;
+      align-items: center;
     }
-    dialog::backdrop { background: rgba(17, 24, 39, 0.6); }
-    .dialog-header {
+    .signal-options .signal-options-label {
+      font-size: 11px;
+      color: #555;
+      text-transform: uppercase;
+    }
+    .signal-options label {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 13px;
+      cursor: pointer;
+      text-transform: none;
+    }
+    .signal-options input[type="checkbox"] { cursor: pointer; }
+
+    /* ── Settings table ── */
+    .settings-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .settings-table th {
+      background: #eee;
+      border-bottom: 1px solid #ccc;
+      padding: 2px 6px;
+      text-align: left;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #555;
+    }
+    .settings-table td {
+      padding: 3px 6px;
+      border-bottom: 1px solid #eee;
+      vertical-align: middle;
+    }
+    .settings-table tbody tr:last-child td { border-bottom: none; }
+    .settings-table .metric-cell {
+      text-transform: uppercase;
+      font-size: 11px;
+      color: #555;
+      letter-spacing: 0.05em;
+      white-space: nowrap;
+    }
+    .settings-table .value-cell {
+      font-weight: bold;
+      min-width: 72px;
+    }
+    .settings-table .ctrl-cell { white-space: nowrap; }
+
+    /* ── Step (−/+) buttons ── */
+    .step-btn {
+      font-family: monospace;
+      font-size: 14px;
+      font-weight: bold;
+      padding: 2px 10px;
+      min-height: 28px;
+      border: 1px solid #999;
+      background: #e8e8e8;
+      color: #111;
+      cursor: pointer;
+      touch-action: manipulation;
+    }
+    .step-btn:hover { background: #d0d0d0; }
+
+    /* ── Frequency preset buttons ── */
+    .freq-preset {
+      font-family: monospace;
+      font-size: 12px;
+      font-weight: bold;
+      padding: 2px 7px;
+      min-height: 28px;
+      border: 1px solid #999;
+      background: #e8e8e8;
+      color: #111;
+      cursor: pointer;
+      touch-action: manipulation;
+    }
+    .freq-preset:hover { background: #d0d0d0; }
+    .freq-preset.active {
+      background: #1a7f1a;
+      color: #fff;
+      border-color: #0d4d0d;
+    }
+
+    /* ── Small-screen tweaks ── */
+    @media (max-width: 480px) {
+      body { padding: 8px; }
+      .settings-grid { grid-template-columns: repeat(2, 1fr); }
+      .stats-summary { gap: 12px; }
+      .stats-summary .stat-value { font-size: 18px; }
+      #touch-keyboard-panel { display: block; }
+    }
+
+    /* ── Vanity modal ── */
+    #vanity-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.72);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+    #vanity-overlay.open { display: flex; }
+    #vanity-modal {
+      background: #111;
+      color: #eee;
+      border: 2px solid #444;
+      max-width: 440px;
+      width: 100%;
+      font-family: monospace;
+    }
+    #vanity-modal .vm-header {
+      background: #222;
+      border-bottom: 2px solid #444;
+      padding: 10px 14px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 18px;
     }
-    .letter-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(48px, 1fr));
-      gap: 10px;
-      margin-bottom: 20px;
+    #vanity-modal .vm-title {
+      font-size: 15px;
+      font-weight: bold;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #0f0;
     }
-    .letter-chip {
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 10px 0;
-      text-align: center;
-      font-weight: 600;
+    #vanity-modal .vm-date {
+      font-size: 11px;
+      color: #666;
       letter-spacing: 0.05em;
-      cursor: pointer;
-      transition: border-color 0.2s, background 0.2s, transform 0.1s;
-      background: #f9fafb;
-      color: var(--text);
-      user-select: none;
     }
-    .letter-chip:hover {
-      transform: translateY(-1px);
-      background: #f3f4f6;
+    #vanity-modal .vm-body {
+      padding: 14px;
     }
-    .letter-chip.active {
-      border-color: var(--accent);
-      background: var(--accent-muted);
-      color: var(--accent);
+    #vanity-modal .vm-score {
+      text-align: center;
+      font-size: clamp(42px, 12vw, 72px);
+      font-weight: bold;
+      letter-spacing: 0.05em;
+      color: #0f0;
+      line-height: 1;
+      margin-bottom: 4px;
     }
-    .dialog-actions {
+    #vanity-modal.vm-fail .vm-score { color: #fa0; }
+    #vanity-modal .vm-score-label {
+      text-align: center;
+      font-size: 11px;
+      color: #666;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 14px;
+    }
+    #vanity-modal .vm-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: #333;
+      border: 1px solid #333;
+      margin-bottom: 14px;
+    }
+    #vanity-modal .vm-cell {
+      background: #1a1a1a;
+      padding: 8px 10px;
       display: flex;
-      justify-content: flex-end;
-      gap: 12px;
+      flex-direction: column;
+      align-items: center;
     }
-
-    /* NEW: Responsive Layout */
-    @media (max-width: 1024px) {
-      .layout-wrapper {
-        /* Stack columns */
-        grid-template-columns: 1fr;
-      }
-      .sidebar-panel {
-        /* Un-stick sidebar */
-        position: static;
-        /* Make sidebar cards horizontal */
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 24px;
-      }
-      .controls-row {
-        /* Allow horizontal controls again */
-        flex-direction: row;
-        align-items: center;
-      }
+    #vanity-modal .vm-cell-value {
+      font-size: 20px;
+      font-weight: bold;
+      letter-spacing: 0.05em;
+      color: #ccc;
     }
-    @media (max-width: 720px) {
-      .layout-wrapper {
-        padding: 24px 16px;
-        gap: 24px;
-      }
-      header {
-        padding: 24px 16px;
-      }
-      h1 {
-        font-size: 1.8rem;
-      }
-      p.lead {
-        font-size: 0.95rem;
-      }
-      .sidebar-panel {
-        /* Stack sidebar cards again */
-        grid-template-columns: 1fr;
-      }
-      .controls-row {
-        flex-direction: column;
-        align-items: stretch;
-      }
+    #vanity-modal .vm-cell-label {
+      font-size: 10px;
+      color: #666;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-top: 2px;
     }
+    #vanity-modal .vm-levelup-badge {
+      display: none;
+      text-align: center;
+      background: #003300;
+      border: 1px solid #0f0;
+      color: #0f0;
+      font-size: 13px;
+      font-weight: bold;
+      letter-spacing: 0.1em;
+      padding: 6px;
+      margin-bottom: 14px;
+      text-transform: uppercase;
+    }
+    #vanity-modal.levelup .vm-levelup-badge { display: block; }
+    #vanity-modal .vm-body-profile { display: none; }
+    #vanity-modal.profile-mode .vm-body-session { display: none; }
+    #vanity-modal.profile-mode .vm-body-profile { display: block; }
+    #vanity-modal .vm-footer {
+      padding: 0 14px 14px;
+      text-align: center;
+    }
+    #btn-vanity-close {
+      font-family: monospace;
+      font-size: 13px;
+      font-weight: bold;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 8px 24px;
+      border: 2px solid #555;
+      background: #222;
+      color: #ccc;
+      cursor: pointer;
+      min-height: 36px;
+      touch-action: manipulation;
+    }
+    #btn-vanity-close:hover { background: #333; border-color: #888; }
   </style>
 </head>
 <body>
+<div class="wrap">
+  <h1>Morse Trainer</h1>
 
-  <div class="page-container">
+  <!-- Status banner (Strava-style session state) -->
+  <div id="status-banner" class="ready">READY</div>
 
-    <header>
-      <h1>Morse Teacher (jscwlib)</h1>
-      <p class="lead">
-        Practice copying Morse code with adaptive difficulty. <b>Choose a letter
-        set</b>, click start,
-        and type the character you hear.
-      </p>
-    </header>
+  <!-- Timer + progress -->
+  <div id="timer">00:00</div>
+  <div class="progress-wrap"><div id="progress-bar"></div></div>
 
-    <div class="layout-wrapper">
-      
-      <aside class="sidebar-panel">
-        
-        <article class="card controls">
-          <h2>Session Setup</h2>
-          <div class="controls-row">
-            <label>
-              Alphabet preset
-              <select id="presetSelect">
-                <option value="starter">Starter (C, Q)</option>
-                <option value="koch">Koch Progression</option>
-                <option value="letters">Letters A–Z</option>
-                <option value="alphanumeric">Letters + Digits</option>
-                <option value="full">Ward Cunningham Set</option>
-                <option value="zo-difficult">ZO Difficult</option>
-                <option value="custom">Custom selection…</option>
-              </select>
-            </label>
-            <label>
-              Default miss chance (%)
-              <input type="number" id="defaultExpect" value="100" min="0" max="100" step="5" disabled>
-            </label>
-            <button class="secondary" id="customizeButton" type="button">Pick letters</button>
-          </div>
-          <div class="controls-row">
-            <label style="flex:1; min-width: 100%;">
-              Output volume
-              <input type="range" id="volumeSlider" min="0" max="100" value="30">
-              <span class="range-value" id="volumeValue">30%</span>
-            </label>
-            <label style="flex:1; min-width: 100%;">
-              Morse speed (WPM)
-              <input type="range" id="speedSlider" min="5" max="60" value="18">
-              <span class="range-value" id="speedValue">18 WPM</span>
-            </label>
-            <label style="flex:1; min-width: 100%;">
-              Session length (minutes)
-              <input type="range" id="sessionLengthSlider" min="1" max="30" value="10">
-              <span class="range-value" id="sessionLengthValue">10 min</span>
-            </label>
-          </div>
-          <div class="controls-row">
-            <button class="action" id="startButton" type="button">Start session</button>
-            <button class="secondary" id="restartButton" type="button" disabled>Restart</button>
-          </div>
-        </article>
-        
-        <article class="card status-card">
-          <h2>Live Status</h2>
-          <div class="status-grid">
-            <span>Current letter<strong id="currentLetter">–</strong></span>
-            <span>Miss chance<strong id="currentExpect">–</strong></span>
-            <span>Last response<strong id="lastMetric">–</strong></span>
-            <span>Time left<strong id="timeRemaining">–</strong></span>
-            <span class="status-full-width">Preset<strong id="activePresetLabel">Starter (C, Q)</strong></span>
-          </div>
-        </article>
+  <!-- Session controls -->
+  <div class="controls">
+    <button id="btn-start">▶ Start</button>
+    <button id="btn-pause" disabled>⏸ Pause</button>
+    <button id="btn-stop"  disabled>■ Stop</button>
+    <button id="btn-report" title="Show overall profile stats">📊</button>
+  </div>
 
-      </aside>
-      
-      <main class="main-panel">
-        
-        <article class="card entry-panel" id="entryPanel">
-          <h3>Type what you hear</h3>
-          <p class="entry-hint">Letters play one at a time. Type exactly what you hear—nothing advances until you copy the letter. Press Enter whenever you need a break.</p>
-          <div class="letter-hint" id="letterHint" hidden></div>
-          <input type="text" id="answerField" placeholder="Type letter here" maxlength="1" autocomplete="off" spellcheck="false" disabled>
-        </article>
-
-        <article class="card stats-card">
-          <div class="stats-header">
-            <div>
-              <h2>Overall Progress</h2>
-              <p class="stats-subtitle">Cumulative on this device across all sessions. Reset only when you want a fresh baseline.</p>
-            </div>
-            <button class="secondary" id="resetStatsButton" type="button">Reset progress</button>
-          </div>
-          <div class="stats-grid">
-            <div class="stat">
-              <div class="stat-label">Sessions (all time)</div>
-              <div class="stat-value" id="statSessions">0</div>
-              <div class="stat-meta" id="statLetters">Letters unlocked: 0</div>
-              <div class="stat-note">Counts each fresh start, not resumes.</div>
-            </div>
-            <div class="stat">
-              <div class="stat-label">Answers (all time)</div>
-              <div class="stat-value" id="statAnswers">0</div>
-              <div class="stat-meta" id="statAccuracy">Accuracy: 0%</div>
-              <div class="stat-note">Correct vs total keystrokes.</div>
-            </div>
-            <div class="stat">
-              <div class="stat-label">Current streak</div>
-              <div class="stat-value" id="statStreak">0</div>
-              <div class="stat-meta" id="statBestStreak">Best: 0</div>
-              <div class="stat-note">Breaks on a miss or pause; best is all-time.</div>
-            </div>
-            <div class="stat">
-              <div class="stat-label">Response time (all time)</div>
-              <div class="stat-value" id="statAvgTime">–</div>
-              <div class="stat-meta" id="statFastest">Fastest: –</div>
-              <div class="stat-note">Measured from tone start; lower is better.</div>
-            </div>
-          </div>
-        </article>
-        
-        <article class="card graph-wrapper">
-          <div class="graph-header">
-            <h2>Letter Focus</h2>
-            <div class="graph-toggle">
-              <button class="secondary" id="toggleGraphView" type="button">Show table</button>
-            </div>
-          </div>
-          <div class="graph-bars empty" id="graphBars">
-            Select a preset and start the session to see live progress.
-          </div>
-          <div class="graph-table" id="graphTableWrapper">
-            <table>
-              <thead>
-                <tr>
-                  <th>Letter</th>
-                  <th>Morse</th>
-                  <th>Miss %</th>
-                </tr>
-              </thead>
-              <tbody id="graphTableBody"></tbody>
-            </table>
-          </div>
-        </article>
-
-      </main>
-      
-    </div> </div> <dialog id="letterDialog">
-    <div class="dialog-header">
-      <h2>Choose letters</h2>
-      <button class="secondary" id="closeDialog" type="button">Close</button>
+  <!-- Character replay -->
+  <div class="panel">
+    <div class="panel-title">Your answers</div>
+    <div class="panel-body">
+      <div id="char-display"><span class="pending">—</span></div>
     </div>
-    <p class="hint">Select the characters you want to practice. The session uses the default expect value unless the preset defines its own progression.</p>
-    <div class="letter-grid" id="letterGrid"></div>
-    <div class="dialog-actions">
-      <button class="secondary" id="clearSelection" type="button">Clear</button>
-      <button class="action" id="applySelection" type="button">Use selection</button>
+  </div>
+
+  <!-- On-screen keyboard for mobile (hidden on desktop via media query) -->
+  <div class="panel" id="touch-keyboard-panel">
+    <div class="panel-title">Tap the letter you heard</div>
+    <div class="panel-body">
+      <div id="touch-keyboard"></div>
     </div>
-  </dialog>
-
-  <script src="https://fkurz.net/ham/jscwlib/releases/jscwlib-0.3.0.js"></script>
-  <script>
-    // All the original JavaScript functionality is retained without modification.
-    const MORSE_MAP = {
-      A: ".-",
-      B: "-...",
-      C: "-.-.",
-      D: "-..",
-      E: ".",
-      F: "..-.",
-      G: "--.",
-      H: "....",
-      I: "..",
-      J: ".---",
-      K: "-.-",
-      L: ".-..",
-      M: "--",
-      N: "-.",
-      O: "---",
-      P: ".--.",
-      Q: "--.-",
-      R: ".-.",
-      S: "...",
-      T: "-",
-      U: "..-",
-      V: "...-",
-      W: ".--",
-      X: "-..-",
-      Y: "-.--",
-      Z: "--..",
-      0: "-----",
-      1: ".----",
-      2: "..---",
-      3: "...--",
-      4: "....-",
-      5: ".....",
-      6: "-....",
-      7: "--...",
-      8: "---..",
-      9: "----.",
-      ".": ".-.-.-",
-      ",": "--..--",
-      "?": "..--..",
-      "/": "-..-.",
-      "+": ".-.-.",
-      "=": "-...-",
-      "-": "-....-",
-      "'": ".----.",
-      "\"": ".-..-.",
-      "@": ".--.-.",
-      "!": "-.-.--",
-      ":": "---...",
-      ";": "-.-.-.",
-      "(": "-.--.",
-      ")": "-.--.-",
-      "&": ".-...",
-      "_": "..--.-"
-    };
-
-    const KOCH_SEQUENCE = [
-      "K", "M", "R", "S", "U", "A", "P", "T", "L", "O", "W", "I", "N", "J", "E", "F", "0", "Y",
-      ",", "V", "G", "5", "/", "Q", "9", "Z", "H", "3", "8", "B", "?", "4", "2", "7", "C", "1", "D", "6", "X"
-    ];
-
-    const PRESET_DATA = {
-      starter: {
-        name: "Starter (C, Q)",
-        description: "Begin with two letters to establish rhythm.",
-        data: "C -.-. 100\nQ --.- 60"
-      },
-      koch: {
-        name: "Koch Progression",
-        description: "Classic Koch order, introducing one letter at a time.",
-        build: () => KOCH_SEQUENCE.map((letter, index) => ({
-          letter,
-          morse: MORSE_MAP[letter],
-          expect: index < 2 ? 90 : null
-        }))
-      },
-      letters: {
-        name: "Letters A–Z",
-        description: "Full alphabet set.",
-        build: (expect) => "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("").map(letter => ({
-          letter,
-          morse: MORSE_MAP[letter],
-          expect
-        }))
-      },
-      alphanumeric: {
-        name: "Letters + Digits",
-        description: "A–Z plus numerals 0–9.",
-        build: (expect) => "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789".split("").map(letter => ({
-          letter,
-          morse: MORSE_MAP[letter],
-          expect
-        }))
-      },
-      full: {
-        name: "Ward Cunningham Set",
-        description: "Original plugin data file.",
-        data: `
-Q --.- 60
-7 --... 70
-Z --..
-G --.
-0 -----
-9 ----.
-8 ---..
-O ---
-1 .----
-J .---
-P .--.
-W .--
-L .-..
-R .-.
-A .-
-M --
-6 -....
-B -...
-X -..-
-D -..
-Y -.--
-C -.-.
-K -.-
-N -.
-2 ..---
-3 ...--
-F ..-.
-U ..-
-4 ....-
-5 .....
-V ...-
-H ....
-S ...
-I ..
-T -
-E .
-`.trim()
-      },
-      "zo-difficult": {
-        name: "ZO Difficult",
-        description: "Focus on higher-mistake characters reported by operators.",
-        build: (expect) => "SH5DB678".split("").map(letter => ({
-          letter,
-          morse: MORSE_MAP[letter],
-          expect
-        }))
-      }
-    };
-
-    const LETTER_POOL = [
-      ..."ABCDEFGHIJKLMNOPQRSTUVWXYZ",
-      ..."0123456789",
-      ".", ",", "?", "/", "+", "=", "-", "'", "\"", "@", "!", ":", ";", "(", ")", "&", "_"
-    ].filter((item, index, array) => array.indexOf(item) === index);
-
-    const presetSelect = document.getElementById("presetSelect");
-    const defaultExpectInput = document.getElementById("defaultExpect");
-    const volumeSlider = document.getElementById("volumeSlider");
-    const volumeValue = document.getElementById("volumeValue");
-    const speedSlider = document.getElementById("speedSlider");
-    const speedValue = document.getElementById("speedValue");
-    const sessionLengthSlider = document.getElementById("sessionLengthSlider");
-    const sessionLengthValue = document.getElementById("sessionLengthValue");
-    const startButton = document.getElementById("startButton");
-    const restartButton = document.getElementById("restartButton");
-    const answerField = document.getElementById("answerField");
-    const currentLetterEl = document.getElementById("currentLetter");
-    const currentExpectEl = document.getElementById("currentExpect");
-    const lastMetricEl = document.getElementById("lastMetric");
-    const timeRemainingEl = document.getElementById("timeRemaining");
-    const activePresetLabel = document.getElementById("activePresetLabel");
-    const graphBarsEl = document.getElementById("graphBars");
-    const graphTableWrapper = document.getElementById("graphTableWrapper");
-    const graphTableBody = document.getElementById("graphTableBody");
-    const toggleGraphViewButton = document.getElementById("toggleGraphView");
-    const dialog = document.getElementById("letterDialog");
-    const customizeButton = document.getElementById("customizeButton");
-    const closeDialogButton = document.getElementById("closeDialog");
-    const applySelectionButton = document.getElementById("applySelection");
-    const clearSelectionButton = document.getElementById("clearSelection");
-    const letterGrid = document.getElementById("letterGrid");
-    const entryPanel = document.getElementById("entryPanel");
-    const letterHint = document.getElementById("letterHint");
-    const statSessionsEl = document.getElementById("statSessions");
-    const statLettersEl = document.getElementById("statLetters");
-    const statAnswersEl = document.getElementById("statAnswers");
-    const statAccuracyEl = document.getElementById("statAccuracy");
-    const statStreakEl = document.getElementById("statStreak");
-    const statBestStreakEl = document.getElementById("statBestStreak");
-    const statAvgTimeEl = document.getElementById("statAvgTime");
-    const statFastestEl = document.getElementById("statFastest");
-    const resetStatsButton = document.getElementById("resetStatsButton");
-
-    let alphabet = [];
-    let cwPlayer = null;
-    let sessionActive = false;
-    let trial = null;
-    let observeScore = 0;
-    let observeTimer = null;
-    let replayTimer = null;
-    let lastInputValue = "";
-    let customSelection = new Set();
-    let hintTimer = null;
-    let sessionInitialized = false;
-    let isOnBreak = false;
-    let hasPersistedAlphabet = false;
-    let persistedPresetKey = null;
-    let sessionTimer = null;
-    let sessionEndTime = null;
-    let stats = null;
-
-    const STORAGE_KEY = "morseTeacher:v1";
-    const NOTES_KEY = "morseTeacher:notes";
-    const STATS_KEY = "morseTeacher:stats";
-
-    const HINT_DELAY_MS = 3200;
-
-    const computeVolume = (sliderValue) => {
-      const clamped = Math.min(Math.max(Number(sliderValue) || 0, 0), 100);
-      return Number((clamped / 100).toFixed(3));
-    };
-
-    const currentVolumeValue = () => computeVolume(volumeSlider.value);
-
-    const updateVolumeLabel = () => {
-      const effective = currentVolumeValue();
-      const percent = Math.round(effective * 100);
-      volumeValue.textContent = `${percent}%`;
-      return effective;
-    };
-
-    const clampPercent = (value) => Math.max(0, Math.min(100, Number(value) || 0));
-
-    const currentWpmValue = () => Math.max(5, Math.min(60, Number(speedSlider.value) || 18));
-    const currentEffValue = () => {
-      const wpm = currentWpmValue();
-      return Math.max(4, Math.min(wpm - 4, Math.round(wpm * 0.7)));
-    };
-
-    const updateSpeedLabel = () => {
-      const wpm = currentWpmValue();
-      let eff = currentEffValue();
-      if (eff >= wpm) {
-        eff = Math.max(5, wpm - 5);
-      }
-      speedValue.textContent = `${wpm} WPM`;
-      return { wpm, eff };
-    };
-
-    const currentSessionLength = () => Math.max(1, Math.min(30, Number(sessionLengthSlider.value) || 10));
-
-    const updateSessionLengthLabel = () => {
-      const minutes = currentSessionLength();
-      sessionLengthValue.textContent = `${minutes} min`;
-      return minutes;
-    };
-
-    const createDefaultStats = () => ({
-      sessions: 0,
-      trials: 0,
-      correct: 0,
-      incorrect: 0,
-      streak: 0,
-      bestStreak: 0,
-      totalTicks: 0,
-      fastestTicks: null
-    });
-
-    const hydrateStats = (raw) => {
-      const base = createDefaultStats();
-      if (!raw || typeof raw !== "object") return base;
-      return {
-        sessions: Math.max(0, Number(raw.sessions) || 0),
-        trials: Math.max(0, Number(raw.trials) || 0),
-        correct: Math.max(0, Number(raw.correct) || 0),
-        incorrect: Math.max(0, Number(raw.incorrect) || 0),
-        streak: Math.max(0, Number(raw.streak) || 0),
-        bestStreak: Math.max(0, Number(raw.bestStreak) || 0),
-        totalTicks: Math.max(0, Number(raw.totalTicks) || 0),
-        fastestTicks: raw.fastestTicks == null ? null : Math.max(0, Number(raw.fastestTicks) || 0)
-      };
-    };
-
-    const ticksToSecondsLabel = (ticks) => {
-      if (ticks == null) return "–";
-      const seconds = (ticks * 0.06);
-      if (seconds >= 10) return `${seconds.toFixed(1)}s`;
-      if (seconds >= 1) return `${seconds.toFixed(2)}s`;
-      return `${seconds.toFixed(3)}s`;
-    };
-
-    const updateStatsUI = () => {
-      if (!stats) return;
-      const unlocked = alphabet.filter(item => item.expect != null).length;
-      const answers = stats.trials;
-      const accuracy = answers > 0 ? Math.round((stats.correct / answers) * 100) : 0;
-      const avgTicks = stats.correct > 0 ? stats.totalTicks / stats.correct : null;
-
-      statSessionsEl.textContent = stats.sessions;
-      statLettersEl.textContent = `Letters unlocked: ${unlocked}`;
-      statAnswersEl.textContent = answers;
-      statAccuracyEl.textContent = `Accuracy: ${accuracy}%`;
-      statStreakEl.textContent = stats.streak;
-      statBestStreakEl.textContent = `Best: ${stats.bestStreak}`;
-      statAvgTimeEl.textContent = ticksToSecondsLabel(avgTicks);
-      statFastestEl.textContent = `Fastest: ${ticksToSecondsLabel(stats.fastestTicks)}`;
-    };
-
-    const recordSessionStart = () => {
-      stats.sessions += 1;
-      stats.streak = 0;
-      updateStatsUI();
-      saveState();
-    };
-
-    const recordCorrect = (ticks) => {
-      stats.trials += 1;
-      stats.correct += 1;
-      stats.streak += 1;
-      stats.bestStreak = Math.max(stats.bestStreak, stats.streak);
-      stats.totalTicks += Math.max(0, Number(ticks) || 0);
-      if (stats.fastestTicks == null || ticks < stats.fastestTicks) {
-        stats.fastestTicks = Math.max(0, Number(ticks) || 0);
-      }
-      updateStatsUI();
-      saveState();
-    };
-
-    const recordIncorrect = () => {
-      stats.trials += 1;
-      stats.incorrect += 1;
-      stats.streak = 0;
-      updateStatsUI();
-      saveState();
-    };
-
-    const resetStats = () => {
-      stats = createDefaultStats();
-      updateStatsUI();
-      saveState();
-      lastMetricEl.textContent = "Progress reset";
-    };
-
-    const formatTimeRemaining = (ms) => {
-      if (ms <= 0) return "0:00";
-      const totalSeconds = Math.ceil(ms / 1000);
-      const minutes = Math.floor(totalSeconds / 60);
-      const seconds = totalSeconds % 60;
-      return `${minutes}:${seconds.toString().padStart(2, '0')}`;
-    };
-
-    const updateTimeDisplay = () => {
-      if (!sessionActive || !sessionEndTime) {
-        timeRemainingEl.textContent = "–";
-        return;
-      }
-      const remaining = sessionEndTime - Date.now();
-      if (remaining <= 0) {
-        timeRemainingEl.textContent = "0:00";
-        handleSessionTimeout();
-        return;
-      }
-      timeRemainingEl.textContent = formatTimeRemaining(remaining);
-    };
-
-    const startSessionTimer = () => {
-      const minutes = currentSessionLength();
-      sessionEndTime = Date.now() + (minutes * 60 * 1000);
-      clearInterval(sessionTimer);
-      sessionTimer = setInterval(updateTimeDisplay, 1000);
-      updateTimeDisplay();
-    };
-
-    const pauseSessionTimer = () => {
-      clearInterval(sessionTimer);
-      sessionTimer = null;
-    };
-
-    const handleSessionTimeout = () => {
-      pauseSessionTimer();
-      sessionEndTime = null;
-      takeBreak();
-      lastMetricEl.textContent = "Session ended";
-    };
-
-    const cancelHintTimer = () => {
-      clearTimeout(hintTimer);
-      hintTimer = null;
-    };
-
-    const hideHint = () => {
-      letterHint.textContent = "";
-      letterHint.classList.remove("visible", "paused");
-      if (!letterHint.hasAttribute("hidden")) {
-        letterHint.setAttribute("hidden", "hidden");
-      }
-    };
-
-    const scheduleHint = () => {
-      cancelHintTimer();
-      if (!sessionActive || !trial) return;
-      hintTimer = setTimeout(() => {
-        if (!sessionActive || !trial) return;
-        showHint();
-      }, HINT_DELAY_MS);
-    };
-
-    const showHint = () => {
-      if (!sessionActive || !trial) return;
-      letterHint.textContent = `${trial.letter} — ${trial.morse}`;
-      letterHint.classList.remove("paused");
-      letterHint.classList.add("visible");
-      letterHint.removeAttribute("hidden");
-      playLetter();
-      scheduleHint();
-    };
-
-    const showPauseMessage = () => {
-      cancelHintTimer();
-      letterHint.textContent = "Session paused. Press Resume to continue.";
-      letterHint.classList.add("visible", "paused");
-      letterHint.removeAttribute("hidden");
-    };
-
-    // --- Persistence helpers ---
-    const saveState = () => {
-      try {
-        const state = {
-          presetKey: presetSelect.value,
-          defaultExpect: clampPercent(defaultExpectInput.value || 100),
-          volume: clampPercent(volumeSlider.value || 0),
-          speed: currentWpmValue(),
-          sessionLength: currentSessionLength(),
-          alphabet: alphabet.map(({ letter, morse, expect }) => ({ letter, morse, expect })),
-          customSelection: Array.from(customSelection),
-          tableOpen: graphTableWrapper.classList.contains("open"),
-          stats
-        };
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-        localStorage.setItem(STATS_KEY, JSON.stringify(stats));
-      } catch (e) { /* ignore persistence errors */ }
-    };
-
-    const loadState = () => {
-      try {
-        const raw = localStorage.getItem(STORAGE_KEY);
-        if (!raw) return;
-        const state = JSON.parse(raw);
-
-        if (state.presetKey) {
-          presetSelect.value = state.presetKey;
-          activePresetLabel.textContent = PRESET_DATA[state.presetKey]?.name || "Custom";
-          persistedPresetKey = state.presetKey;
-        }
-        if (typeof state.defaultExpect === "number") {
-          defaultExpectInput.value = clampPercent(state.defaultExpect);
-        }
-        if (typeof state.volume === "number") {
-          volumeSlider.value = clampPercent(state.volume);
-          updateVolumeLabel();
-        }
-        if (typeof state.speed === "number") {
-          speedSlider.value = Math.max(5, Math.min(60, state.speed));
-          updateSpeedLabel();
-        }
-        if (typeof state.sessionLength === "number") {
-          sessionLengthSlider.value = Math.max(1, Math.min(30, state.sessionLength));
-          updateSessionLengthLabel();
-        }
-
-        const storedStats = state.stats || JSON.parse(localStorage.getItem(STATS_KEY) || "null");
-        stats = hydrateStats(storedStats);
-        updateStatsUI();
-
-        customSelection = new Set(state.customSelection || []);
-        alphabet = Array.isArray(state.alphabet)
-          ? state.alphabet
-              .filter(x => x && x.letter && x.morse)
-              .map(x => ({
-                letter: x.letter,
-                morse: x.morse,
-                expect: x.expect == null ? null : clampPercent(x.expect)
-              }))
-          : [];
-        hasPersistedAlphabet = Array.isArray(state.alphabet) && state.alphabet.length > 0;
-
-        renderGraph();
-
-        if (state.tableOpen) {
-          graphTableWrapper.classList.add("open");
-          toggleGraphViewButton.textContent = "Hide table";
-        } else {
-          graphTableWrapper.classList.remove("open");
-          toggleGraphViewButton.textContent = "Show table";
-        }
-      } catch (e) { /* ignore load errors */ }
-    };
-
-    const saveNotes = () => {
-      try { localStorage.setItem(NOTES_KEY, answerField.value || ""); } catch (e) { /* ignore */ }
-    };
-
-    const loadNotes = () => {
-      try {
-        const v = localStorage.getItem(NOTES_KEY);
-        if (v != null) {
-          answerField.value = v;
-        }
-      } catch (e) { /* ignore */ }
-    };
-
-    const initLetterGrid = () => {
-      letterGrid.innerHTML = "";
-      LETTER_POOL.forEach(letter => {
-        const chip = document.createElement("button");
-        chip.type = "button";
-        chip.className = "letter-chip";
-        chip.textContent = letter;
-        chip.dataset.letter = letter;
-        chip.addEventListener("click", () => {
-          if (chip.classList.toggle("active")) {
-            customSelection.add(letter);
-          } else {
-            customSelection.delete(letter);
-          }
-        });
-        letterGrid.appendChild(chip);
-      });
-    };
-
-    const syncLetterGridSelection = () => {
-      const chips = letterGrid.querySelectorAll(".letter-chip");
-      chips.forEach(chip => {
-        const letter = chip.dataset.letter;
-        if (customSelection.has(letter)) {
-          chip.classList.add("active");
-        } else {
-          chip.classList.remove("active");
-        }
-      });
-    };
-
-    const parsePresetData = (presetKey, expectFallback) => {
-      const preset = PRESET_DATA[presetKey];
-      if (!preset) return [];
-
-      if (typeof preset.build === "function") {
-        return preset.build(expectFallback).map(item => ({
-          letter: item.letter.toUpperCase(),
-          morse: item.morse,
-          expect: item.expect == null ? null : clampPercent(item.expect)
-        }));
-      }
-
-      return preset.data
-        .split("\n")
-        .map(line => line.trim())
-        .filter(Boolean)
-        .map(line => {
-          const match = line.match(/^(\S)\s+([.\-]+)(?:\s+(\d+))?$/);
-          if (!match) return null;
-          const [, letter, morse, expectValue] = match;
-          const percent = expectValue != null ? clampPercent(expectValue) : expectFallback;
-          return {
-            letter: letter.toUpperCase(),
-            morse,
-            expect: clampPercent(percent)
-          };
-        })
-        .filter(Boolean);
-    };
-
-    const buildCustomAlphabet = (expectFallback) => {
-      return Array.from(customSelection).map(letter => ({
-        letter,
-        morse: MORSE_MAP[letter],
-        expect: clampPercent(expectFallback)
-      })).filter(item => item.morse);
-    };
-
-    const resetSessionState = () => {
-      sessionActive = false;
-      trial = null;
-      observeScore = 0;
-      lastInputValue = "";
-      currentLetterEl.textContent = "–";
-      currentExpectEl.textContent = "–";
-      lastMetricEl.textContent = "–";
-      answerField.value = "";
-      answerField.setAttribute("placeholder", "Press Enter to start");
-      entryPanel.classList.remove("focused");
-      cancelHintTimer();
-      hideHint();
-      isOnBreak = false;
-      sessionInitialized = false;
-      clearInterval(observeTimer);
-      observeTimer = null;
-      clearTimeout(replayTimer);
-      replayTimer = null;
-      pauseSessionTimer();
-      sessionEndTime = null;
-      timeRemainingEl.textContent = "–";
-      if (stats) {
-        stats.streak = 0;
-        updateStatsUI();
-      }
-      renderGraph();
-    };
-
-    const renderGraph = () => {
-      const activeLetters = alphabet.filter(item => typeof item.expect === "number" && item.expect >= 0);
-      if (!activeLetters.length) {
-        graphBarsEl.classList.add("empty");
-        graphBarsEl.innerHTML = "Letters will appear here once the session unlocks them.";
-      } else {
-        graphBarsEl.classList.remove("empty");
-        graphBarsEl.innerHTML = "";
-        const maxExpect = Math.max(100, ...activeLetters.map(item => item.expect));
-        activeLetters.forEach(item => {
-          const wrapper = document.createElement("div");
-          wrapper.className = "graph-bar";
-          if (trial && trial.letter === item.letter) {
-            wrapper.classList.add("current");
-          }
-
-          const bar = document.createElement("div");
-          bar.className = "bar";
-          const cappedExpect = Math.max(0, Math.min(100, item.expect));
-          const chartHeight = 200;
-          const barHeight = Math.max(6, Math.round((cappedExpect / Math.max(1, maxExpect)) * chartHeight));
-          bar.style.height = `${barHeight}px`;
-          bar.title = `${item.letter} (${item.morse}) · Miss chance ${Math.round(item.expect)}%`;
-
-          const letterLabel = document.createElement("span");
-          letterLabel.className = "letter";
-          letterLabel.textContent = item.letter;
-
-          const valueLabel = document.createElement("span");
-          valueLabel.className = "value";
-          valueLabel.textContent = `${Math.round(item.expect)}%`;
-
-          wrapper.appendChild(bar);
-          wrapper.appendChild(letterLabel);
-          wrapper.appendChild(valueLabel);
-          graphBarsEl.appendChild(wrapper);
-        });
-      }
-
-      renderGraphTable();
-      updateStatsUI();
-      saveState();
-    };
-
-    const renderGraphTable = () => {
-      graphTableBody.innerHTML = "";
-      alphabet.forEach(item => {
-        const row = document.createElement("tr");
-        if (trial && trial.letter === item.letter) {
-          row.classList.add("current-row");
-        }
-        const expectValue = typeof item.expect === "number" ? `${Math.round(item.expect)}%` : "–";
-        row.innerHTML = `
-          <td>${item.letter}</td>
-          <td>${item.morse || "· ·"}</td>
-          <td>${expectValue}</td>
-        `;
-        graphTableBody.appendChild(row);
-      });
-    };
-
-    const activatePlayer = () => {
-      const { wpm, eff } = updateSpeedLabel();
-      const volumeSetting = updateVolumeLabel();
-      if (!cwPlayer) {
-        cwPlayer = new jscw({ freq: 650 });
-        cwPlayer.onPlay = () => {
-          cwPlayer.setVolume(currentVolumeValue());
-        };
-        cwPlayer.init();
-      }
-      cwPlayer.setWpm(wpm);
-      cwPlayer.setEff(eff);
-      cwPlayer.setVolume(volumeSetting);
-      cwPlayer.setFreq(650);
-      cwPlayer.setText("");
-    };
-
-    const scheduleObserveTimer = () => {
-      clearInterval(observeTimer);
-      observeTimer = setInterval(() => {
-        observeScore = Math.min(observeScore + 1, 100);
-      }, 60);
-    };
-
-    const playLetter = () => {
-      if (!cwPlayer || !trial || !sessionActive) return;
-      clearTimeout(replayTimer);
-      cwPlayer.stop();
-      cwPlayer.setText(trial.letter);
-      cwPlayer.setVolume(currentVolumeValue());
-      cwPlayer.play();
-      replayTimer = setTimeout(() => {
-        playLetter();
-      }, 4200);
-    };
-
-    const chooseTrial = () => {
-      const activeChoices = alphabet.filter(item => typeof item.expect === "number" && item.expect >= 0);
-      const totalArea = activeChoices.reduce((sum, item) => sum + item.expect, 0);
-
-      if (activeChoices.length === 0 || totalArea <= 0) {
-        const nextUnlock = alphabet.find(item => item.expect == null);
-        if (nextUnlock) {
-          nextUnlock.expect = 100;
-          return nextUnlock;
-        }
-        return alphabet[0] || null;
-      }
-
-      let area = Math.random() * totalArea;
-      for (const item of activeChoices) {
-        area -= item.expect;
-        if (area <= 0) {
-          return item;
-        }
-      }
-      return activeChoices[activeChoices.length - 1];
-    };
-
-    const advanceAlphabet = () => {
-      const expectValues = alphabet
-        .filter(item => typeof item.expect === "number")
-        .map(item => item.expect);
-      const worst = expectValues.length ? Math.max(...expectValues) : 0;
-      if (worst < 30) {
-        for (const item of alphabet) {
-          if (item.expect == null) {
-            item.expect = 100;
-            break;
-          }
-        }
-      }
-    };
-
-    const startTrial = () => {
-      trial = chooseTrial();
-      if (!trial) {
-        currentLetterEl.textContent = "–";
-        currentExpectEl.textContent = "–";
-        return;
-      }
-      observeScore = 0;
-      scheduleObserveTimer();
-      currentLetterEl.textContent = trial.letter;
-      currentExpectEl.textContent = typeof trial.expect === "number" ? `${Math.round(trial.expect)}%` : "–";
-      cancelHintTimer();
-      hideHint();
-      playLetter();
-      scheduleHint();
-      renderGraph();
-    };
-
-    const handleCorrectAnswer = () => {
-      clearInterval(observeTimer);
-      observeTimer = null;
-      clearTimeout(replayTimer);
-      replayTimer = null;
-
-      const oldExpect = typeof trial.expect === "number" ? trial.expect : clampPercent(defaultExpectInput.value || 100);
-      const now = Math.min(100, observeScore);
-      trial.expect = clampPercent(oldExpect * 0.8 + now * 0.2);
-      lastMetricEl.textContent = `Response: ${Math.round(now)} ticks`;
-
-      recordCorrect(now);
-
-      advanceAlphabet();
-      cancelHintTimer();
-      hideHint();
-      renderGraph();
-      answerField.value = "";
-      lastInputValue = "";
-      startTrial();
-    };
-
-    const handleIncorrectAnswer = () => {
-      observeScore = 100;
-      lastMetricEl.textContent = "Incorrect (penalized)";
-      answerField.value = answerField.value.slice(0, -1);
-      lastInputValue = answerField.value;
-      recordIncorrect();
-      playLetter();
-      scheduleHint();
-      renderGraph();
-    };
-
-    const takeBreak = () => {
-      if (!sessionActive || isOnBreak) return;
-      isOnBreak = true;
-      sessionActive = false;
-      pauseSessionTimer();
-      cancelHintTimer();
-      cwPlayer && cwPlayer.stop();
-      clearInterval(observeTimer);
-      observeTimer = null;
-      clearTimeout(replayTimer);
-      replayTimer = null;
-      observeScore = 0;
-      answerField.disabled = true;
-      answerField.blur();
-      entryPanel.classList.remove("focused");
-      showPauseMessage();
-      startButton.disabled = false;
-      startButton.textContent = "Resume session";
-      lastMetricEl.textContent = "Break";
-      if (stats) {
-        stats.streak = 0;
-        updateStatsUI();
-        saveState();
-      }
-    };
-
-    const resumeSession = () => {
-      if (!sessionInitialized) return;
-      isOnBreak = false;
-      sessionActive = true;
-      answerField.disabled = false;
-      startButton.disabled = true;
-      startButton.textContent = "Start session";
-      if (sessionEndTime && sessionEndTime > Date.now()) {
-        startSessionTimer();
-      } else {
-        const minutes = currentSessionLength();
-        sessionEndTime = Date.now() + (minutes * 60 * 1000);
-        startSessionTimer();
-      }
-      cancelHintTimer();
-      hideHint();
-      observeScore = 0;
-      if (!trial) {
-        startTrial();
-      } else {
-        scheduleObserveTimer();
-        playLetter();
-        scheduleHint();
-      }
-      lastMetricEl.textContent = "Resumed";
-      answerField.focus();
-    };
-
-    const beginSession = () => {
-      if (isOnBreak && sessionInitialized) {
-        resumeSession();
-        return;
-      }
-      const expectFallback = clampPercent(defaultExpectInput.value || 100);
-      const presetKey = presetSelect.value;
-      let usePersisted = hasPersistedAlphabet && presetKey === persistedPresetKey;
-
-      // For custom preset with an explicit selection, rebuild alphabet
-      if (presetKey === "custom" && customSelection.size > 0) {
-        usePersisted = false;
-      }
-
-      if (!usePersisted) {
-        let nextAlphabet = [];
-        if (presetKey === "custom") {
-          nextAlphabet = buildCustomAlphabet(expectFallback);
-        } else {
-          nextAlphabet = parsePresetData(presetKey, expectFallback);
-        }
-        if (!nextAlphabet.length) {
-          alert("Select at least one valid letter before starting.");
-          return;
-        }
-        alphabet = nextAlphabet;
-        activePresetLabel.textContent = PRESET_DATA[presetKey]?.name || "Custom";
-      }
-      renderGraph();
-      activatePlayer();
-      sessionActive = true;
-      sessionInitialized = true;
-      isOnBreak = false;
-      recordSessionStart();
-      answerField.disabled = false;
-      answerField.value = "";
-      answerField.focus();
-      lastInputValue = "";
-      startButton.disabled = true;
-      startButton.textContent = "Start session";
-      restartButton.disabled = false;
-      startSessionTimer();
-      startTrial();
-    };
-
-    const restartSession = () => {
-      resetSessionState();
-      startButton.disabled = false;
-      startButton.textContent = "Start session";
-      restartButton.disabled = true;
-    };
-
-    answerField.addEventListener("keydown", (event) => {
-      if (!event.shiftKey && !event.ctrlKey && !event.altKey && !event.metaKey && event.key === "Enter") {
-        event.preventDefault();
-        if (!sessionInitialized) {
-          beginSession();
-        } else if (sessionActive) {
-          takeBreak();
-        } else if (isOnBreak) {
-          resumeSession();
-        }
-        return;
-      }
-      if ((event.altKey || event.metaKey) && event.key.toLowerCase() === "s") {
-        event.preventDefault();
-        answerField.blur();
-        saveNotes();
-        return;
-      }
-    });
-
-    answerField.addEventListener("input", () => {
-      if (!sessionActive || !trial) {
-        answerField.value = "";
-        lastInputValue = "";
-        return;
-      }
-
-      if (answerField.value.length <= lastInputValue.length) {
-        lastInputValue = answerField.value.toUpperCase();
-        return;
-      }
-
-      const char = answerField.value.slice(-1).toUpperCase();
-      if (char === trial.letter) {
-        handleCorrectAnswer();
-      } else {
-        handleIncorrectAnswer();
-      }
-    });
-
-    volumeSlider.addEventListener("input", () => {
-      const effective = updateVolumeLabel();
-      if (cwPlayer) {
-        cwPlayer.setVolume(effective);
-      }
-      saveState();
-    });
-
-    speedSlider.addEventListener("input", () => {
-      const { wpm, eff } = updateSpeedLabel();
-      if (cwPlayer) {
-        cwPlayer.setWpm(wpm);
-        cwPlayer.setEff(eff);
-      }
-      saveState();
-    });
-
-    sessionLengthSlider.addEventListener("input", () => {
-      updateSessionLengthLabel();
-      saveState();
-    });
-
-    answerField.addEventListener("focus", () => entryPanel.classList.add("focused"));
-    answerField.addEventListener("blur", () => entryPanel.classList.remove("focused"));
-
-    startButton.addEventListener("click", beginSession);
-    restartButton.addEventListener("click", () => {
-      restartSession();
-      answerField.disabled = true;
-    });
-
-    resetStatsButton.addEventListener("click", resetStats);
-
-    presetSelect.addEventListener("change", () => {
-      const presetKey = presetSelect.value;
-      activePresetLabel.textContent = PRESET_DATA[presetKey]?.name || "Custom";
-      if (presetKey !== "custom") {
-        customSelection.clear();
-      }
-      saveState();
-    });
-
-    toggleGraphViewButton.addEventListener("click", () => {
-      const isOpen = graphTableWrapper.classList.toggle("open");
-      toggleGraphViewButton.textContent = isOpen ? "Hide table" : "Show table";
-      saveState();
-    });
-
-    customizeButton.addEventListener("click", () => {
-      const presetKey = presetSelect.value;
-      if (presetKey !== "custom") {
-        presetSelect.value = "custom";
-        activePresetLabel.textContent = "Custom";
-      }
-      syncLetterGridSelection();
-      dialog.showModal();
-    });
-
-    closeDialogButton.addEventListener("click", () => dialog.close());
-
-    applySelectionButton.addEventListener("click", () => {
-      if (!customSelection.size) {
-        alert("Pick at least one letter.");
-        return;
-      }
-      dialog.close();
-      saveState();
-    });
-
-    clearSelectionButton.addEventListener("click", () => {
-      customSelection.clear();
-      syncLetterGridSelection();
-    });
-
-    window.addEventListener("beforeunload", () => {
-      if (cwPlayer) {
-        cwPlayer.stop();
-      }
-      clearInterval(observeTimer);
-      clearTimeout(replayTimer);
-      cancelHintTimer();
-      pauseSessionTimer();
-      saveNotes();
-      saveState();
-    });
-
-    initLetterGrid();
-    loadState();
-    if (!stats) {
-      stats = createDefaultStats();
+  </div>
+
+  <!-- Statistics -->
+  <div class="panel" id="stats-panel">
+    <div class="panel-title panel-title-row">
+      <span>Statistics</span>
+      <button id="btn-reset-stats" style="font-family:monospace;font-size:11px;padding:2px 6px;cursor:pointer">Reset all stats ↺</button>
+    </div>
+    <div class="panel-body">
+      <div class="stats-summary" id="stats-summary"></div>
+      <div class="char-stats-grid" id="char-stats-grid"></div>
+    </div>
+  </div>
+
+  <div class="panel" id="koch-panel">
+    <div class="panel-title">Koch Method</div>
+    <div class="panel-body">
+      <div class="settings-grid">
+        <div class="field">
+          <label>Level <span id="koch-level-val" class="val">2</span> / 40</label>
+          <input type="range" id="koch-level" min="2" max="40" value="2" />
+        </div>
+        <div class="field">
+          <label>Duration <span id="session-mins-val" class="val">5</span> min</label>
+          <input type="range" id="session-mins" min="1" max="30" value="5" />
+        </div>
+        <div class="field">
+          <label>Auto level-up % <span id="koch-threshold-val" class="val">90</span></label>
+          <input type="range" id="koch-threshold" min="50" max="100" value="90" />
+        </div>
+      </div>
+      <div class="koch-info">
+        Character set: <span id="koch-chars-display"></span>
+      </div>
+      <div class="koch-info">
+        New character at this level: <span id="koch-new-char-display" class="koch-new-char"></span>
+        &nbsp;|&nbsp;
+        <button id="btn-koch-reset" style="font-family:monospace;font-size:11px;padding:2px 6px;cursor:pointer">Reset level ↺</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Settings -->
+  <div class="panel">
+    <div class="panel-title">Settings</div>
+    <div class="panel-body">
+      <table class="settings-table">
+        <thead>
+          <tr>
+            <th>Metric</th>
+            <th>Value</th>
+            <th>Control</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="metric-cell">Character Speed</td>
+            <td class="value-cell"><span id="wpm-val">20</span> WPM</td>
+            <td class="ctrl-cell">
+              <button class="step-btn" id="wpm-dec" aria-label="Decrease character speed">&#8722;</button>
+              <button class="step-btn" id="wpm-inc" aria-label="Increase character speed">+</button>
+            </td>
+          </tr>
+          <tr>
+            <td class="metric-cell">Effective Speed</td>
+            <td class="value-cell"><span id="eff-val">15</span> WPM</td>
+            <td class="ctrl-cell">
+              <button class="step-btn" id="eff-dec" aria-label="Decrease effective speed">&#8722;</button>
+              <button class="step-btn" id="eff-inc" aria-label="Increase effective speed">+</button>
+            </td>
+          </tr>
+          <tr>
+            <td class="metric-cell">Tone Freq</td>
+            <td class="value-cell"><span id="freq-val">700</span> Hz</td>
+            <td class="ctrl-cell">
+              <button class="freq-preset" data-freq="440">440</button>
+              <button class="freq-preset" data-freq="600">600</button>
+              <button class="freq-preset active" data-freq="700">700</button>
+            </td>
+          </tr>
+          <tr>
+            <td class="metric-cell">Volume</td>
+            <td class="value-cell"><span id="vol-val">0.8</span></td>
+            <td class="ctrl-cell">
+              <button class="step-btn" id="vol-dec" aria-label="Decrease volume">&#8722;</button>
+              <button class="step-btn" id="vol-inc" aria-label="Increase volume">+</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <!-- Signal output -->
+      <div class="signal-options">
+        <span class="signal-options-label">Signal output:</span>
+        <label><input type="checkbox" id="opt-sound" checked /> Sound</label>
+        <label><input type="checkbox" id="opt-vibrate" /> Vibration</label>
+        <label><input type="checkbox" id="opt-flash" /> Flash panel</label>
+      </div>
+    </div>
+  </div>
+
+
+</div><!-- .wrap -->
+
+<!-- Vanity modal (session accomplishment report) -->
+<div id="vanity-overlay" role="dialog" aria-modal="true" aria-labelledby="vanity-title">
+  <div id="vanity-modal">
+    <div class="vm-header">
+      <span class="vm-title" id="vanity-title">Session Complete</span>
+      <span class="vm-date" id="vanity-date"></span>
+    </div>
+    <!-- Session view (shown at session end) -->
+    <div class="vm-body vm-body-session">
+      <div class="vm-score" id="vanity-score">—</div>
+      <div class="vm-score-label">Accuracy</div>
+      <div class="vm-levelup-badge" id="vanity-levelup-badge">▲ Level up!</div>
+      <div class="vm-grid">
+        <div class="vm-cell">
+          <span class="vm-cell-value" id="vanity-chars">—</span>
+          <span class="vm-cell-label">Correct / Total</span>
+        </div>
+        <div class="vm-cell">
+          <span class="vm-cell-value" id="vanity-time">—</span>
+          <span class="vm-cell-label">Duration</span>
+        </div>
+        <div class="vm-cell">
+          <span class="vm-cell-value" id="vanity-wpm">—</span>
+          <span class="vm-cell-label">Eff. speed (WPM)</span>
+        </div>
+        <div class="vm-cell">
+          <span class="vm-cell-value" id="vanity-level">—</span>
+          <span class="vm-cell-label">Koch level</span>
+        </div>
+      </div>
+    </div>
+    <!-- Profile view (shown on-demand via 📊 button) -->
+    <div class="vm-body vm-body-profile">
+      <div class="vm-score" id="profile-score">—</div>
+      <div class="vm-score-label">Overall Accuracy</div>
+      <div class="vm-grid">
+        <div class="vm-cell">
+          <span class="vm-cell-value" id="profile-sessions">—</span>
+          <span class="vm-cell-label">Sessions</span>
+        </div>
+        <div class="vm-cell">
+          <span class="vm-cell-value" id="profile-time">—</span>
+          <span class="vm-cell-label">Total time</span>
+        </div>
+        <div class="vm-cell">
+          <span class="vm-cell-value" id="profile-wpm">—</span>
+          <span class="vm-cell-label">Avg speed (WPM)</span>
+        </div>
+        <div class="vm-cell">
+          <span class="vm-cell-value" id="profile-level">—</span>
+          <span class="vm-cell-label">Koch level</span>
+        </div>
+      </div>
+    </div>
+    <div class="vm-footer">
+      <button id="btn-vanity-close">✕ Close</button>
+    </div>
+  </div>
+</div>
+
+<script src="jscwlib.js"></script>
+<script>
+(function () {
+  /* ── Koch method character order (40 chars, traditional sequence) ── */
+  var KOCH_CHARS = [
+    'K','M','R','S','U','A','P','T','L','O',
+    'W','I','.','N','J','E','F','0','Y',',',
+    'V','G','5','/','Q','9','Z','H','3','8',
+    'B','?','4','2','7','C','1','D','6','X'
+  ];
+  var MAX_KOCH_LEVEL = KOCH_CHARS.length; // 40
+  var CHARS_PER_WORD = 5;                // PARIS standard: 5 chars = 1 word
+
+  /* ── jscwlib instance ── */
+  var m = new jscw({ wpm: 20, eff: 15, freq: 700, volume: 0.8 });
+
+  /* ── Settings state (mirrors jscwlib defaults) ── */
+  var wpmValue  = 20;
+  var effValue  = 15;
+  var freqValue = 700;
+  var volValue  = 0.8;
+
+  /* ── Morse code table (covers all 40 Koch chars + common punctuation) ── */
+  var MORSE_CODE = {
+    'A':'.-',   'B':'-...', 'C':'-.-.', 'D':'-..',  'E':'.',
+    'F':'..-.', 'G':'--.',  'H':'....', 'I':'..',   'J':'.---',
+    'K':'-.-',  'L':'.-..', 'M':'--',   'N':'-.',   'O':'---',
+    'P':'.--.', 'Q':'--.-', 'R':'.-.',  'S':'...',  'T':'-',
+    'U':'..-',  'V':'...-', 'W':'.--',  'X':'-..-', 'Y':'-.--',
+    'Z':'--..',
+    '0':'-----','1':'.----','2':'..---','3':'...--','4':'....-',
+    '5':'.....','6':'-....','7':'--...','8':'---..','9':'----.',
+    '.':'.-.-.-', ',':'--..--', '?':'..--..', '/':'-..-.', '+':'.-.-.'
+  };
+
+  /* ── Signal output state ── */
+  var useSound     = true;
+  var useVibration = false;
+  var useFlash     = false;
+  var flashTimeouts = [];
+
+  /* ── Flash helpers (reuse the status banner for the visual signal) ── */
+  function clearFlash() {
+    for (var i = 0; i < flashTimeouts.length; i++) clearTimeout(flashTimeouts[i]);
+    flashTimeouts = [];
+    banner.classList.remove('flash-on');
+  }
+
+  function triggerFlash(char) {
+    clearFlash();
+    var morse = MORSE_CODE[char.toUpperCase()];
+    if (!morse) return;
+    var wpm  = wpmValue;
+    var unit = Math.round(1200 / wpm);
+    var t = 0;
+    for (var i = 0; i < morse.length; i++) {
+      var dur = morse[i] === '-' ? 3 * unit : unit;
+      /* IIFE to capture t and dur for each setTimeout */
+      (function (start, length) {
+        flashTimeouts.push(setTimeout(function () { banner.classList.add('flash-on');    }, start));
+        flashTimeouts.push(setTimeout(function () { banner.classList.remove('flash-on'); }, start + length));
+      })(t, dur);
+      t += dur;
+      if (i < morse.length - 1) t += unit; /* inter-element gap */
     }
-    updateStatsUI();
-    loadNotes();
-    resetSessionState();
-    updateVolumeLabel();
-    updateSpeedLabel();
-    updateSessionLengthLabel();
-    answerField.focus();
-  </script>
+  }
+
+  /* ── Vibration helper ── */
+  function triggerVibration(char) {
+    if (!navigator.vibrate) return;
+    var morse = MORSE_CODE[char.toUpperCase()];
+    if (!morse) return;
+    var wpm     = wpmValue;
+    var unit    = Math.round(1200 / wpm);
+    var pattern = [];
+    for (var i = 0; i < morse.length; i++) {
+      pattern.push(morse[i] === '-' ? 3 * unit : unit);
+      if (i < morse.length - 1) pattern.push(unit); /* inter-element gap */
+    }
+    navigator.vibrate(pattern);
+  }
+
+  /* ── DOM refs ── */
+  var banner   = document.getElementById('status-banner');
+  var timerEl  = document.getElementById('timer');
+  var progBar  = document.getElementById('progress-bar');
+  var charDisp = document.getElementById('char-display');
+  var btnStart = document.getElementById('btn-start');
+  var btnPause = document.getElementById('btn-pause');
+  var btnStop  = document.getElementById('btn-stop');
+
+  /* ── State ── */
+  var sessionState    = 'ready';   // ready | playing | waiting | paused | stopped
+  var timerInterval   = null;
+  var elapsed         = 0;
+  var kochLevel       = parseInt(localStorage.getItem('kochLevel')     || '2',  10);
+  var sessionMins     = parseInt(localStorage.getItem('sessionMins')   || '5',  10);
+  var sessionDuration = sessionMins * 60;   // seconds; recalculated on slider change
+  var kochThreshold   = parseInt(localStorage.getItem('kochThreshold') || '90', 10);
+  var currentChar     = null;      // char currently being asked
+  var waitingForInput = false;     // true once the char audio has finished playing
+  var answers         = [];        // [{expected, typed, correct}, …]
+
+  /* ── Persistent stats ── */
+  function loadStats() {
+    try {
+      return JSON.parse(localStorage.getItem('morseStats') || 'null') || {
+        charStats: {},          // { 'K': { attempts: 0, correct: 0 }, … }
+        totalCorrectChars: 0,
+        totalElapsedSeconds: 0,
+        totalSessions: 0
+      };
+    } catch (e) {
+      return { charStats: {}, totalCorrectChars: 0, totalElapsedSeconds: 0, totalSessions: 0 };
+    }
+  }
+
+  function saveStats(stats) {
+    localStorage.setItem('morseStats', JSON.stringify(stats));
+  }
+
+  var persistedStats = loadStats();
+
+  /* ── Koch helpers ── */
+  function pickRandomChar() {
+    var chars = KOCH_CHARS.slice(0, kochLevel);
+    return chars[Math.floor(Math.random() * chars.length)];
+  }
+
+  function updateKochUI() {
+    var levelEl  = document.getElementById('koch-level');
+    var levelVal = document.getElementById('koch-level-val');
+    var newChar  = document.getElementById('koch-new-char-display');
+    var charsEl  = document.getElementById('koch-chars-display');
+
+    levelEl.value        = kochLevel;
+    levelVal.textContent = kochLevel;
+    newChar.textContent  = KOCH_CHARS[kochLevel - 1];
+
+    var html = '';
+    for (var i = 0; i < kochLevel; i++) {
+      var c = escHtml(KOCH_CHARS[i]);
+      if (i === kochLevel - 1) {
+        html += '<span class="koch-new-char">' + c + '</span>';
+      } else {
+        html += c;
+      }
+      if (i < kochLevel - 1) html += ' ';
+    }
+    charsEl.innerHTML = html;
+  }
+
+  /* ── General helpers ── */
+  function pad(n) { return String(n).padStart(2, '0'); }
+
+  function formatTime(s) {
+    var minutes = Math.floor(s / 60);
+    var sec = Math.floor(s % 60);
+    return pad(minutes) + ':' + pad(sec);
+  }
+
+  function setStatus(state) {
+    sessionState = state;
+    banner.className = state;
+    var labels = {
+      ready:   'READY',
+      playing: 'PLAYING',
+      waiting: 'WAITING — TYPE THE LETTER',
+      paused:  'PAUSED',
+      stopped: 'STOPPED'
+    };
+    banner.textContent = labels[state] || state.toUpperCase();
+  }
+
+  function updateButtons() {
+    var active = (sessionState === 'playing' || sessionState === 'waiting');
+    btnStart.disabled = active;
+    btnPause.disabled = (sessionState !== 'playing');
+    btnStop.disabled  = (sessionState === 'ready' || sessionState === 'stopped');
+  }
+
+  function startTimer() {
+    if (timerInterval) return;
+    timerInterval = setInterval(function () {
+      elapsed += 1;
+      timerEl.textContent = formatTime(elapsed);
+      progBar.style.width = sessionDuration > 0
+        ? Math.min(100, (elapsed / sessionDuration * 100)).toFixed(1) + '%'
+        : '0%';
+      if (elapsed >= sessionDuration && (sessionState === 'playing' || sessionState === 'waiting')) {
+        endSession();
+      }
+    }, 1000);
+  }
+
+  function pauseTimer() {
+    clearInterval(timerInterval);
+    timerInterval = null;
+  }
+
+  function resetTimer() {
+    pauseTimer();
+    elapsed = 0;
+    timerEl.textContent = '00:00';
+    progBar.style.width = '0%';
+  }
+
+  function escHtml(s) {
+    return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+
+  function countCorrect() {
+    var n = 0;
+    for (var i = 0; i < answers.length; i++) {
+      if (answers[i].correct) n++;
+    }
+    return n;
+  }
+
+  function renderAnswers() {
+    if (answers.length === 0) {
+      charDisp.innerHTML = '<span class="pending">—</span>';
+      return;
+    }
+    var GROUP_SIZE   = 5;   // characters per group
+    var GROUPS_PER_ROW = 5; // groups per row  →  25 chars per row
+    var html = '';
+    for (var i = 0; i < answers.length; i++) {
+      var a   = answers[i];
+      var cls = a.correct ? 'correct' : 'wrong';
+      html += '<span class="' + cls + '">' + escHtml(a.typed) + '</span>';
+      var pos = i + 1; // 1-based position
+      if (pos % (GROUP_SIZE * GROUPS_PER_ROW) === 0) {
+        /* end of a full row → new line */
+        html += '\n';
+      } else if (pos % GROUP_SIZE === 0) {
+        /* end of a group within a row → space separator */
+        html += ' ';
+      }
+    }
+    charDisp.innerHTML = html;
+  }
+
+  function renderStats() {
+    var s = persistedStats;
+    var summaryEl = document.getElementById('stats-summary');
+    var gridEl    = document.getElementById('char-stats-grid');
+
+    /* overall accuracy */
+    var totalAttempts = 0;
+    var totalCorrect  = 0;
+    for (var ch in s.charStats) {
+      totalAttempts += s.charStats[ch].attempts;
+      totalCorrect  += s.charStats[ch].correct;
+    }
+    var accuracy = totalAttempts > 0 ? Math.round(totalCorrect / totalAttempts * 100) : 0;
+
+    /* avg effective speed: correct chars / elapsed time → WPM (PARIS: 5 chars = 1 word) */
+    var avgWpm = s.totalElapsedSeconds > 0
+      ? ((s.totalCorrectChars / s.totalElapsedSeconds) * 60 / CHARS_PER_WORD).toFixed(1)
+      : '—';
+
+    summaryEl.innerHTML =
+      stat(s.totalSessions,    'Sessions') +
+      stat(totalAttempts,      'Total chars') +
+      stat(accuracy + '%',     'Accuracy') +
+      stat(avgWpm,             'Avg speed (WPM)');
+
+    /* per-char grid — show all Koch chars; inactive ones are visually dimmed */
+    var html = '';
+    for (var i = 0; i < KOCH_CHARS.length; i++) {
+      var c   = KOCH_CHARS[i];
+      var cs  = s.charStats[c];
+      var pct, cls;
+      if (i >= kochLevel) {
+        /* not yet unlocked */
+        pct = '';
+        cls = 'cs-inactive';
+      } else if (!cs || cs.attempts === 0) {
+        pct = '—';
+        cls = 'cs-none';
+      } else {
+        pct = Math.round(cs.correct / cs.attempts * 100);
+        cls = pct >= 90 ? 'cs-good' : (pct >= 70 ? 'cs-mid' : 'cs-bad');
+        pct = pct + '%';
+      }
+      html += '<div class="char-stat ' + cls + '">' +
+                '<span class="cs-char">' + escHtml(c) + '</span>' +
+                '<span class="cs-pct">'  + pct         + '</span>' +
+              '</div>';
+    }
+    gridEl.innerHTML = html;
+  }
+
+  function stat(value, label) {
+    return '<div class="stat-item">' +
+             '<span class="stat-value">' + value + '</span>' +
+             '<span class="stat-label">' + label + '</span>' +
+           '</div>';
+  }
+
+  /* ── Helper: effective WPM from correct chars and elapsed seconds ── */
+  function calcWPM(correctChars, elapsedSec) {
+    return elapsedSec > 0
+      ? ((correctChars / elapsedSec) * 60 / CHARS_PER_WORD).toFixed(1)
+      : '—';
+  }
+
+  /* ── Vanity modal ── */
+  function showVanity(accuracy, correctCount, totalAnswers, elapsedSec, didLevelUp, newLevel, title) {
+    var overlay = document.getElementById('vanity-overlay');
+    var modal   = document.getElementById('vanity-modal');
+
+    modal.classList.remove('profile-mode');
+    document.getElementById('vanity-title').textContent = title || 'Session Complete';
+    document.getElementById('vanity-score').textContent = accuracy + '%';
+    document.getElementById('vanity-chars').textContent = correctCount + ' / ' + totalAnswers;
+    document.getElementById('vanity-time').textContent  = formatTime(elapsedSec);
+
+    var effectiveWPM = calcWPM(correctCount, elapsedSec);
+    document.getElementById('vanity-wpm').textContent   = effectiveWPM;
+    document.getElementById('vanity-level').textContent = newLevel;
+
+    var now = new Date();
+    var sessionDateTime = now.toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' })
+                + ' ' + now.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' });
+    document.getElementById('vanity-date').textContent = sessionDateTime;
+
+    if (didLevelUp) {
+      modal.classList.add('levelup');
+      modal.classList.remove('vm-fail');
+      document.getElementById('vanity-levelup-badge').textContent = '▲ Level up! Now at level ' + newLevel;
+    } else {
+      modal.classList.remove('levelup');
+      modal.classList.toggle('vm-fail', accuracy < 70);
+    }
+
+    overlay.classList.add('open');
+  }
+
+  function closeVanity() {
+    document.getElementById('vanity-overlay').classList.remove('open');
+  }
+
+  /* ── End session (time expired or Stop button while session running) ── */
+  function endSession() {
+    m.stop();
+    clearFlash();
+    if (navigator.vibrate) navigator.vibrate(0);
+    waitingForInput = false;
+    hideTouchKeyboard();
+    pauseTimer();
+    progBar.style.width = '100%';
+
+    var correctCount = countCorrect();
+    var accuracy = answers.length > 0 ? Math.round(correctCount / answers.length * 100) : 0;
+
+    /* persist session-level stats */
+    persistedStats.totalSessions      += 1;
+    persistedStats.totalCorrectChars  += correctCount;
+    persistedStats.totalElapsedSeconds += elapsed;
+    saveStats(persistedStats);
+    renderStats();
+
+    var didLevelUp = false;
+    if (accuracy >= kochThreshold && kochLevel < MAX_KOCH_LEVEL) {
+      kochLevel += 1;
+      localStorage.setItem('kochLevel', kochLevel);
+      updateKochUI();
+      didLevelUp = true;
+      banner.className   = 'levelup';
+      banner.textContent = 'LEVEL UP! ▲ — ' + accuracy + '% CORRECT';
+    } else {
+      banner.textContent = 'DONE — ' + accuracy + '% CORRECT';
+    }
+    setStatus('stopped');
+    updateButtons();
+    showVanity(accuracy, correctCount, answers.length, elapsed, didLevelUp, kochLevel);
+  }
+
+  /* ── On-demand vanity: show overall profile stats ── */
+  function showProfile() {
+    var overlay = document.getElementById('vanity-overlay');
+    var modal   = document.getElementById('vanity-modal');
+    var s = persistedStats;
+
+    /* overall accuracy across all chars */
+    var totalAttempts = 0, totalCorrect = 0;
+    for (var ch in s.charStats) {
+      totalAttempts += s.charStats[ch].attempts;
+      totalCorrect  += s.charStats[ch].correct;
+    }
+    var accuracy = totalAttempts > 0 ? Math.round(totalCorrect / totalAttempts * 100) : 0;
+    var avgWPM = calcWPM(s.totalCorrectChars, s.totalElapsedSeconds);
+
+    document.getElementById('vanity-title').textContent   = 'My Profile';
+    document.getElementById('vanity-date').textContent    = 'Koch level ' + kochLevel;
+    document.getElementById('profile-score').textContent    = totalAttempts > 0 ? accuracy + '%' : '—';
+    document.getElementById('profile-sessions').textContent = s.totalSessions;
+    document.getElementById('profile-time').textContent     = formatTime(s.totalElapsedSeconds);
+    document.getElementById('profile-wpm').textContent      = avgWPM;
+    document.getElementById('profile-level').textContent    = kochLevel;
+
+    modal.classList.add('profile-mode');
+    modal.classList.remove('vm-fail', 'levelup');
+    if (totalAttempts > 0 && accuracy < 70) modal.classList.add('vm-fail');
+    overlay.classList.add('open');
+  }
+
+  document.getElementById('btn-report').addEventListener('click', showProfile);
+  document.getElementById('btn-vanity-close').addEventListener('click', closeVanity);
+  document.getElementById('vanity-overlay').addEventListener('click', function (e) {
+    if (e.target === this) closeVanity();
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') closeVanity();
+  });
+
+  /* ── Play the current character ── */
+  function playCurrentChar() {
+    waitingForInput = false;
+    hideTouchKeyboard();
+    clearFlash();
+    setStatus('playing');
+    updateButtons();
+    /* apply current volume, or mute when sound output is disabled */
+    m.setVolume(useSound ? volValue : 0);
+    if (useVibration) triggerVibration(currentChar);
+    if (useFlash)     triggerFlash(currentChar);
+    m.setText(currentChar);
+    m.play();
+  }
+
+  /* ── jscwlib callbacks ── */
+  m.onFinished = function () {
+    if (sessionState !== 'playing') return;
+    waitingForInput = true;
+    setStatus('waiting');
+    updateButtons();
+    showTouchKeyboard();
+  };
+
+  /* ── Touch keyboard helpers ── */
+  function buildTouchKeyboard() {
+    var kbd = document.getElementById('touch-keyboard');
+    kbd.innerHTML = '';
+    var chars = KOCH_CHARS.slice(0, kochLevel).sort();
+    for (var i = 0; i < chars.length; i++) {
+      (function (c) {
+        var btn = document.createElement('button');
+        btn.className = 'touch-key';
+        btn.textContent = c;
+        btn.addEventListener('click', function () {
+          if (!waitingForInput) return;
+          handleAnswer(c);
+        });
+        kbd.appendChild(btn);
+      })(chars[i]);
+    }
+  }
+
+  function showTouchKeyboard() {
+    /* Only build the DOM when the panel is actually visible (small screens) */
+    if (window.matchMedia('(max-width: 480px)').matches) {
+      buildTouchKeyboard();
+    }
+  }
+
+  function hideTouchKeyboard() {
+    /* No extra hiding needed; panel show/hide is CSS-only (media query) */
+  }
+
+  /* ── Shared answer handler ── */
+  function handleAnswer(key) {
+    key = key.toUpperCase();
+    waitingForInput = false;
+
+    var correct = (key === currentChar);
+    answers.push({ expected: currentChar, typed: key, correct: correct });
+
+    /* update persistent per-char stats */
+    if (!persistedStats.charStats[currentChar]) {
+      persistedStats.charStats[currentChar] = { attempts: 0, correct: 0 };
+    }
+    persistedStats.charStats[currentChar].attempts += 1;
+    if (correct) persistedStats.charStats[currentChar].correct += 1;
+    saveStats(persistedStats);
+
+    renderAnswers();
+    renderStats();
+
+    if (correct) {
+      currentChar = pickRandomChar();
+    }
+    /* wrong: replay the same char; correct: play new char */
+    playCurrentChar();
+  }
+
+  /* ── Keyboard handler ── */
+  document.addEventListener('keydown', function (e) {
+    if (!waitingForInput) return;
+
+    /* ignore when user is focused in a form element */
+    var tag = e.target.tagName;
+    if (tag === 'INPUT' || tag === 'BUTTON' || tag === 'TEXTAREA' || tag === 'SELECT') return;
+
+    var key = e.key;
+
+    /* accept only single printable characters */
+    if (key.length !== 1) return;
+
+    handleAnswer(key);
+  });
+
+  /* ── Button handlers ── */
+  btnStart.addEventListener('click', function () {
+    if (sessionState === 'paused') {
+      /* resume — replay the current char from the start */
+      setStatus('playing');
+      updateButtons();
+      startTimer();
+      playCurrentChar();
+      return;
+    }
+    /* fresh start */
+    answers = [];
+    resetTimer();
+    renderAnswers();
+    currentChar = pickRandomChar();
+    startTimer();
+    playCurrentChar();
+  });
+
+  btnPause.addEventListener('click', function () {
+    if (sessionState !== 'playing') return;
+    m.stop();   /* stop the current char; it will replay on resume */
+    clearFlash();
+    if (navigator.vibrate) navigator.vibrate(0); /* cancel any ongoing vibration */
+    setStatus('paused');
+    updateButtons();
+    pauseTimer();
+  });
+
+  btnStop.addEventListener('click', function () {
+    if (sessionState === 'ready' || sessionState === 'stopped') return;
+    endSession();
+  });
+
+  /* ── Settings live update ── */
+  document.getElementById('wpm-dec').addEventListener('click', function () {
+    if (wpmValue > 5) { wpmValue--; document.getElementById('wpm-val').textContent = wpmValue; m.setWpm(wpmValue); }
+  });
+  document.getElementById('wpm-inc').addEventListener('click', function () {
+    if (wpmValue < 40) { wpmValue++; document.getElementById('wpm-val').textContent = wpmValue; m.setWpm(wpmValue); }
+  });
+
+  document.getElementById('eff-dec').addEventListener('click', function () {
+    if (effValue > 5) { effValue--; document.getElementById('eff-val').textContent = effValue; m.setEff(effValue); }
+  });
+  document.getElementById('eff-inc').addEventListener('click', function () {
+    if (effValue < 40) { effValue++; document.getElementById('eff-val').textContent = effValue; m.setEff(effValue); }
+  });
+
+  var freqBtns = document.querySelectorAll('.freq-preset');
+  for (var fi = 0; fi < freqBtns.length; fi++) {
+    (function (btn) {
+      btn.addEventListener('click', function () {
+        freqValue = parseInt(btn.getAttribute('data-freq'), 10);
+        document.getElementById('freq-val').textContent = freqValue;
+        for (var j = 0; j < freqBtns.length; j++) { freqBtns[j].classList.remove('active'); }
+        btn.classList.add('active');
+        m.setFreq(freqValue);
+      });
+    })(freqBtns[fi]);
+  }
+
+  function stepVol(delta) {
+    volValue = Math.min(1, Math.max(0, Math.round((volValue + delta) * 10) / 10));
+    document.getElementById('vol-val').textContent = volValue.toFixed(1);
+    if (useSound) m.setVolume(volValue);
+  }
+  document.getElementById('vol-dec').addEventListener('click', function () { stepVol(-0.1); });
+  document.getElementById('vol-inc').addEventListener('click', function () { stepVol(+0.1); });
+
+  /* ── Signal output checkboxes ── */
+  document.getElementById('opt-sound').addEventListener('change', function () {
+    useSound = this.checked;
+    /* apply immediately so in-progress audio respects the change */
+    m.setVolume(useSound ? volValue : 0);
+  });
+
+  document.getElementById('opt-vibrate').addEventListener('change', function () {
+    useVibration = this.checked;
+  });
+
+  document.getElementById('opt-flash').addEventListener('change', function () {
+    useFlash = this.checked;
+    if (!useFlash) clearFlash();
+  });
+
+  /* Hide vibration checkbox on browsers that don't support the Vibration API */
+  if (!navigator.vibrate) {
+    document.getElementById('opt-vibrate').closest('label').style.display = 'none';
+  }
+
+  /* ── Koch level / duration controls ── */
+  document.getElementById('koch-level').addEventListener('input', function () {
+    kochLevel = parseInt(this.value, 10);
+    localStorage.setItem('kochLevel', kochLevel);
+    updateKochUI();
+  });
+
+  document.getElementById('session-mins').addEventListener('input', function () {
+    sessionMins = parseInt(this.value, 10);
+    sessionDuration = sessionMins * 60;
+    document.getElementById('session-mins-val').textContent = sessionMins;
+    localStorage.setItem('sessionMins', sessionMins);
+  });
+
+  document.getElementById('koch-threshold').addEventListener('input', function () {
+    kochThreshold = parseInt(this.value, 10);
+    document.getElementById('koch-threshold-val').textContent = kochThreshold;
+    localStorage.setItem('kochThreshold', kochThreshold);
+  });
+
+  document.getElementById('btn-koch-reset').addEventListener('click', function () {
+    kochLevel = 2;
+    localStorage.setItem('kochLevel', kochLevel);
+    updateKochUI();
+    renderStats();
+  });
+
+  document.getElementById('btn-reset-stats').addEventListener('click', function () {
+    if (!confirm('Reset all stats? This cannot be undone.')) return;
+    persistedStats = { charStats: {}, totalCorrectChars: 0, totalElapsedSeconds: 0, totalSessions: 0 };
+    saveStats(persistedStats);
+    renderStats();
+  });
+
+  /* ── Initial state ── */
+  document.getElementById('koch-level').value     = kochLevel;
+  document.getElementById('session-mins').value   = sessionMins;
+  document.getElementById('koch-threshold').value = kochThreshold;
+  document.getElementById('session-mins-val').textContent    = sessionMins;
+  document.getElementById('koch-threshold-val').textContent  = kochThreshold;
+  updateKochUI();
+  updateButtons();
+  renderStats();
+
+  /* ── Service Worker registration ── */
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function () {
+      navigator.serviceWorker.register('./sw.js');
+    });
+  }
+}());
+</script>
 </body>
 </html>

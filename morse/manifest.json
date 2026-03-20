@@ -1,0 +1,19 @@
+{
+  "name": "Morse Trainer",
+  "short_name": "Morse",
+  "description": "Interactive Koch-method Morse code trainer",
+  "start_url": ".",
+  "scope": ".",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f0f0f0",
+  "theme_color": "#111111",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
