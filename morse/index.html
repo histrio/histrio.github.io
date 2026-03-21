@@ -100,6 +100,8 @@
       color: #0f0;
       text-transform: uppercase;
       margin-bottom: 8px;
+      white-space: nowrap;
+      overflow: hidden;
     }
     #status-banner.waiting { color: #0af; background: #222; }
     #status-banner.paused  { color: #fa0; }
@@ -122,7 +124,8 @@
 
     /* ── Character display ── */
     #char-display {
-      min-height: 48px;
+      height: 96px;
+      overflow-y: auto;
       font-size: 24px;
       letter-spacing: 0.12em;
       line-height: 1.6;
@@ -741,6 +744,7 @@
   ];
   var MAX_KOCH_LEVEL = KOCH_CHARS.length; // 40
   var CHARS_PER_WORD = 5;                // PARIS standard: 5 chars = 1 word
+  var MOBILE_BREAKPOINT = '(max-width: 480px)'; // matches the CSS media query
 
   /* ── jscwlib instance ── */
   var m = new jscw({ wpm: 20, eff: 15, freq: 700, volume: 0.8 });
@@ -831,6 +835,8 @@
   var currentChar     = null;      // char currently being asked
   var waitingForInput = false;     // true once the char audio has finished playing
   var answers         = [];        // [{expected, typed, correct}, …]
+  var levelUpCheckpoint  = 0;     // answer index at which we last leveled up (mid-session)
+  var midSessionLevelUpTimer = null;
 
   /* ── Persistent stats ── */
   function loadStats() {
@@ -896,7 +902,7 @@
     var labels = {
       ready:   'READY',
       playing: 'PLAYING',
-      waiting: 'WAITING — TYPE THE LETTER',
+      waiting: 'WAITING',
       paused:  'PAUSED',
       stopped: 'STOPPED'
     };
@@ -970,6 +976,7 @@
       }
     }
     charDisp.innerHTML = html;
+    charDisp.scrollTop = charDisp.scrollHeight;
   }
 
   function renderStats() {
@@ -1192,13 +1199,44 @@
 
   function showTouchKeyboard() {
     /* Only build the DOM when the panel is actually visible (small screens) */
-    if (window.matchMedia('(max-width: 480px)').matches) {
+    if (window.matchMedia(MOBILE_BREAKPOINT).matches) {
       buildTouchKeyboard();
     }
   }
 
   function hideTouchKeyboard() {
     /* No extra hiding needed; panel show/hide is CSS-only (media query) */
+  }
+
+  /* ── Mid-session level-up ── */
+  function showMidSessionLevelUpBanner() {
+    if (midSessionLevelUpTimer) clearTimeout(midSessionLevelUpTimer);
+    banner.className = 'levelup';
+    banner.textContent = '▲ LEVEL ' + kochLevel;
+    midSessionLevelUpTimer = setTimeout(function () {
+      midSessionLevelUpTimer = null;
+      setStatus(sessionState);
+    }, 2000);
+  }
+
+  function checkMidSessionLevelUp() {
+    if (kochLevel >= MAX_KOCH_LEVEL) return;
+    var answersSince = answers.length - levelUpCheckpoint;
+    if (answersSince < 10) return;
+    var correctSince = 0;
+    for (var i = levelUpCheckpoint; i < answers.length; i++) {
+      if (answers[i].correct) correctSince++;
+    }
+    var accuracySince = Math.round(correctSince / answersSince * 100);
+    if (accuracySince < kochThreshold) return;
+    kochLevel += 1;
+    localStorage.setItem('kochLevel', kochLevel);
+    updateKochUI();
+    levelUpCheckpoint = answers.length;
+    if (window.matchMedia(MOBILE_BREAKPOINT).matches) {
+      buildTouchKeyboard();
+    }
+    showMidSessionLevelUpBanner();
   }
 
   /* ── Shared answer handler ── */
@@ -1219,6 +1257,7 @@
 
     renderAnswers();
     renderStats();
+    checkMidSessionLevelUp();
 
     if (correct) {
       currentChar = pickRandomChar();
@@ -1255,6 +1294,7 @@
     }
     /* fresh start */
     answers = [];
+    levelUpCheckpoint = 0;
     resetTimer();
     renderAnswers();
     currentChar = pickRandomChar();
