@@ -1,7 +1,7 @@
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-Contact: mailto:me@false.org.ru
+Contact: mailto:me+website@false.org.ru
 Contact: https://t.me/histrio
 Encryption: https://github.com/histrio.gpg
 Preferred-Languages: en, ru
